@@ -51,7 +51,7 @@ func articleList(w http.ResponseWriter, r *http.Request) {
 		bvnsj_ := decode(bvnsj)
 		idonx := r.FormValue("idonx")
 		idonx_ := decode(idonx)
-		if utysh == "1" {
+		if utysh_ == "1" {
 			result = data.ArticleListSubjectNew(bvnsj_, idonx_)
 		} else {
 			result = data.ArticleListSubjectPopular(bvnsj_, idonx_)
@@ -61,7 +61,7 @@ func articleList(w http.ResponseWriter, r *http.Request) {
 		bvnsj_ := decode(bvnsj)
 		idonx := r.FormValue("idonx")
 		idonx_ := decode(idonx)
-		if utysh == "1" {
+		if utysh_ == "1" {
 			result = data.ArticleListAccountNew(bvnsj_, idonx_)
 		} else {
 			result = data.ArticleListAccountPopular(bvnsj_, idonx_)
