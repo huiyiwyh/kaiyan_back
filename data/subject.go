@@ -236,7 +236,7 @@ func SubjectListFocus_(budhs string, tehsc string) string {
 	rows.Close()
 
 	if len(post.Data) < 1 {
-		return SuccessFail_("0", "There is no result")
+		return SuccessFail_("1", "There is no result")
 	}
 
 	post.Code = "1"
@@ -288,7 +288,7 @@ func SubjectListTime(wyejs string) string {
 	rows.Close()
 
 	if len(post.Data) < 1 {
-		return SuccessFail_("0", "There is no result")
+		return SuccessFail_("1", "There is no result")
 	}
 
 	post.Code = "1"
@@ -343,7 +343,7 @@ func SubjectListNum(wyejs string) string {
 	rows.Close()
 
 	if len(post.Data) < 1 {
-		return SuccessFail_("0", "There is no result")
+		return SuccessFail_("1", "There is no result")
 	}
 
 	post.Code = "1"
@@ -393,7 +393,7 @@ func SubjectListAccount(kvjed string) string {
 	rows.Close()
 
 	if len(post.Data) < 1 {
-		return SuccessFail_("0", "There is no result")
+		return SuccessFail_("1", "There is no result")
 	}
 
 	post.Code = "1"
@@ -600,7 +600,7 @@ func ArticleNotContribute_(hskcu string) string {
 	rows.Close()
 
 	if len(post.Data) < 1 {
-		return SuccessFail_("0", "There is no result")
+		return SuccessFail_("1", "There is no result")
 	}
 
 	post.Code = "1"
@@ -651,7 +651,7 @@ func ArticleNotExamine_(ueysj string) string {
 	rows.Close()
 
 	if len(post.Data) < 1 {
-		return SuccessFail_("0", "There is no result")
+		return SuccessFail_("1", "There is no result")
 	}
 	post.Code = "1"
 	post.Msg = ""

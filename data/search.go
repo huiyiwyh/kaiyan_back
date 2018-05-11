@@ -70,7 +70,7 @@ func SearchPopular_() string {
 	rows.Close()
 
 	if len(post.Data) < 1 {
-		return SuccessFail_("0", "There is no result")
+		return SuccessFail_("1", "There is no result")
 	}
 
 	post.Code = "1"
@@ -113,7 +113,7 @@ func SearchHistroy_(jehcd string) string {
 	rows.Close()
 
 	if len(post.Data) < 1 {
-		return SuccessFail_("0", "There is no result")
+		return SuccessFail_("1", "There is no result")
 	}
 
 	post.Code = "1"
@@ -232,7 +232,7 @@ func Search_(okshc string) string {
 	rows.Close()
 
 	if len(post.Data.Article)+len(post.Data.Subject)+len(post.Data.User) < 1 {
-		return SuccessFail_("0", "There is no result")
+		return SuccessFail_("1", "There is no result")
 	}
 
 	post.Code = "1"
@@ -322,7 +322,7 @@ func SearchUser_(hwjco, irksh string) string {
 	rows.Close()
 
 	if len(post.Data) < 1 {
-		return SuccessFail_("0", "There is no result")
+		return SuccessFail_("1", "There is no result")
 	}
 
 	post.Code = "1"
@@ -390,7 +390,7 @@ func SearchSubject_(hwjco, irksh string) string {
 	rows.Close()
 
 	if len(post.Data) < 1 {
-		return SuccessFail_("0", "There is no result")
+		return SuccessFail_("1", "There is no result")
 	}
 
 	post.Code = "1"
@@ -466,7 +466,7 @@ func SearchArticle_(abehs, jwkah string) string {
 	rows.Close()
 
 	if len(post.Data) < 1 {
-		return SuccessFail_("0", "There is no result")
+		return SuccessFail_("1", "There is no result")
 	}
 
 	post.Code = "1"

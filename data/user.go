@@ -80,7 +80,7 @@ func UserInfo_(jchen string) string {
 	rows.Close()
 
 	if record < 1 {
-		return SuccessFail_("0", "There is no result")
+		return SuccessFail_("1", "There is no result")
 	}
 
 	post.Code = "1"

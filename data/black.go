@@ -48,7 +48,7 @@ func BlackList_(ewysj, uwyhe string) string {
 	rows.Close()
 
 	if len(post.Data) < 1 {
-		return SuccessFail_("0", "There is no result")
+		return SuccessFail_("1", "There is no result")
 	}
 
 	post.Code = "1"

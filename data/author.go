@@ -51,7 +51,7 @@ func AuthorListFollow(geacg, iicje string) string {
 	rows.Close()
 
 	if len(post.Data) < 1 {
-		return SuccessFail_("0", "There is no result")
+		return SuccessFail_("1", "There is no result")
 	}
 
 	post.Code = "1"
@@ -104,7 +104,7 @@ func AuthorListFollowAll(geacg, iicje string) string {
 	rows.Close()
 
 	if len(post.Data) < 1 {
-		return SuccessFail_("0", "There is no result")
+		return SuccessFail_("1", "There is no result")
 	}
 
 	post.Code = "1"
@@ -158,7 +158,7 @@ func AuthorListFans(geacg, iicje string) string {
 	rows.Close()
 
 	if len(post.Data) < 1 {
-		return SuccessFail_("0", "There is no result")
+		return SuccessFail_("1", "There is no result")
 	}
 
 	post.Code = "1"
@@ -210,7 +210,7 @@ func AuthorListRanking_(jeheh string) string {
 	rows.Close()
 
 	if len(post.Data) < 1 {
-		return SuccessFail_("0", "There is no result")
+		return SuccessFail_("1", "There is no result")
 	}
 
 	post.Code = "1"
