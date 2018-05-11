@@ -44,12 +44,11 @@ func ArticleListRec(Account string) string {
 	recartcilesmatchall := make([]RecArticle, 0)
 	recartcilesmatch := make([]RecArticle, 0)
 
-	Mutex.Lock()
 	conn, err := Db.Begin()
 	if err != nil {
 		log.Println(err)
-		Mutex.Unlock()
-		return SuccessFail_("Conn err")
+
+		return SuccessFail_("0", "Conn err")
 	}
 
 	//先查看用户的标签，再查找文章附带标签
@@ -57,8 +56,7 @@ func ArticleListRec(Account string) string {
 	if err != nil {
 		log.Println(err)
 		conn.Rollback()
-		Mutex.Unlock()
-		return SuccessFail_("Query err1")
+		return SuccessFail_("0", "Query err1")
 	}
 
 	for rows.Next() {
@@ -76,8 +74,7 @@ func ArticleListRec(Account string) string {
 	if err != nil {
 		log.Println(err)
 		conn.Rollback()
-		Mutex.Unlock()
-		return SuccessFail_("Query err2")
+		return SuccessFail_("0", "Query err2")
 	}
 	for rows.Next() {
 		var articleid, labelstring string
@@ -101,8 +98,7 @@ func ArticleListRec(Account string) string {
 		if err != nil {
 			log.Println(err)
 			conn.Rollback()
-			Mutex.Unlock()
-			return SuccessFail_("Query err3")
+			return SuccessFail_("0", "Query err3")
 		}
 		if labelmatch == 4 && !newRows.Next() {
 			recartcilesmatchall = append(recartcilesmatchall, RecArticle{ArticleId: articleid, LabelNum: labelnum})
@@ -115,7 +111,6 @@ func ArticleListRec(Account string) string {
 	rows.Close()
 
 	conn.Commit()
-	Mutex.Unlock()
 
 	sort.Sort(RecArticleSlice(recartcilesmatchall))
 	//fmt.Println(recartcilesmatchall)
@@ -132,6 +127,5 @@ func ArticleListRec(Account string) string {
 	}
 
 	fmt.Println(Recartciles)
-
 	return ""
 }

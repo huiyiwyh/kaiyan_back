@@ -76,9 +76,9 @@ func main() {
 	mux.HandleFunc("/search/Delete", searchDelete)
 
 	//用户接口
-	mux.HandleFunc("/login", login)
-	mux.HandleFunc("/logout", logout)
-	mux.HandleFunc("/signup", signup)
+	mux.HandleFunc("/user/Login", userLogin)
+	mux.HandleFunc("/user/Logout", userLogout)
+	mux.HandleFunc("/user/SignUp", userSignUp)
 	mux.HandleFunc("/user/Info", userInfo)
 	mux.HandleFunc("/user/ModifyHead", userModifyHead)
 	mux.HandleFunc("/user/ModifyNickname", userModifyNickname)

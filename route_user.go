@@ -10,54 +10,56 @@ import (
 
 //登陆
 
-func login(w http.ResponseWriter, r *http.Request) {
+func userLogin(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Add("Access-Control-Allow-Headers", "Content-Type")
 	w.Header().Set("content-type", "application/json")
 
-	// name := r.FormValue("name")
-	// password := r.FormValue("password")
+	bhtdm := r.FormValue("bhtdm") //account
+	bhtdm_ := decode(bhtdm)
+	opawe := r.FormValue("opawe") //password
+	opawe_ := decode(opawe)
+	var result string
 
-	// fmt.Println(name, password)
+	if data.Authenticate(bhtdm_, opawe_) {
+		cookie := http.Cookie{Name: "account", Value: bhtdm_, Path: "/", MaxAge: 86400}
+		http.SetCookie(w, &cookie)
 
-	// if authenticate(name, password) {
-	// 	fmt.Fprintf(w, "failed")
-	// } else {
-	// 	fmt.Fprintf(w, "success")
-	// }
+		//发送个客户端Token
+		createToken(bhtdm_)
+
+		result = data.SuccessFail_("0", "登陆成功")
+		fmt.Fprintf(w, result)
+	} else {
+		result = data.SuccessFail_("0", "账号或密码不正确")
+		fmt.Fprintf(w, result)
+	}
 }
 
 //登出
 
-func logout(w http.ResponseWriter, r *http.Request) {
+func userLogout(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Add("Access-Control-Allow-Headers", "Content-Type")
 	w.Header().Set("content-type", "application/json")
 
-	// cookie, err := r.Cookie("_cookie")
-	// if err != http.ErrNoCookie {
-	// 	warning(err, "Failed to get cookie")
-	// 	session := data.Session{Uuid: cookie.Value}
-	// 	session.DeleteByUUID()
-	// }
-	// http.Redirect(w, r, "/", 302)
+	cookie := http.Cookie{Name: "account", Path: "/", MaxAge: -1}
+	http.SetCookie(w, &cookie)
 }
 
 //注册
-func signup(w http.ResponseWriter, r *http.Request) {
+func userSignUp(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Add("Access-Control-Allow-Headers", "Content-Type")
 	w.Header().Set("content-type", "application/json")
 
-	// user := data.User{
-	// 	Name:     r.FormValue("name"),
-	// 	Email:    r.FormValue("email"),
-	// 	Password: r.FormValue("password"),
-	// }
-	// if err := user.Create(); err != nil {
-	// 	danger(err, "Cannot create user")
-	// }
-	// http.Redirect(writer, request, "/login", 302)
+	ywhft := r.FormValue("ywhft") //account
+	urhsf := r.FormValue("urhsf") //name
+	iuqng := r.FormValue("iuqng") //password
+
+	var result string
+	result = data.UserSignUp_(ywhft, urhsf, iuqng)
+	fmt.Fprintf(w, result)
 }
 
 //获取个人信息
@@ -89,18 +91,18 @@ func userModifyHead(w http.ResponseWriter, r *http.Request) {
 	file, _, err := r.FormFile("yshuc")
 	if err != nil {
 		fmt.Println(err)
-		result = data.SuccessFail_("图片获取失败")
+		result = data.SuccessFail_("0", "图片获取失败")
 		fmt.Fprintf(w, result)
 		return
 	}
 	defer file.Close()
 
-	data.CreateDir("back")
+	createDir("back")
 
 	fW, err := os.Create("back/" + hcnsg_ + ".jpg")
 	if err != nil {
 		fmt.Println("文件创建失败")
-		result = data.SuccessFail_("文件创建失败")
+		result = data.SuccessFail_("0", "文件创建失败")
 		fmt.Fprintf(w, result)
 		return
 	}
@@ -109,7 +111,7 @@ func userModifyHead(w http.ResponseWriter, r *http.Request) {
 	_, err = io.Copy(fW, file)
 	if err != nil {
 		fmt.Println("文件保存失败")
-		result = data.SuccessFail_("文件保存失败")
+		result = data.SuccessFail_("0", "文件保存失败")
 		fmt.Fprintf(w, result)
 		return
 	}

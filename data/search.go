@@ -19,7 +19,7 @@ func SearchPopular_() string {
 	if err != nil {
 		log.Println(err)
 
-		return SuccessFail_("Query err")
+		return SuccessFail_("0", "Query err")
 	}
 	record := 0
 	for rows.Next() {
@@ -48,7 +48,7 @@ func SearchPopular_() string {
 		if err != nil {
 			log.Println(err)
 
-			return SuccessFail_("Query err")
+			return SuccessFail_("0", "Query err")
 		}
 
 		for rows.Next() {
@@ -57,7 +57,7 @@ func SearchPopular_() string {
 			if err != nil {
 				log.Println(err)
 
-				return SuccessFail_("Scan err")
+				return SuccessFail_("0", "Scan err")
 			}
 
 			data := DataSearchPopular{
@@ -70,7 +70,7 @@ func SearchPopular_() string {
 	rows.Close()
 
 	if len(post.Data) < 1 {
-		return SuccessFail_("There is no result")
+		return SuccessFail_("0", "There is no result")
 	}
 
 	post.Code = "1"
@@ -90,7 +90,7 @@ func SearchHistroy_(jehcd string) string {
 	rows, err := Db.Query("select id,content from view_history_search where account = ? limit 10", jehcd)
 	if err != nil {
 		log.Println(err)
-		return SuccessFail_("Query err")
+		return SuccessFail_("0", "Query err")
 	}
 
 	var post SearchHistory
@@ -101,7 +101,7 @@ func SearchHistroy_(jehcd string) string {
 		if err != nil {
 			log.Println(err)
 
-			return SuccessFail_("Scan err")
+			return SuccessFail_("0", "Scan err")
 		}
 		data := DataSearchHistory{
 			Id:   id,
@@ -113,7 +113,7 @@ func SearchHistroy_(jehcd string) string {
 	rows.Close()
 
 	if len(post.Data) < 1 {
-		return SuccessFail_("There is no result")
+		return SuccessFail_("0", "There is no result")
 	}
 
 	post.Code = "1"
@@ -130,20 +130,10 @@ func SearchDelete_(uejsh, yehjc string) string {
 	if err != nil {
 		log.Println(err)
 
-		return SuccessFail_("can not delete")
+		return SuccessFail_("0", "can not delete")
 	}
 
-	var post SuccessFail
-	post.Code = "1"
-	post.Msg = ""
-	post.Data = make([]DataSuccessFail, 0)
-
-	result, err := json.MarshalIndent(post, "", "  ")
-	if err != nil {
-		return FailMarshalIndent(err)
-	}
-
-	return string(result)
+	return SuccessFail_("1", "")
 }
 
 //初步检索(complete)
@@ -159,7 +149,7 @@ func Search_(okshc string) string {
 	if err != nil {
 		log.Println(err)
 
-		return SuccessFail_("Query err")
+		return SuccessFail_("0", "Query err")
 	}
 
 	for rows.Next() {
@@ -168,7 +158,7 @@ func Search_(okshc string) string {
 		if err != nil {
 			log.Println(err)
 
-			return SuccessFail_("Scan err")
+			return SuccessFail_("0", "Scan err")
 		}
 
 		data := DataSearchUser{
@@ -184,7 +174,7 @@ func Search_(okshc string) string {
 	if err != nil {
 		log.Println(err)
 
-		return SuccessFail_("Query err")
+		return SuccessFail_("0", "Query err")
 	}
 
 	for rows.Next() {
@@ -193,7 +183,7 @@ func Search_(okshc string) string {
 		if err != nil {
 			log.Println(err)
 
-			return SuccessFail_("Scan err")
+			return SuccessFail_("0", "Scan err")
 		}
 
 		data := DataSearchSubject{
@@ -209,7 +199,7 @@ func Search_(okshc string) string {
 	if err != nil {
 		log.Println(err)
 
-		return SuccessFail_("Query err")
+		return SuccessFail_("0", "Query err")
 	}
 
 	for rows.Next() {
@@ -219,7 +209,7 @@ func Search_(okshc string) string {
 		if err != nil {
 			log.Println(err)
 
-			return SuccessFail_("Scan err")
+			return SuccessFail_("0", "Scan err")
 		}
 
 		data := DataSearchArticle{
@@ -242,7 +232,7 @@ func Search_(okshc string) string {
 	rows.Close()
 
 	if len(post.Data.Article)+len(post.Data.Subject)+len(post.Data.User) < 1 {
-		return SuccessFail_("There is no result")
+		return SuccessFail_("0", "There is no result")
 	}
 
 	post.Code = "1"
@@ -274,14 +264,14 @@ func SearchUser_(hwjco, irksh string) string {
 	limit, err := strconv.Atoi(irksh)
 	if err != nil {
 		log.Println(err)
-		return SuccessFail_("Atoi err")
+		return SuccessFail_("0", "Atoi err")
 	}
 
 	rows, err := Db.Query("select account,nickname,head from view_user where nickname like ? limit ?,8", string(nrune), limit)
 	if err != nil {
 		log.Println(err)
 
-		return SuccessFail_("Query err")
+		return SuccessFail_("0", "Query err")
 	}
 
 	var post SearchUser
@@ -292,7 +282,7 @@ func SearchUser_(hwjco, irksh string) string {
 		if err != nil {
 			log.Println(err)
 
-			return SuccessFail_("Scan err")
+			return SuccessFail_("0", "Scan err")
 		}
 
 		data := DataSearchUser_{
@@ -307,7 +297,7 @@ func SearchUser_(hwjco, irksh string) string {
 		if err != nil {
 			log.Println(err)
 
-			return SuccessFail_("Query err_")
+			return SuccessFail_("0", "Query err_")
 		}
 
 		for newrows.Next() {
@@ -316,7 +306,7 @@ func SearchUser_(hwjco, irksh string) string {
 			if err != nil {
 				log.Println(err)
 
-				return SuccessFail_("Scan err")
+				return SuccessFail_("0", "Scan err")
 			}
 
 			article := DataSearchUser_Article{
@@ -332,7 +322,7 @@ func SearchUser_(hwjco, irksh string) string {
 	rows.Close()
 
 	if len(post.Data) < 1 {
-		return SuccessFail_("There is no result")
+		return SuccessFail_("0", "There is no result")
 	}
 
 	post.Code = "1"
@@ -364,14 +354,14 @@ func SearchSubject_(hwjco, irksh string) string {
 	limit, err := strconv.Atoi(irksh)
 	if err != nil {
 		log.Println(err)
-		return SuccessFail_("Atoi err")
+		return SuccessFail_("0", "Atoi err")
 	}
 
 	rows, err := Db.Query("select id,name,thumbnail,brief,countFocus,countArticle from view_subject where name like ? limit ?,6", string(nrune), limit)
 	if err != nil {
 		log.Println(err)
 
-		return SuccessFail_("Query err")
+		return SuccessFail_("0", "Query err")
 	}
 
 	var post SearchSubject
@@ -383,7 +373,7 @@ func SearchSubject_(hwjco, irksh string) string {
 		if err != nil {
 			log.Println(err)
 
-			return SuccessFail_("Scan err")
+			return SuccessFail_("0", "Scan err")
 		}
 
 		data := DataSearchSubject_{
@@ -400,7 +390,7 @@ func SearchSubject_(hwjco, irksh string) string {
 	rows.Close()
 
 	if len(post.Data) < 1 {
-		return SuccessFail_("There is no result")
+		return SuccessFail_("0", "There is no result")
 	}
 
 	post.Code = "1"
@@ -433,14 +423,14 @@ func SearchArticle_(abehs, jwkah string) string {
 	if err != nil {
 		log.Println(err)
 
-		return SuccessFail_("Atoi err")
+		return SuccessFail_("0", "Atoi err")
 	}
 
 	rows, err := Db.Query("select id,sid,subjectName,title,content,account,nickname,head,date,thumbnail,countComment,countLike,countRead from view_article where title like ? limit ?,4", string(nrune), limit)
 	if err != nil {
 		log.Println(err)
 
-		return SuccessFail_("Query err")
+		return SuccessFail_("0", "Query err")
 	}
 
 	var post SearchArticle
@@ -452,7 +442,7 @@ func SearchArticle_(abehs, jwkah string) string {
 		if err != nil {
 			log.Println(err)
 
-			return SuccessFail_("Scan err")
+			return SuccessFail_("0", "Scan err")
 		}
 
 		data := DataSearchArticle{
@@ -476,7 +466,7 @@ func SearchArticle_(abehs, jwkah string) string {
 	rows.Close()
 
 	if len(post.Data) < 1 {
-		return SuccessFail_("There is no result")
+		return SuccessFail_("0", "There is no result")
 	}
 
 	post.Code = "1"

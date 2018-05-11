@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io"
 	"kaiyan/data"
+	"log"
 	"net/http"
 	"os"
 	"time"
@@ -270,7 +271,7 @@ func articleUploadSymbolNum(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, result)
 }
 
-//新建文章标签
+//新建文章标签(complete)
 
 func articleUploadSymbol(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
@@ -285,7 +286,7 @@ func articleUploadSymbol(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, result)
 }
 
-//图片上传
+//图片上传(complete)
 
 func articleUploadPicture(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
@@ -299,13 +300,13 @@ func articleUploadPicture(w http.ResponseWriter, r *http.Request) {
 	file, _, err := r.FormFile("oxjwg")
 	if err != nil {
 		fmt.Println(err)
-		result = data.SuccessFail_("图片获取失败")
+		result = data.SuccessFail_("0", "图片获取失败")
 		fmt.Fprintf(w, result)
 		return
 	}
 	defer file.Close()
 
-	data.CreateDir("article/" + twhck_)
+	createDir("article/" + twhck_)
 
 	timestamp := time.Now().Unix()
 	tm := time.Unix(timestamp, 0)
@@ -314,16 +315,17 @@ func articleUploadPicture(w http.ResponseWriter, r *http.Request) {
 	fW, err := os.Create("article/" + twhck_ + "/" + time + ".jpg")
 	if err != nil {
 		fmt.Println("文件创建失败")
-		result = data.SuccessFail_("文件创建失败")
+		result = data.SuccessFail_("0", "文件创建失败")
 		fmt.Fprintf(w, result)
 		return
 	}
+
 	defer fW.Close()
 
 	_, err = io.Copy(fW, file)
 	if err != nil {
 		fmt.Println("文件保存失败")
-		result = data.SuccessFail_("文件保存失败")
+		result = data.SuccessFail_("0", "文件保存失败")
 		fmt.Fprintf(w, result)
 		return
 	}
@@ -342,7 +344,23 @@ func articleCancel(w http.ResponseWriter, r *http.Request) {
 	iuhwc := r.FormValue("iuhwc")
 	iuhwc_ := decode(iuhwc)
 	var result string
-	result = data.ArticleCancel_(iuhwc_)
+
+	_dir := "article/" + iuhwc_
+
+	exist, err := pathExists(_dir)
+	if !exist {
+		log.Println(err)
+		result = data.SuccessFail_("0", "文件夹不存在")
+	}
+
+	err = os.RemoveAll(_dir)
+	if err != nil {
+		log.Println(err)
+		result = data.SuccessFail_("0", "文件删除失败")
+	}
+
+	result = data.SuccessFail_("1", "文章放弃成功！")
+
 	fmt.Fprintf(w, result)
 }
 

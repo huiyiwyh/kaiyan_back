@@ -1,9 +1,5 @@
 package data
 
-import "github.com/jmoiron/sqlx"
-
-var Db *sqlx.DB
-
 type SuccessFail struct {
 	Code string            `json:"code"`
 	Msg  string            `json:"msg"`

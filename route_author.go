@@ -30,7 +30,7 @@ func authorList(w http.ResponseWriter, r *http.Request) {
 	case "3":
 		result = data.AuthorListFans(geacg_, iicje_)
 	default:
-		result = data.SuccessFail_("wrong code")
+		result = data.SuccessFail_("0", "wrong code")
 	}
 	fmt.Fprintf(w, result)
 }

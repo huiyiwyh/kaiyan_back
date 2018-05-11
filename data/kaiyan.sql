@@ -1721,6 +1721,8 @@ insert into ohistory(Gaid,Aaccount,Pdate) values ('20180509717729537','717729520
 
 use wangyuhao
 
+select * from ruser where Raccount = '717729521'
+
 select account, nickname, head from view_blacklist where owner = '879646529' limit 10
 
 select * from view_blacklist
@@ -1740,3 +1742,7 @@ select * from larticle where Xaid = '879646528180323135935'
 
 insert into nblacklist(Hblackaccount,Vaccount) values ('717729520' ,'717729521')
 select * from nblacklist
+
+insert into ruser(Raccount,Hnickname,Ipassword,Jbrief) values ('717729525',' ','qwert123',' ')
+
+insert into ruser(Raccount,Hnickname,Ipassword,Jbrief) values ('717729525',' ','qwert123',' ')

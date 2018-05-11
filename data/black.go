@@ -16,14 +16,14 @@ func BlackList_(ewysj, uwyhe string) string {
 	limit, err := strconv.Atoi(uwyhe)
 	if err != nil {
 		log.Println()
-		return SuccessFail_("Atoi err")
+		return SuccessFail_("0", "Atoi err")
 	}
 
 	rows, err := Db.Query("select account, nickname, head from view_blacklist where owner = ? limit ?,10", ewysj, limit)
 	if err != nil {
 		log.Println(err)
 
-		return SuccessFail_("Query err")
+		return SuccessFail_("0", "Query err")
 	}
 
 	var post BlackList
@@ -34,7 +34,7 @@ func BlackList_(ewysj, uwyhe string) string {
 		if err != nil {
 			log.Println(err)
 
-			return SuccessFail_("Scan err")
+			return SuccessFail_("0", "Scan err")
 		}
 
 		data := DataBlackList{
@@ -48,7 +48,7 @@ func BlackList_(ewysj, uwyhe string) string {
 	rows.Close()
 
 	if len(post.Data) < 1 {
-		return SuccessFail_("There is no result")
+		return SuccessFail_("0", "There is no result")
 	}
 
 	post.Code = "1"
@@ -70,20 +70,10 @@ func BlackAdd_(cjrhw, chewj string) string {
 	if err != nil {
 		log.Println(err)
 
-		return SuccessFail_("failed")
+		return SuccessFail_("0", "Insert err")
 	}
 
-	var post SuccessFail
-	post.Code = "1"
-	post.Msg = "加入黑名单成功！"
-	post.Data = make([]DataSuccessFail, 0)
-
-	result, err := json.MarshalIndent(post, "", "  ")
-	if err != nil {
-		return FailMarshalIndent(err)
-	}
-
-	return string(result)
+	return SuccessFail_("1", "加入黑名单成功！")
 }
 
 //移除黑名单用户(complete)
@@ -92,25 +82,14 @@ func BlackDelete_(cjnek string) string {
 	id, err := strconv.Atoi(cjnek)
 	if err != nil {
 		log.Println(err)
-		return SuccessFail_("Atoi err")
+		return SuccessFail_("0", "Atoi err")
 	}
 
 	_, err = Db.Query("delete from nblacklist where Tbid = ?", id)
 	if err != nil {
 		log.Println(err)
 
-		return SuccessFail_("failed")
+		return SuccessFail_("0", "Delete err")
 	}
-
-	var post SuccessFail
-	post.Code = "1"
-	post.Msg = "移除黑名单用户成功！"
-	post.Data = make([]DataSuccessFail, 0)
-
-	result, err := json.MarshalIndent(post, "", "  ")
-	if err != nil {
-		return FailMarshalIndent(err)
-	}
-
-	return string(result)
+	return SuccessFail_("1", "移除黑名单用户成功！")
 }

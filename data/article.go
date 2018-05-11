@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
-	"os"
 	"strconv"
 	"strings"
 	"time"
@@ -17,7 +16,7 @@ func ArticleListNoneNew(idonx string) string {
 	rows, err := Db.Query("select id,sid,subjectName,title,content,account,nickname,head,date,thumbnail,countComment,countLike,countRead from view_article where date > ?", idonx)
 	if err != nil {
 		log.Println(err)
-		return SuccessFail_("Query err")
+		return SuccessFail_("0", "Query err")
 	}
 
 	var post ArticleListWithNone
@@ -30,7 +29,7 @@ func ArticleListNoneNew(idonx string) string {
 		if err != nil {
 			log.Println(err)
 
-			return SuccessFail_("Scan err")
+			return SuccessFail_("0", "Scan err")
 		}
 
 		data := DataArticleListWithNone{
@@ -68,14 +67,14 @@ func ArticleListNonePopular(idonx string) string {
 	limit, err := strconv.Atoi(idonx)
 	if err != nil {
 		log.Println(err)
-		return SuccessFail_("Atoi err")
+		return SuccessFail_("0", "Atoi err")
 	}
 
 	rows, err := Db.Query("select id,sid,subjectName,title,content,account,nickname,head,date,thumbnail,countComment,countLike,countRead from view_article limit ?,10", limit)
 	if err != nil {
 		log.Println(err)
 
-		return SuccessFail_("Query err")
+		return SuccessFail_("0", "Query err")
 	}
 
 	var post ArticleListWithNone
@@ -88,7 +87,7 @@ func ArticleListNonePopular(idonx string) string {
 		if err != nil {
 			log.Println(err)
 
-			return SuccessFail_("Scan err")
+			return SuccessFail_("0", "Scan err")
 		}
 
 		data := DataArticleListWithNone{
@@ -128,7 +127,7 @@ func ArticleListSubjectNew(bvnsj, idonx string) string {
 	if err != nil {
 		log.Println(err)
 
-		return SuccessFail_("Query err")
+		return SuccessFail_("0", "Query err")
 	}
 
 	var post ArticleListWithSubject
@@ -141,7 +140,7 @@ func ArticleListSubjectNew(bvnsj, idonx string) string {
 		if err != nil {
 			log.Println(err)
 
-			return SuccessFail_("Scan err")
+			return SuccessFail_("0", "Scan err")
 		}
 
 		data := DataArticleListWithSubject{
@@ -176,13 +175,13 @@ func ArticleListSubjectPopular(bvnsj, idonx string) string {
 	limit, err := strconv.Atoi(idonx)
 	if err != nil {
 		log.Println(err)
-		return SuccessFail_("Atoi err")
+		return SuccessFail_("0", "Atoi err")
 	}
 
 	rows, err := Db.Query("select id,title,account,nickname,head,date,thumbnail,countComment,countLike,countRead from view_article where sid = ? limit ?,10", bvnsj, limit)
 	if err != nil {
 		log.Println(err)
-		return SuccessFail_("Query err")
+		return SuccessFail_("0", "Query err")
 	}
 
 	var post ArticleListWithSubject
@@ -195,7 +194,7 @@ func ArticleListSubjectPopular(bvnsj, idonx string) string {
 		if err != nil {
 			log.Println(err)
 
-			return SuccessFail_("Scan err")
+			return SuccessFail_("0", "Scan err")
 		}
 
 		data := DataArticleListWithSubject{
@@ -230,7 +229,7 @@ func ArticleListAccountNew(bvnsj, idonx string) string {
 	rows, err := Db.Query("select id,sid,subjectName,title,date,thumbnail,countComment,countLike,countRead from view_article where account = ? and date > ?", bvnsj, idonx)
 	if err != nil {
 		log.Println(err)
-		return SuccessFail_("Query err")
+		return SuccessFail_("0", "Query err")
 	}
 
 	var post ArticleListWithAccount
@@ -243,7 +242,7 @@ func ArticleListAccountNew(bvnsj, idonx string) string {
 		if err != nil {
 			log.Println(err)
 
-			return SuccessFail_("Scan err")
+			return SuccessFail_("0", "Scan err")
 		}
 
 		data := DataArticleListWithAccount{
@@ -277,7 +276,7 @@ func ArticleListAccountPopular(bvnsj, idonx string) string {
 	rows, err := Db.Query("select id,sid,subjectName,title,date,thumbnail,countComment,countLike,countRead from view_article where account = ? limit ?,10", bvnsj, idonx)
 	if err != nil {
 		log.Println(err)
-		return SuccessFail_("Query err")
+		return SuccessFail_("0", "Query err")
 	}
 
 	var post ArticleListWithAccount
@@ -290,7 +289,7 @@ func ArticleListAccountPopular(bvnsj, idonx string) string {
 		if err != nil {
 			log.Println(err)
 
-			return SuccessFail_("Scan err")
+			return SuccessFail_("0", "Scan err")
 		}
 
 		data := DataArticleListWithAccount{
@@ -323,7 +322,7 @@ func ArticleListRanking_(ieudh string, day int64) string {
 	limit, err := strconv.Atoi(ieudh)
 	if err != nil {
 		log.Println(err)
-		return SuccessFail_("Atoi err")
+		return SuccessFail_("0", "Atoi err")
 	}
 
 	timestamp := time.Now().Unix() - day
@@ -334,7 +333,7 @@ func ArticleListRanking_(ieudh string, day int64) string {
 	if err != nil {
 		log.Println(err)
 
-		return SuccessFail_("Query err")
+		return SuccessFail_("0", "Query err")
 	}
 
 	var post ArticleRanking
@@ -347,7 +346,7 @@ func ArticleListRanking_(ieudh string, day int64) string {
 		if err != nil {
 			log.Println(err)
 
-			return SuccessFail_("Scan err")
+			return SuccessFail_("0", "Scan err")
 		}
 
 		data := DataArticleRanking{
@@ -387,7 +386,7 @@ func ArticleListLike_(xdgje, uegsb string) string {
 	rows, err := Db.Query("select id,author, nickname, head, aid, title, date, thumbnail,countComment,countLike,countRead from view_article_like where account = ? and date < ?", xdgje, uegsb)
 	if err != nil {
 		log.Println(err)
-		return SuccessFail_("Query err")
+		return SuccessFail_("0", "Query err")
 	}
 
 	var post ArticleLike
@@ -400,7 +399,7 @@ func ArticleListLike_(xdgje, uegsb string) string {
 		if err != nil {
 			log.Println(err)
 
-			return SuccessFail_("Scan err")
+			return SuccessFail_("0", "Scan err")
 		}
 
 		data := DataArticleLike{
@@ -437,7 +436,7 @@ func ArticleListHistory_(ychwn, siwhb string) string {
 	if err != nil {
 		log.Println(err)
 
-		return SuccessFail_("Query err")
+		return SuccessFail_("0", "Query err")
 	}
 
 	var post ArticleHistory
@@ -450,7 +449,7 @@ func ArticleListHistory_(ychwn, siwhb string) string {
 		if err != nil {
 			log.Println(err)
 
-			return SuccessFail_("Scan err")
+			return SuccessFail_("0", "Scan err")
 		}
 
 		data := DataArticleHistory{
@@ -487,7 +486,7 @@ func ArticleListDetails_(rwhcs, uwhgc string) string {
 	if err != nil {
 		log.Println(err)
 
-		return SuccessFail_("Query err")
+		return SuccessFail_("0", "Query err")
 	}
 
 	var post ArticleDetails
@@ -499,7 +498,7 @@ func ArticleListDetails_(rwhcs, uwhgc string) string {
 		if err != nil {
 			log.Println(err)
 
-			return SuccessFail_("Scan err")
+			return SuccessFail_("0", "Scan err")
 		}
 
 		post.Data.Article = DataArticleDetailsInfo{
@@ -525,7 +524,7 @@ func ArticleListDetails_(rwhcs, uwhgc string) string {
 	if err != nil {
 		log.Println(err)
 
-		return SuccessFail_("Query err_")
+		return SuccessFail_("0", "Query err_")
 	}
 	record := 0
 	for rows.Next() {
@@ -556,14 +555,14 @@ func ArticleListComment_(hnksa, ncvbs string) string {
 	limit, err := strconv.Atoi(ncvbs)
 	if err != nil {
 		log.Println(err)
-		return SuccessFail_("Atoi err")
+		return SuccessFail_("0", "Atoi err")
 	}
 
 	rows, err := Db.Query("select article,sender,nickname, head, receiver,date,content from view_comment where article = ? and type = 0 limit ?,10", hnksa, limit)
 	if err != nil {
 		log.Println(err)
 
-		return SuccessFail_("Query err")
+		return SuccessFail_("0", "Query err")
 	}
 
 	var post ArticleComment
@@ -575,7 +574,7 @@ func ArticleListComment_(hnksa, ncvbs string) string {
 		if err != nil {
 			log.Println(err)
 
-			return SuccessFail_("Scan err")
+			return SuccessFail_("0", "Scan err")
 		}
 
 		data := DataArticleComment{
@@ -592,7 +591,7 @@ func ArticleListComment_(hnksa, ncvbs string) string {
 		if err != nil {
 			log.Println(err)
 
-			return SuccessFail_("Query err_")
+			return SuccessFail_("0", "Query err_")
 		}
 
 		data.SubComment = make([]DataArticleCommentSubComment, 0)
@@ -602,7 +601,7 @@ func ArticleListComment_(hnksa, ncvbs string) string {
 			if err != nil {
 				log.Println(err)
 
-				return SuccessFail_("Scan err")
+				return SuccessFail_("0", "Scan err")
 			}
 
 			subComment := DataArticleCommentSubComment{
@@ -643,20 +642,10 @@ func ArticleAddComment_(iwuus, kalcb, thske, ywhkd, mnsjf string) string {
 	if err != nil {
 		log.Println(err)
 
-		return SuccessFail_("Insert err")
+		return SuccessFail_("0", "Insert err")
 	}
 
-	var post SuccessFail
-	post.Code = "1"
-	post.Msg = ""
-	post.Data = make([]DataSuccessFail, 0)
-
-	result, err := json.MarshalIndent(post, "", " ")
-	if err != nil {
-		return FailMarshalIndent(err)
-	}
-
-	return string(result)
+	return SuccessFail_("1", "")
 }
 
 //记录文章阅读信息(complete)
@@ -670,7 +659,7 @@ func ArticleAddHistory_(rqgcm, ivhws string) string {
 		log.Println(err)
 		conn.Rollback()
 
-		return SuccessFail_("Update err")
+		return SuccessFail_("0", "Update err")
 	}
 	timestamp := time.Now().Unix()
 	tm := time.Unix(timestamp, 0)
@@ -680,21 +669,11 @@ func ArticleAddHistory_(rqgcm, ivhws string) string {
 		log.Println(err)
 		conn.Rollback()
 
-		return SuccessFail_("Insert err")
+		return SuccessFail_("0", "Insert err")
 	}
 	conn.Commit()
 
-	var post SuccessFail
-	post.Code = "1"
-	post.Msg = "记录成功"
-	post.Data = make([]DataSuccessFail, 0)
-
-	result, err := json.MarshalIndent(post, "", " ")
-	if err != nil {
-		return FailMarshalIndent(err)
-	}
-
-	return string(result)
+	return SuccessFail_("1", "记录成功")
 }
 
 //喜欢文章
@@ -711,7 +690,7 @@ func ArticleAddLike_(ivwga, rwhcs, uwhgc, mjkns string) string {
 		log.Println(err)
 		conn.Rollback()
 
-		return SuccessFail_("Insert err")
+		return SuccessFail_("0", "Insert err")
 	}
 
 	_, err = Db.Exec("update larticle set Klike = Klike + 1 where Xaid = ?", ivwga)
@@ -719,7 +698,7 @@ func ArticleAddLike_(ivwga, rwhcs, uwhgc, mjkns string) string {
 		log.Println(err)
 		conn.Rollback()
 
-		return SuccessFail_("Update err")
+		return SuccessFail_("0", "Update err")
 	}
 
 	_, err = Db.Exec("insert into hmesslike (Ireceiver,Varticle,Ssender,Wdate) values (?,?,?,?)", ivwga, rwhcs, uwhgc, time)
@@ -727,7 +706,7 @@ func ArticleAddLike_(ivwga, rwhcs, uwhgc, mjkns string) string {
 		log.Println(err)
 		conn.Rollback()
 
-		return SuccessFail_("Insert_ err")
+		return SuccessFail_("0", "Insert_ err")
 	}
 
 	symbols := strings.Split(mjkns, "|")
@@ -740,7 +719,7 @@ func ArticleAddLike_(ivwga, rwhcs, uwhgc, mjkns string) string {
 			log.Println(err)
 			conn.Rollback()
 
-			return SuccessFail_("Query" + symbols[index] + "err")
+			return SuccessFail_("0", "Query err1")
 		}
 
 		if rows.Next() {
@@ -749,7 +728,7 @@ func ArticleAddLike_(ivwga, rwhcs, uwhgc, mjkns string) string {
 				log.Println(err)
 				conn.Rollback()
 
-				return SuccessFail_("Update" + symbols[index] + "err")
+				return SuccessFail_("0", "Update err2")
 			}
 		} else {
 			_, err = Db.Exec("Insert into vuserlabel(Xaccount,Qlabel,Lvalue,Otype) values(?,?,6,0)", uwhgc, symbol)
@@ -757,7 +736,7 @@ func ArticleAddLike_(ivwga, rwhcs, uwhgc, mjkns string) string {
 				log.Println(err)
 				conn.Rollback()
 
-				return SuccessFail_("Insert" + symbols[index] + "err")
+				return SuccessFail_("0", "Insert err")
 			}
 		}
 		rows.Close()
@@ -765,17 +744,7 @@ func ArticleAddLike_(ivwga, rwhcs, uwhgc, mjkns string) string {
 
 	conn.Commit()
 
-	var post SuccessFail
-	post.Code = "1"
-	post.Msg = "XXX操作成功，具体说明到时候再议"
-	post.Data = make([]DataSuccessFail, 0)
-
-	result, err := json.MarshalIndent(post, "", " ")
-	if err != nil {
-		return FailMarshalIndent(err)
-	}
-
-	return string(result)
+	return SuccessFail_("1", "XXX操作成功，具体说明到时候再议")
 }
 
 //取消喜欢文章
@@ -788,14 +757,14 @@ func ArticleDeletelike_(wqsvh, zshrs, uqvcj string) string {
 		log.Println(err)
 		conn.Rollback()
 
-		return SuccessFail_("Delete err")
+		return SuccessFail_("0", "Delete err")
 	}
 	_, err = Db.Exec("update larticle set Klike = Klike - 1 where Xaid = ?", wqsvh)
 	if err != nil {
 		log.Println(err)
 		conn.Rollback()
 
-		return SuccessFail_("Update err")
+		return SuccessFail_("0", "Update err")
 	}
 
 	symbols := strings.Split(uqvcj, "|")
@@ -808,7 +777,7 @@ func ArticleDeletelike_(wqsvh, zshrs, uqvcj string) string {
 			log.Println(err)
 			conn.Rollback()
 
-			return SuccessFail_("Query" + symbols[index] + "err")
+			return SuccessFail_("0", "Query err")
 		}
 
 		if rows.Next() {
@@ -816,7 +785,7 @@ func ArticleDeletelike_(wqsvh, zshrs, uqvcj string) string {
 			if err != nil {
 				log.Println(err)
 				conn.Rollback()
-				return SuccessFail_("Update" + symbols[index] + "err")
+				return SuccessFail_("0", "Update err")
 			}
 		}
 		rows.Close()
@@ -824,24 +793,14 @@ func ArticleDeletelike_(wqsvh, zshrs, uqvcj string) string {
 
 	conn.Commit()
 
-	var post SuccessFail
-	post.Code = "1"
-	post.Msg = "XXX操作成功，具体说明到时候再议"
-	post.Data = make([]DataSuccessFail, 0)
-
-	result, err := json.MarshalIndent(post, "", " ")
-	if err != nil {
-		return FailMarshalIndent(err)
-	}
-
-	return string(result)
+	return SuccessFail_("1", "XXX操作成功，具体说明到时候再议")
 }
 
 //上传标签值(complete)
 
 func ArtcileUploadSymbolNum_(wafhc, iryvn, yvhen string) string {
 
-	conn, err := Db.Begin()
+	conn, _ := Db.Begin()
 
 	symbols := strings.Split(iryvn, "|")
 	fmt.Println(symbols)
@@ -854,7 +813,7 @@ func ArtcileUploadSymbolNum_(wafhc, iryvn, yvhen string) string {
 			log.Println(err)
 			conn.Rollback()
 
-			return SuccessFail_("Query" + symbols[index] + "err")
+			return SuccessFail_("0", "Query err")
 		}
 
 		if rows.Next() {
@@ -863,7 +822,7 @@ func ArtcileUploadSymbolNum_(wafhc, iryvn, yvhen string) string {
 				log.Println(err)
 				conn.Rollback()
 
-				return SuccessFail_("Update" + symbols[index] + "err")
+				return SuccessFail_("0", "Update err")
 			}
 		} else {
 			_, err = Db.Exec("Insert into vuserlabel(Xaccount,Qlabel,Lvalue,Otype) values(?,?,6,0)", wafhc, symbol)
@@ -871,25 +830,14 @@ func ArtcileUploadSymbolNum_(wafhc, iryvn, yvhen string) string {
 				log.Println(err)
 				conn.Rollback()
 
-				return SuccessFail_("Insert" + symbols[index] + "err")
+				return SuccessFail_("0", "Insert err")
 			}
 		}
 		rows.Close()
 	}
 	conn.Commit()
 
-	var post SuccessFail
-
-	post.Code = "1"
-	post.Msg = "XXX操作成功，具体说明到时候再议"
-	post.Data = make([]DataSuccessFail, 0)
-
-	result, err := json.MarshalIndent(post, "", " ")
-	if err != nil {
-		return FailMarshalIndent(err)
-	}
-
-	return string(result)
+	return SuccessFail_("1", "XXX操作成功，具体说明到时候再议")
 }
 
 //新建文章标签(complete)
@@ -899,7 +847,7 @@ func ArticleUploadSymbol_(tgmbj string) string {
 	rows, err := Db.Query("select Salid from warticlelabel where Uname = ?", tgmbj)
 	if err != nil {
 		log.Println(err)
-		return SuccessFail_("Query err")
+		return SuccessFail_("0", "Query err")
 	}
 
 	var post ArticleUploadSymbol
@@ -911,7 +859,7 @@ func ArticleUploadSymbol_(tgmbj string) string {
 		_, err := Db.Exec("insert into warticlelabel(Uname) values (?)", tgmbj)
 		if err != nil {
 			log.Println(err)
-			return SuccessFail_("Insert err")
+			return SuccessFail_("0", "Insert err")
 		}
 		newrows, err := Db.Query("select Salid from warticlelabel where Uname = ?", tgmbj)
 		var Salid int
@@ -953,35 +901,6 @@ func ArticleUploadPicture_(twhck string) string {
 
 //放弃纂写文章(complete)
 
-func ArticleCancel_(iuhwc string) string {
-
-	_dir := "article/" + iuhwc
-
-	exist, err := PathExists(_dir)
-	if !exist {
-		log.Println(err)
-		return SuccessFail_("文件夹不存在")
-	}
-
-	err = os.RemoveAll(_dir)
-	if err != nil {
-		log.Println(err)
-		return SuccessFail_("文件删除失败")
-	}
-
-	var post SuccessFail
-	post.Code = "1"
-	post.Msg = "文章放弃成功！"
-	post.Data = make([]DataSuccessFail, 0)
-
-	result, err := json.MarshalIndent(post, "", " ")
-	if err != nil {
-		return FailMarshalIndent(err)
-	}
-
-	return string(result)
-}
-
 //编辑文章(complete)
 
 func ArticleEdit_(ywjnc, ncdac, porjw, kvdjw, majsh, twgnk string) string {
@@ -994,25 +913,14 @@ func ArticleEdit_(ywjnc, ncdac, porjw, kvdjw, majsh, twgnk string) string {
 	if err != nil {
 		log.Println(err)
 
-		return SuccessFail_("Update err")
+		return SuccessFail_("0", "Update err")
 	}
 
-	var post SuccessFail
-	post.Code = "1"
-	post.Msg = "文章编辑成功！"
-	post.Data = make([]DataSuccessFail, 0)
-
-	result, err := json.MarshalIndent(post, "", " ")
-	if err != nil {
-		return FailMarshalIndent(err)
-	}
-
-	return string(result)
+	return SuccessFail_("1", "文章编辑成功！")
 }
 
 //提交文章(complete)
 func ArticleWrite_(twhck, mncsk, uvcns, yvhek, rwkcb, ovjsb string) string {
-
 	timestamp := time.Now().Unix()
 	tm := time.Unix(timestamp, 0)
 	time_ := tm.Format("060102150405")
@@ -1022,18 +930,8 @@ func ArticleWrite_(twhck, mncsk, uvcns, yvhek, rwkcb, ovjsb string) string {
 	if err != nil {
 		log.Println(err)
 
-		return SuccessFail_("Insert err")
+		return SuccessFail_("0", "Insert err")
 	}
 
-	var post SuccessFail
-	post.Code = "1"
-	post.Msg = "发表文章成功！"
-	post.Data = make([]DataSuccessFail, 0)
-
-	result, err := json.MarshalIndent(post, "", " ")
-	if err != nil {
-		return FailMarshalIndent(err)
-	}
-
-	return string(result)
+	return SuccessFail_("1", "发表文章成功！")
 }

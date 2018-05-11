@@ -17,14 +17,14 @@ func AuthorListFollow(geacg, iicje string) string {
 	limit, err := strconv.Atoi(iicje)
 	if err != nil {
 		log.Println(err)
-		return SuccessFail_("Atoi err")
+		return SuccessFail_("0", "Atoi err")
 	}
 
 	rows, err := Db.Query("select account,nickname,head,aid,title from view_author_focus where owner = ? limit ?,10", geacg, limit)
 	if err != nil {
 		log.Println(err)
 
-		return SuccessFail_("Query err")
+		return SuccessFail_("0", "Query err")
 	}
 
 	var post AuthorFollow
@@ -36,7 +36,7 @@ func AuthorListFollow(geacg, iicje string) string {
 		if err != nil {
 			log.Println(err)
 
-			return SuccessFail_("Scan err")
+			return SuccessFail_("0", "Scan err")
 		}
 
 		data := DataAuthorFollow{
@@ -51,7 +51,7 @@ func AuthorListFollow(geacg, iicje string) string {
 	rows.Close()
 
 	if len(post.Data) < 1 {
-		return SuccessFail_("There is no result")
+		return SuccessFail_("0", "There is no result")
 	}
 
 	post.Code = "1"
@@ -70,14 +70,14 @@ func AuthorListFollowAll(geacg, iicje string) string {
 	limit, err := strconv.Atoi(iicje)
 	if err != nil {
 		log.Println(err)
-		return SuccessFail_("Atoi err")
+		return SuccessFail_("0", "Atoi err")
 	}
 
 	rows, err := Db.Query("select account, nickname, head,countwords,countliked from view_userfocus where owner = ? limit ?,10", geacg, limit)
 	if err != nil {
 		log.Println(err)
 
-		return SuccessFail_("Query err")
+		return SuccessFail_("0", "Query err")
 	}
 
 	var post AuthorFollowAll
@@ -89,7 +89,7 @@ func AuthorListFollowAll(geacg, iicje string) string {
 		if err != nil {
 			log.Println(err)
 
-			return SuccessFail_("Scan err")
+			return SuccessFail_("0", "Scan err")
 		}
 
 		data := DataAuthorFollowAll{
@@ -104,7 +104,7 @@ func AuthorListFollowAll(geacg, iicje string) string {
 	rows.Close()
 
 	if len(post.Data) < 1 {
-		return SuccessFail_("There is no result")
+		return SuccessFail_("0", "There is no result")
 	}
 
 	post.Code = "1"
@@ -124,14 +124,14 @@ func AuthorListFans(geacg, iicje string) string {
 	limit, err := strconv.Atoi(iicje)
 	if err != nil {
 		log.Println(err)
-		return SuccessFail_("Atoi err")
+		return SuccessFail_("0", "Atoi err")
 	}
 
 	rows, err := Db.Query("select account,nickname,head,countwords,countliked from view_userfocus where account = ? limit ?,10", geacg, limit)
 	if err != nil {
 		log.Println(err)
 
-		return SuccessFail_("Query err")
+		return SuccessFail_("0", "Query err")
 	}
 
 	var post AuthorFans
@@ -143,7 +143,7 @@ func AuthorListFans(geacg, iicje string) string {
 		if err != nil {
 			log.Println(err)
 
-			return SuccessFail_("Scan err")
+			return SuccessFail_("0", "Scan err")
 		}
 
 		data := DataAuthorFans{
@@ -158,7 +158,7 @@ func AuthorListFans(geacg, iicje string) string {
 	rows.Close()
 
 	if len(post.Data) < 1 {
-		return SuccessFail_("There is no result")
+		return SuccessFail_("0", "There is no result")
 	}
 
 	post.Code = "1"
@@ -178,13 +178,13 @@ func AuthorListRanking_(jeheh string) string {
 	limit, err := strconv.Atoi(jeheh)
 	if err != nil {
 		log.Println(err)
-		return SuccessFail_("Atoi err")
+		return SuccessFail_("0", "Atoi err")
 	}
 
 	rows, err := Db.Query("select account, nickname, head, aid, title from view_rank_author limit ?,10", limit)
 	if err != nil {
 		log.Println(err)
-		return SuccessFail_("Query err")
+		return SuccessFail_("0", "Query err")
 	}
 
 	var post AuthorRanking
@@ -195,7 +195,7 @@ func AuthorListRanking_(jeheh string) string {
 		err = rows.Scan(&account, &nickname, &head, &aid, &title)
 		if err != nil {
 			log.Println(err)
-			return SuccessFail_("Scan err")
+			return SuccessFail_("0", "Scan err")
 		}
 
 		data := DataAuthorRanking{
@@ -210,7 +210,7 @@ func AuthorListRanking_(jeheh string) string {
 	rows.Close()
 
 	if len(post.Data) < 1 {
-		return SuccessFail_("There is no result")
+		return SuccessFail_("0", "There is no result")
 	}
 
 	post.Code = "1"

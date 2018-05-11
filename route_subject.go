@@ -234,7 +234,7 @@ func articleExamine(w http.ResponseWriter, r *http.Request) {
 	case "0":
 		result = data.ArticleExamine_fa(eshhd_, twrch_, imvah_, tafvm_, uehst_)
 	default:
-		result = data.SuccessFail_("wrong code")
+		result = data.SuccessFail_("0", "wrong code")
 	}
 	fmt.Fprintf(w, result)
 }
