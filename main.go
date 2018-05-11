@@ -79,12 +79,24 @@ func main() {
 	mux.HandleFunc("/user/Login", userLogin)
 	mux.HandleFunc("/user/Logout", userLogout)
 	mux.HandleFunc("/user/SignUp", userSignUp)
-	mux.HandleFunc("/user/Info", userInfo)
+	mux.HandleFunc("/user/Details", userDetails)
 	mux.HandleFunc("/user/ModifyHead", userModifyHead)
 	mux.HandleFunc("/user/ModifyNickname", userModifyNickname)
 	mux.HandleFunc("/user/ModifyBrief", userModifyBrief)
 	mux.HandleFunc("/user/ModifyPassword", userModifyPassword)
 	mux.HandleFunc("/user/Dynamic", userDynamic)
+
+	mux.HandleFunc("/user/ListMessage", userListMessage)         //获取私信列表
+	mux.HandleFunc("/user/ListDetails", userListDetails)         //查看私信内容
+	mux.HandleFunc("/user/SearchFri", userSearchFri)             //检索好友
+	mux.HandleFunc("/user/SendMessage", userSendMessage)         //发送私信
+	mux.HandleFunc("/user/ListComment", userListComment)         //获取评论列表
+	mux.HandleFunc("/user/AddComment", userAddComment)           //回复评论
+	mux.HandleFunc("/user/ListLike", userListLike)               //获取喜欢列表
+	mux.HandleFunc("/user/ListFocus", userListFocus)             //获取关注列表
+	mux.HandleFunc("/user/ListHomeDetails", userListHomeDetails) //获取用户主页信息
+	mux.HandleFunc("/user/Focus", userFocus)                     //关注用户
+	mux.HandleFunc("/user/CancelFocus", userCancelFocus)         //取消关注用户
 
 	server := &http.Server{
 		Addr:           config.Address,

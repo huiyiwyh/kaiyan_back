@@ -589,3 +589,137 @@ type ArticleUnloadPicture struct {
 //放弃纂写文章
 
 //提交文章
+
+//接口文档
+//
+
+//获取私信列表
+
+type UserListMessage struct {
+	Code string                `json:"code"`
+	Msg  string                `json:"msg"`
+	Data []DataUserListMessage `json:"data"`
+}
+
+type DataUserListMessage struct {
+	Id       string `json:"id"`
+	Sender   string `json:"sender"`
+	Receiver string `json:"receiver"`
+	IsRead   bool   `json:"isRead"`
+	Nickname string `json:"nickname"`
+	Head     string `json:"head"`
+	Content  string `json:"content"`
+	Date     string `json:"date"`
+}
+
+//查看私信内容
+
+type UserListDetails struct {
+	Code string                `json:"code"`
+	Msg  string                `json:"msg"`
+	Data []DataUserListDetails `json:"data"`
+}
+
+type DataUserListDetails struct {
+	Id       string `json:"id"`
+	Sender   string `json:"sender"`
+	Receiver string `json:"receiver"`
+	Content  string `json:"content"`
+	Head     string `json:"head"`
+	Date     string `json:"date"`
+	IsRead   bool   `json:"isRead"`
+}
+
+//检索好友
+
+type UserSearchFri struct {
+	Code string              `json:"code"`
+	Msg  string              `json:"msg"`
+	Data []DataUserSearchFri `json:"data"`
+}
+
+type DataUserSearchFri struct {
+	Account  string `json:"account"`
+	Nickname string `json:"nickname"`
+	Head     string `json:"head"`
+}
+
+//发送私信
+
+//获取评论列表
+
+type UserListComment struct {
+	Code string                `json:"code"`
+	Msg  string                `json:"msg"`
+	Data []DataUserListComment `json:"data"`
+}
+
+type DataUserListComment struct {
+	Sender   string `json:"sender"`
+	Nickname string `json:"nickname"`
+	Head     string `json:"head"`
+	Content  string `json:"content"`
+	Date     string `json:"date"`
+	Article  string `json:"article"`
+	Title    string `json:"title"`
+}
+
+//回复评论
+
+//获取喜欢列表
+type UserListLike struct {
+	Code string             `json:"code"`
+	Msg  string             `json:"msg"`
+	Data []DataUserListLike `json:"data"`
+}
+
+type DataUserListLike struct {
+	Sender   string `json:"sender"`
+	Nickname string `json:"nickname"`
+	Head     string `json:"head"`
+	Article  string `json:"article"`
+	Title    string `json:"title"`
+	Date     string `json:"date"`
+}
+
+//获取关注列表
+
+type UserListFocus struct {
+	Code string              `json:"code"`
+	Msg  string              `json:"msg"`
+	Data []DataUserListFocus `json:"data"`
+}
+
+type DataUserListFocus struct {
+	Sender   string `json:"sender"`
+	Nickname string `json:"nickname"`
+	Date     string `json:"date"`
+}
+
+//获取用户主页信息
+
+type UserListHomeDetails struct {
+	Code string              `json:"code"`
+	Msg  string              `json:"msg"`
+	Data []DataUserListFocus `json:"data"`
+}
+
+type DataUserListHomeDetails struct {
+	IsFocused    bool   `json:"isFocused"`
+	Nickname     string `json:"nickname"`
+	Head         string `json:"head"`
+	Brief        string `json:"brief"`
+	CountFocus   int    `json:"countFocus"`
+	CountFans    int    `json:"countFans"`
+	CountLike    int    `json:"countLike"`
+	CountArticle int    `json:"countArticle"`
+	Indexback    string `json:"indexback"`
+	CountWords   int    `json:"countWords"`
+	CountLiked   int    `json:"countLiked"`
+}
+
+//关注用户
+
+//取消关注用户
+
+//获取专题消息列表

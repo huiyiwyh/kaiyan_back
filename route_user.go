@@ -64,7 +64,7 @@ func userSignUp(w http.ResponseWriter, r *http.Request) {
 
 //获取个人信息
 
-func userInfo(w http.ResponseWriter, r *http.Request) {
+func userDetails(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Add("Access-Control-Allow-Headers", "Content-Type")
 	w.Header().Set("content-type", "application/json")
@@ -73,7 +73,7 @@ func userInfo(w http.ResponseWriter, r *http.Request) {
 	jchen_ := decode(jchen)
 
 	var result string
-	result = data.UserInfo_(jchen_)
+	result = data.UserDetails_(jchen_)
 	fmt.Fprintf(w, result)
 }
 

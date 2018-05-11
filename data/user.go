@@ -50,7 +50,7 @@ func UserSignUp_(ywhft, urhsf, iuqng string) string {
 
 //获取个人信息(complete)
 
-func UserInfo_(jchen string) string {
+func UserDetails_(jchen string) string {
 	Mutex.Lock()
 	rows, err := Db.Query("select nickname,head,brief,countFocus,countFans,countLike,countArticle,countSubject,indexback,countWords,countLiked from view_user where account = ?", jchen)
 	if err != nil {
