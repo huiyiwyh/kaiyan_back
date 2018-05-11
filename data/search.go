@@ -14,13 +14,16 @@ import (
 //获取热门搜索(complete)
 
 func SearchPopular_() string {
-
+	Mutex.Lock()
 	rows, err := Db.Query("select * from view_history_search_popular")
 	if err != nil {
 		log.Println(err)
-
+		Mutex.Unlock()
 		return SuccessFail_("0", "Query err")
 	}
+
+	defer rows.Close()
+
 	record := 0
 	for rows.Next() {
 		record++
@@ -47,7 +50,7 @@ func SearchPopular_() string {
 		rows, err = Db.Query("select content from view_history_search_popular limit ?,10", num)
 		if err != nil {
 			log.Println(err)
-
+			Mutex.Unlock()
 			return SuccessFail_("0", "Query err")
 		}
 
@@ -56,7 +59,7 @@ func SearchPopular_() string {
 			err = rows.Scan(&name)
 			if err != nil {
 				log.Println(err)
-
+				Mutex.Unlock()
 				return SuccessFail_("0", "Scan err")
 			}
 
@@ -67,11 +70,7 @@ func SearchPopular_() string {
 		}
 	}
 
-	rows.Close()
-
-	if len(post.Data) < 1 {
-		return SuccessFail_("1", "There is no result")
-	}
+	Mutex.Unlock()
 
 	post.Code = "1"
 	post.Msg = ""
@@ -86,12 +85,17 @@ func SearchPopular_() string {
 //获取搜索记录(complete)
 
 func SearchHistroy_(jehcd string) string {
-
+	Mutex.Lock()
 	rows, err := Db.Query("select id,content from view_history_search where account = ? limit 10", jehcd)
 	if err != nil {
 		log.Println(err)
+		Mutex.Unlock()
 		return SuccessFail_("0", "Query err")
 	}
+
+	defer rows.Close()
+
+	Mutex.Unlock()
 
 	var post SearchHistory
 	post.Data = make([]DataSearchHistory, 0)
@@ -100,7 +104,6 @@ func SearchHistroy_(jehcd string) string {
 		err = rows.Scan(&id, &name)
 		if err != nil {
 			log.Println(err)
-
 			return SuccessFail_("0", "Scan err")
 		}
 		data := DataSearchHistory{
@@ -108,12 +111,6 @@ func SearchHistroy_(jehcd string) string {
 			Name: name,
 		}
 		post.Data = append(post.Data, data)
-	}
-
-	rows.Close()
-
-	if len(post.Data) < 1 {
-		return SuccessFail_("1", "There is no result")
 	}
 
 	post.Code = "1"
@@ -125,13 +122,14 @@ func SearchHistroy_(jehcd string) string {
 //清除搜索记录(complete)
 
 func SearchDelete_(uejsh, yehjc string) string {
-
+	Mutex.Lock()
 	_, err := Db.Exec("delete from yhissearch where Hsid = ? and jaccount = ?", uejsh, yehjc)
 	if err != nil {
 		log.Println(err)
-
+		Mutex.Unlock()
 		return SuccessFail_("0", "can not delete")
 	}
+	Mutex.Unlock()
 
 	return SuccessFail_("1", "")
 }
@@ -145,19 +143,22 @@ func Search_(okshc string) string {
 	post.Data.Article = make([]DataSearchArticle, 0)
 	post.Data.Subject = make([]DataSearchSubject, 0)
 
+	Mutex.Lock()
 	rows, err := Db.Query("select account,nickname,head from view_user where nickname like ? limit 4", okshc)
 	if err != nil {
 		log.Println(err)
-
+		Mutex.Unlock()
 		return SuccessFail_("0", "Query err")
 	}
+
+	defer rows.Close()
 
 	for rows.Next() {
 		var account, nickname, head string
 		err = rows.Scan(&account, &nickname, &head)
 		if err != nil {
 			log.Println(err)
-
+			Mutex.Unlock()
 			return SuccessFail_("0", "Scan err")
 		}
 
@@ -168,12 +169,11 @@ func Search_(okshc string) string {
 		}
 		post.Data.User = append(post.Data.User, data)
 	}
-	rows.Close()
 
 	rows, err = Db.Query("select id, name, thumbnail from view_subject where name like ? limit 4", okshc)
 	if err != nil {
 		log.Println(err)
-
+		Mutex.Unlock()
 		return SuccessFail_("0", "Query err")
 	}
 
@@ -182,7 +182,7 @@ func Search_(okshc string) string {
 		err = rows.Scan(&id, &name, &thumbnail)
 		if err != nil {
 			log.Println(err)
-
+			Mutex.Unlock()
 			return SuccessFail_("0", "Scan err")
 		}
 
@@ -193,12 +193,11 @@ func Search_(okshc string) string {
 		}
 		post.Data.Subject = append(post.Data.Subject, data)
 	}
-	rows.Close()
 
 	rows, err = Db.Query("select id,sid,subjectName,title,content,account,nickname,head,date,thumbnail,countComment,countLike,countRead from view_article where title like ? limit 4", okshc)
 	if err != nil {
 		log.Println(err)
-
+		Mutex.Unlock()
 		return SuccessFail_("0", "Query err")
 	}
 
@@ -208,7 +207,7 @@ func Search_(okshc string) string {
 		err = rows.Scan(&id, &sid, &subjectName, &title, &content, &account, &nickname, &head, &date, &thumbnail, &countComment, &countLike, &countRead)
 		if err != nil {
 			log.Println(err)
-
+			Mutex.Unlock()
 			return SuccessFail_("0", "Scan err")
 		}
 
@@ -229,11 +228,7 @@ func Search_(okshc string) string {
 		}
 		post.Data.Article = append(post.Data.Article, data)
 	}
-	rows.Close()
-
-	if len(post.Data.Article)+len(post.Data.Subject)+len(post.Data.User) < 1 {
-		return SuccessFail_("1", "There is no result")
-	}
+	Mutex.Unlock()
 
 	post.Code = "1"
 	post.Msg = ""
@@ -267,12 +262,15 @@ func SearchUser_(hwjco, irksh string) string {
 		return SuccessFail_("0", "Atoi err")
 	}
 
+	Mutex.Lock()
 	rows, err := Db.Query("select account,nickname,head from view_user where nickname like ? limit ?,8", string(nrune), limit)
 	if err != nil {
 		log.Println(err)
-
+		Mutex.Unlock()
 		return SuccessFail_("0", "Query err")
 	}
+
+	defer rows.Close()
 
 	var post SearchUser
 	post.Data = make([]DataSearchUser_, 0)
@@ -281,7 +279,7 @@ func SearchUser_(hwjco, irksh string) string {
 		err = rows.Scan(&account, &nickname, &head)
 		if err != nil {
 			log.Println(err)
-
+			Mutex.Unlock()
 			return SuccessFail_("0", "Scan err")
 		}
 
@@ -296,16 +294,18 @@ func SearchUser_(hwjco, irksh string) string {
 		newrows, err := Db.Query("select title, id from view_article where account = ? limit 2", account)
 		if err != nil {
 			log.Println(err)
-
+			Mutex.Unlock()
 			return SuccessFail_("0", "Query err_")
 		}
+
+		defer newrows.Close()
 
 		for newrows.Next() {
 			var id, title string
 			err = newrows.Scan(&id, &title)
 			if err != nil {
 				log.Println(err)
-
+				Mutex.Unlock()
 				return SuccessFail_("0", "Scan err")
 			}
 
@@ -319,11 +319,7 @@ func SearchUser_(hwjco, irksh string) string {
 		post.Data = append(post.Data, data)
 	}
 
-	rows.Close()
-
-	if len(post.Data) < 1 {
-		return SuccessFail_("1", "There is no result")
-	}
+	Mutex.Unlock()
 
 	post.Code = "1"
 	post.Msg = ""
@@ -357,12 +353,17 @@ func SearchSubject_(hwjco, irksh string) string {
 		return SuccessFail_("0", "Atoi err")
 	}
 
+	Mutex.Lock()
 	rows, err := Db.Query("select id,name,thumbnail,brief,countFocus,countArticle from view_subject where name like ? limit ?,6", string(nrune), limit)
 	if err != nil {
 		log.Println(err)
-
+		Mutex.Unlock()
 		return SuccessFail_("0", "Query err")
 	}
+
+	defer rows.Close()
+
+	Mutex.Unlock()
 
 	var post SearchSubject
 	post.Data = make([]DataSearchSubject_, 0)
@@ -372,7 +373,6 @@ func SearchSubject_(hwjco, irksh string) string {
 		err = rows.Scan(&id, &name, &thumbnail, &brief, &countFocus, &countArticle)
 		if err != nil {
 			log.Println(err)
-
 			return SuccessFail_("0", "Scan err")
 		}
 
@@ -385,12 +385,6 @@ func SearchSubject_(hwjco, irksh string) string {
 			CountArticle: countArticle,
 		}
 		post.Data = append(post.Data, data)
-	}
-
-	rows.Close()
-
-	if len(post.Data) < 1 {
-		return SuccessFail_("1", "There is no result")
 	}
 
 	post.Code = "1"
@@ -426,12 +420,18 @@ func SearchArticle_(abehs, jwkah string) string {
 		return SuccessFail_("0", "Atoi err")
 	}
 
+	Mutex.Lock()
+
 	rows, err := Db.Query("select id,sid,subjectName,title,content,account,nickname,head,date,thumbnail,countComment,countLike,countRead from view_article where title like ? limit ?,4", string(nrune), limit)
 	if err != nil {
 		log.Println(err)
-
+		Mutex.Unlock()
 		return SuccessFail_("0", "Query err")
 	}
+
+	defer rows.Close()
+
+	Mutex.Unlock()
 
 	var post SearchArticle
 	post.Data = make([]DataSearchArticle, 0)
@@ -461,12 +461,6 @@ func SearchArticle_(abehs, jwkah string) string {
 			CountRead:    countRead,
 		}
 		post.Data = append(post.Data, data)
-	}
-
-	rows.Close()
-
-	if len(post.Data) < 1 {
-		return SuccessFail_("1", "There is no result")
 	}
 
 	post.Code = "1"

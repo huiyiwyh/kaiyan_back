@@ -17,15 +17,21 @@ func AuthorListFollow(geacg, iicje string) string {
 	limit, err := strconv.Atoi(iicje)
 	if err != nil {
 		log.Println(err)
+		Mutex.Unlock()
 		return SuccessFail_("0", "Atoi err")
 	}
 
+	Mutex.Lock()
 	rows, err := Db.Query("select account,nickname,head,aid,title from view_author_focus where owner = ? limit ?,10", geacg, limit)
 	if err != nil {
 		log.Println(err)
-
+		Mutex.Unlock()
 		return SuccessFail_("0", "Query err")
 	}
+
+	defer rows.Close()
+
+	Mutex.Unlock()
 
 	var post AuthorFollow
 	post.Data = make([]DataAuthorFollow, 0)
@@ -35,7 +41,6 @@ func AuthorListFollow(geacg, iicje string) string {
 		err = rows.Scan(&account, &nickname, &head, &aid, &title)
 		if err != nil {
 			log.Println(err)
-
 			return SuccessFail_("0", "Scan err")
 		}
 
@@ -47,11 +52,6 @@ func AuthorListFollow(geacg, iicje string) string {
 			Title:    title,
 		}
 		post.Data = append(post.Data, data)
-	}
-	rows.Close()
-
-	if len(post.Data) < 1 {
-		return SuccessFail_("1", "There is no result")
 	}
 
 	post.Code = "1"
@@ -73,12 +73,18 @@ func AuthorListFollowAll(geacg, iicje string) string {
 		return SuccessFail_("0", "Atoi err")
 	}
 
+	Mutex.Lock()
+
 	rows, err := Db.Query("select account, nickname, head,countwords,countliked from view_userfocus where owner = ? limit ?,10", geacg, limit)
 	if err != nil {
 		log.Println(err)
-
+		Mutex.Unlock()
 		return SuccessFail_("0", "Query err")
 	}
+
+	defer rows.Close()
+
+	Mutex.Unlock()
 
 	var post AuthorFollowAll
 	post.Data = make([]DataAuthorFollowAll, 0)
@@ -88,7 +94,6 @@ func AuthorListFollowAll(geacg, iicje string) string {
 		err = rows.Scan(&account, &nickname, &head, &countWords, &countLiked)
 		if err != nil {
 			log.Println(err)
-
 			return SuccessFail_("0", "Scan err")
 		}
 
@@ -100,11 +105,6 @@ func AuthorListFollowAll(geacg, iicje string) string {
 			CountLiked: countLiked,
 		}
 		post.Data = append(post.Data, data)
-	}
-	rows.Close()
-
-	if len(post.Data) < 1 {
-		return SuccessFail_("1", "There is no result")
 	}
 
 	post.Code = "1"
@@ -127,12 +127,18 @@ func AuthorListFans(geacg, iicje string) string {
 		return SuccessFail_("0", "Atoi err")
 	}
 
+	Mutex.Lock()
+
 	rows, err := Db.Query("select account,nickname,head,countwords,countliked from view_userfocus where account = ? limit ?,10", geacg, limit)
 	if err != nil {
 		log.Println(err)
-
+		Mutex.Unlock()
 		return SuccessFail_("0", "Query err")
 	}
+
+	defer rows.Close()
+
+	Mutex.Unlock()
 
 	var post AuthorFans
 	post.Data = make([]DataAuthorFans, 0)
@@ -142,7 +148,6 @@ func AuthorListFans(geacg, iicje string) string {
 		err = rows.Scan(&account, &nickname, &head, &countWords, &countLiked)
 		if err != nil {
 			log.Println(err)
-
 			return SuccessFail_("0", "Scan err")
 		}
 
@@ -154,11 +159,6 @@ func AuthorListFans(geacg, iicje string) string {
 			CountLiked: countLiked,
 		}
 		post.Data = append(post.Data, data)
-	}
-	rows.Close()
-
-	if len(post.Data) < 1 {
-		return SuccessFail_("1", "There is no result")
 	}
 
 	post.Code = "1"
@@ -181,11 +181,18 @@ func AuthorListRanking_(jeheh string) string {
 		return SuccessFail_("0", "Atoi err")
 	}
 
+	Mutex.Lock()
+
 	rows, err := Db.Query("select account, nickname, head, aid, title from view_rank_author limit ?,10", limit)
 	if err != nil {
 		log.Println(err)
+		Mutex.Unlock()
 		return SuccessFail_("0", "Query err")
 	}
+
+	defer rows.Close()
+
+	Mutex.Unlock()
 
 	var post AuthorRanking
 	post.Data = make([]DataAuthorRanking, 0)
@@ -206,11 +213,6 @@ func AuthorListRanking_(jeheh string) string {
 			Title:    title,
 		}
 		post.Data = append(post.Data, data)
-	}
-	rows.Close()
-
-	if len(post.Data) < 1 {
-		return SuccessFail_("1", "There is no result")
 	}
 
 	post.Code = "1"

@@ -10,8 +10,8 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
-var Db *sqlx.DB         //主数据库
-var Mutex *sync.RWMutex //读写互斥锁，每当有数据库操作时，要加锁，数据库操作完再解锁。
+var Db *sqlx.DB       //主数据库
+var Mutex *sync.Mutex //读写互斥锁，每当有数据库操作时，要加锁，数据库操作完再解锁。
 
 //初始化数据库
 func init() {
@@ -20,6 +20,7 @@ func init() {
 	if err != nil {
 		log.Fatalln(err)
 	}
+	Mutex = new(sync.Mutex)
 }
 
 //成功失败通用(complete)

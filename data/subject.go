@@ -12,14 +12,19 @@ import (
 //关注专题
 
 func SubjectFocus_(grbfs, ckege, uiksh string) string {
-
+	Mutex.Lock()
 	conn, err := Db.Begin()
+	if err != nil {
+		log.Println("事物开启失败")
+		Mutex.Unlock()
+		return SuccessFail_("0", "事物开启失败")
+	}
 
 	_, err = Db.Exec("insert into rsubfocus (Ksid,Saccount) values (?,?)", grbfs, ckege)
 	if err != nil {
 		log.Println(err)
 		conn.Rollback()
-
+		Mutex.Unlock()
 		return SuccessFail_("0", "Insert err")
 	}
 
@@ -27,7 +32,7 @@ func SubjectFocus_(grbfs, ckege, uiksh string) string {
 	if err != nil {
 		log.Println(err)
 		conn.Rollback()
-
+		Mutex.Unlock()
 		return SuccessFail_("0", "Update err")
 	}
 
@@ -47,16 +52,17 @@ func SubjectFocus_(grbfs, ckege, uiksh string) string {
 		if err != nil {
 			log.Println(err)
 			conn.Rollback()
-
+			Mutex.Unlock()
 			return SuccessFail_("0", "Query err")
 		}
+		defer rows.Close()
 
 		if rows.Next() {
 			_, err = Db.Exec("Update vuserlabel set Lvalue = Lvalue + 6 where Xaccount = ? and Qlabel = ? and Otype = 1", ckege, symbol)
 			if err != nil {
 				log.Println(err)
 				conn.Rollback()
-
+				Mutex.Unlock()
 				return SuccessFail_("0", "Update err")
 			}
 		} else {
@@ -64,15 +70,14 @@ func SubjectFocus_(grbfs, ckege, uiksh string) string {
 			if err != nil {
 				log.Println(err)
 				conn.Rollback()
-
+				Mutex.Unlock()
 				return SuccessFail_("0", "Insert err")
 			}
 		}
-
-		rows.Close()
 	}
 
 	conn.Commit()
+	Mutex.Unlock()
 
 	return SuccessFail_("1", "XXX操作成功，具体说明到时候再议")
 }
@@ -81,20 +86,26 @@ func SubjectFocus_(grbfs, ckege, uiksh string) string {
 
 func SubjectCancleFocus_(grbfs, ckege, uiksh string) string {
 
+	Mutex.Lock()
 	conn, err := Db.Begin()
+	if err != nil {
+		log.Println("事物开启失败")
+		Mutex.Unlock()
+		return SuccessFail_("0", "事物开启失败")
+	}
 
 	_, err = Db.Exec("delete from rsubfocus where Ksid = ? and Saccount = ?", grbfs, ckege)
 	if err != nil {
 		log.Println(err)
 		conn.Rollback()
-
+		Mutex.Unlock()
 		return SuccessFail_("0", "Delete err")
 	}
 	_, err = Db.Exec("update hsubject set  = Scountfocus - 1 where Usid = ?", grbfs)
 	if err != nil {
 		log.Println(err)
 		conn.Rollback()
-
+		Mutex.Unlock()
 		return SuccessFail_("0", "Update err")
 	}
 
@@ -107,23 +118,25 @@ func SubjectCancleFocus_(grbfs, ckege, uiksh string) string {
 		if err != nil {
 			log.Println(err)
 			conn.Rollback()
-
+			Mutex.Unlock()
 			return SuccessFail_("0", "Query err")
 		}
+
+		defer rows.Close()
 
 		if rows.Next() {
 			_, err = Db.Exec("Update vuserlabel set Lvalue = Lvalue - 6 where Xaccount = ? and Qlabel = ? and Otype = 1", ckege, symbol)
 			if err != nil {
 				log.Println(err)
 				conn.Rollback()
-
+				Mutex.Unlock()
 				return SuccessFail_("0", "Update err")
 			}
 		}
-		rows.Close()
 	}
 
 	conn.Commit()
+	Mutex.Unlock()
 
 	return SuccessFail_("1", "XXX操作成功，具体说明到时候再议")
 }
@@ -131,8 +144,13 @@ func SubjectCancleFocus_(grbfs, ckege, uiksh string) string {
 //新建专题标签
 
 func SubjectUploadSymbol_(tjnsv string) string {
-
+	Mutex.Lock()
 	conn, err := Db.Begin()
+	if err != nil {
+		log.Println("事物开启失败")
+		Mutex.Unlock()
+		return SuccessFail_("0", "事物开启失败")
+	}
 
 	var post SubjectUploadSymbol
 
@@ -140,21 +158,22 @@ func SubjectUploadSymbol_(tjnsv string) string {
 	if err != nil {
 		log.Println(err)
 		conn.Rollback()
-
+		Mutex.Unlock()
 		return SuccessFail_("0", "Query err")
 	}
+
+	defer rows.Close()
 
 	if rows.Next() {
 		var Tslid int
 		rows.Scan(&Tslid)
 		post.Msg = string(Tslid)
 	} else {
-
 		_, err = Db.Exec("insert into ysubjectlabel(Rname) values (?)", tjnsv)
 		if err != nil {
 			log.Println(err)
 			conn.Rollback()
-
+			Mutex.Unlock()
 			return SuccessFail_("0", "Delete err")
 		}
 
@@ -162,9 +181,10 @@ func SubjectUploadSymbol_(tjnsv string) string {
 		if err != nil {
 			log.Println(err)
 			conn.Rollback()
-
+			Mutex.Unlock()
 			return SuccessFail_("0", "Query err")
 		}
+		newrows.Close()
 
 		if newrows.Next() {
 			var Tslid int
@@ -173,15 +193,13 @@ func SubjectUploadSymbol_(tjnsv string) string {
 		} else {
 			log.Println(err)
 			conn.Rollback()
-
+			Mutex.Unlock()
 			return SuccessFail_("0", "Insert err")
 		}
-
-		newrows.Close()
 	}
-	rows.Close()
 
 	conn.Commit()
+	Mutex.Unlock()
 
 	post.Code = "1"
 	post.Msg = "XXX操作成功，具体说明到时候再议"
@@ -203,12 +221,18 @@ func SubjectListFocus_(budhs string, tehsc string) string {
 		return SuccessFail_("0", "Atoi err")
 	}
 
+	Mutex.Lock()
+
 	rows, err := Db.Query("select id,name,brief,thumbnail,countArticle,countFocus from view_subject_focus where account = ? limit ?,10", budhs, limit)
 	if err != nil {
 		log.Println(err)
-
+		Mutex.Unlock()
 		return SuccessFail_("0", "Query err")
 	}
+
+	defer rows.Close()
+
+	Mutex.Unlock()
 
 	var post SubjectListFocus
 	post.Data = make([]DataSubjectListFocus, 0)
@@ -219,7 +243,6 @@ func SubjectListFocus_(budhs string, tehsc string) string {
 		err = rows.Scan(&id, &name, &brief, &thumbnail, &countArticle, &countFocus)
 		if err != nil {
 			log.Println(err)
-
 			return SuccessFail_("0", "Scan err")
 		}
 
@@ -232,11 +255,6 @@ func SubjectListFocus_(budhs string, tehsc string) string {
 			CountFocus:   countFocus,
 		}
 		post.Data = append(post.Data, data)
-	}
-	rows.Close()
-
-	if len(post.Data) < 1 {
-		return SuccessFail_("1", "There is no result")
 	}
 
 	post.Code = "1"
@@ -253,13 +271,17 @@ func SubjectListFocus_(budhs string, tehsc string) string {
 //获取专题列表(complete)
 
 func SubjectListTime(wyejs string) string {
-
+	Mutex.Lock()
 	rows, err := Db.Query("select id ,name, nickname,thumbnail,countArticle,countFocus,date from view_subject where date < ? order by date desc limit 9", wyejs)
 	if err != nil {
 		log.Println(err)
-
+		Mutex.Unlock()
 		return SuccessFail_("0", "Query err")
 	}
+
+	defer rows.Close()
+
+	Mutex.Unlock()
 
 	var post SubjectList
 	post.Data = make([]DataSubjectList, 0)
@@ -270,7 +292,6 @@ func SubjectListTime(wyejs string) string {
 		err = rows.Scan(&id, &name, &nickname, &thumbnail, &countArticle, &countFocus, &date)
 		if err != nil {
 			log.Println(err)
-
 			return SuccessFail_("0", "Scan err")
 		}
 
@@ -284,11 +305,6 @@ func SubjectListTime(wyejs string) string {
 			Date:         date,
 		}
 		post.Data = append(post.Data, data)
-	}
-	rows.Close()
-
-	if len(post.Data) < 1 {
-		return SuccessFail_("1", "There is no result")
 	}
 
 	post.Code = "1"
@@ -309,12 +325,17 @@ func SubjectListNum(wyejs string) string {
 		return SuccessFail_("0", "Atoi err")
 	}
 
+	Mutex.Lock()
 	rows, err := Db.Query("select id ,name, nickname,thumbnail,countArticle,countFocus,date from view_subject limit ?,9", limit)
 	if err != nil {
 		log.Println(err)
-
+		Mutex.Unlock()
 		return SuccessFail_("0", "Query err")
 	}
+
+	defer rows.Close()
+
+	Mutex.Unlock()
 
 	var post SubjectList
 	post.Data = make([]DataSubjectList, 0)
@@ -325,7 +346,6 @@ func SubjectListNum(wyejs string) string {
 		err = rows.Scan(&id, &name, &nickname, &thumbnail, &countArticle, &countFocus, &date)
 		if err != nil {
 			log.Println(err)
-
 			return SuccessFail_("0", "Scan err")
 		}
 
@@ -339,11 +359,6 @@ func SubjectListNum(wyejs string) string {
 			Date:         date,
 		}
 		post.Data = append(post.Data, data)
-	}
-	rows.Close()
-
-	if len(post.Data) < 1 {
-		return SuccessFail_("1", "There is no result")
 	}
 
 	post.Code = "1"
@@ -358,13 +373,17 @@ func SubjectListNum(wyejs string) string {
 }
 
 func SubjectListAccount(kvjed string) string {
-
+	Mutex.Lock()
 	rows, err := Db.Query("select id ,name, nickname,thumbnail,countArticle,countFocus,date from view_subject where owner = ?", kvjed)
 	if err != nil {
 		log.Println(err)
-
+		Mutex.Unlock()
 		return SuccessFail_("0", "Query err")
 	}
+
+	defer rows.Close()
+
+	Mutex.Unlock()
 
 	var post SubjectList
 	post.Data = make([]DataSubjectList, 0)
@@ -375,7 +394,6 @@ func SubjectListAccount(kvjed string) string {
 		err = rows.Scan(&id, &name, &nickname, &thumbnail, &countArticle, &countFocus, &date)
 		if err != nil {
 			log.Println(err)
-
 			return SuccessFail_("0", "Scan err")
 		}
 
@@ -389,11 +407,6 @@ func SubjectListAccount(kvjed string) string {
 			Date:         date,
 		}
 		post.Data = append(post.Data, data)
-	}
-	rows.Close()
-
-	if len(post.Data) < 1 {
-		return SuccessFail_("1", "There is no result")
 	}
 
 	post.Code = "1"
@@ -416,12 +429,18 @@ func SubjectListDetails_(grbfs, ckege string) string {
 		return SuccessFail_("0", "Atoi err")
 	}
 
+	Mutex.Lock()
+
 	rows, err := Db.Query("select id,name,brief,thumbnail,owner,nickname,countArticle,countFocus,label from view_subject where id = ?", subjectId)
 	if err != nil {
 		log.Println(err)
-
+		Mutex.Unlock()
 		return SuccessFail_("0", "Query err")
 	}
+
+	defer rows.Close()
+
+	Mutex.Unlock()
 
 	var post SubjectDetails
 
@@ -431,7 +450,6 @@ func SubjectListDetails_(grbfs, ckege string) string {
 		err = rows.Scan(&id, &name, &brief, &thumbnail, &owner, &nickname, &countArticle, &countFocus, &label)
 		if err != nil {
 			log.Println(err)
-
 			return SuccessFail_("0", "Scan err")
 		}
 
@@ -454,8 +472,6 @@ func SubjectListDetails_(grbfs, ckege string) string {
 		post.Data.Info = data
 	}
 
-	rows.Close()
-
 	//缺少没有返回结果（没有数据）的判断和
 
 	post.Code = "1"
@@ -472,13 +488,22 @@ func SubjectListDetails_(grbfs, ckege string) string {
 //新建专题
 
 func SubjectAdd_(ythcs, utyeh, ertqh, oiyhx, vjmsk string) string {
-
+	Mutex.Lock()
 	conn, err := Db.Begin()
+	if err != nil {
+		log.Println("事物开启失败")
+		Mutex.Unlock()
+		return SuccessFail_("0", "事物开启失败")
+	}
+
 	rows, err := Db.Query("select * from hsubject where Ebelong = ?", ythcs)
 	if err != nil {
 		log.Println(err)
+		Mutex.Unlock()
 		return SuccessFail_("0", "Query err")
 	}
+
+	defer rows.Close()
 
 	record := 0
 
@@ -489,7 +514,7 @@ func SubjectAdd_(ythcs, utyeh, ertqh, oiyhx, vjmsk string) string {
 	if record >= 3 {
 		log.Println(err)
 		conn.Rollback()
-
+		Mutex.Unlock()
 		return SuccessFail_("0", "数量达到上限")
 	}
 
@@ -501,10 +526,12 @@ func SubjectAdd_(ythcs, utyeh, ertqh, oiyhx, vjmsk string) string {
 	if err != nil {
 		log.Println(err)
 		conn.Rollback()
+		Mutex.Unlock()
 		return SuccessFail_("0", "新建失败")
 	}
 
 	conn.Commit()
+	Mutex.Unlock()
 
 	return SuccessFail_("1", "新建专题成功！")
 }
@@ -518,13 +545,20 @@ func SubjectDelete_(rejcs string) string {
 		log.Println(err)
 		return SuccessFail_("0", "Atoi er")
 	}
+	Mutex.Lock()
 
 	conn, err := Db.Begin()
+	if err != nil {
+		log.Println("事物开启失败")
+		Mutex.Unlock()
+		return SuccessFail_("0", "事物开启失败")
+	}
+
 	_, err = Db.Exec("update larticle set psid = 0 where psid = ?", id)
 	if err != nil {
 		log.Println(err)
 		conn.Rollback()
-
+		Mutex.Unlock()
 		return SuccessFail_("0", "更新失败")
 	}
 
@@ -532,10 +566,12 @@ func SubjectDelete_(rejcs string) string {
 	if err != nil {
 		log.Println(err)
 		conn.Rollback()
+		Mutex.Unlock()
 		//存在没有该数据，也能删除成功的情况，返回0行，未解决
 		return SuccessFail_("0", "删除失败")
 	}
 	conn.Commit()
+	Mutex.Unlock()
 
 	return SuccessFail_("1", "删除专题成功！")
 }
@@ -548,12 +584,19 @@ func ArticleContribute_(ychsw, hsyce, anscj, rywjc string) string {
 	tm := time.Unix(timestamp, 0)
 	time := tm.Format("2006-01-02 15:04")
 
+	Mutex.Lock()
 	conn, err := Db.Begin()
+	if err != nil {
+		log.Println("事物开启失败")
+		Mutex.Unlock()
+		return SuccessFail_("0", "事物开启失败")
+	}
+
 	_, err = Db.Exec("insert into jexamine(Caid,Usid,Gaccount,Edate) values (?,?,?,?)", ychsw, hsyce, anscj, time)
 	if err != nil {
 		log.Println(err)
 		conn.Rollback()
-
+		Mutex.Unlock()
 		return SuccessFail_("0", "更新失败")
 	}
 
@@ -561,10 +604,11 @@ func ArticleContribute_(ychsw, hsyce, anscj, rywjc string) string {
 	if err != nil {
 		log.Println(err)
 		conn.Rollback()
-
+		Mutex.Unlock()
 		return SuccessFail_("0", "更新失败")
 	}
 	conn.Commit()
+	Mutex.Unlock()
 
 	return SuccessFail_("1", "投稿申请已发送，请等待管理员审核")
 }
@@ -572,13 +616,17 @@ func ArticleContribute_(ychsw, hsyce, anscj, rywjc string) string {
 //获取未投稿文章(complete)
 
 func ArticleNotContribute_(hskcu string) string {
-
+	Mutex.Lock()
 	rows, err := Db.Query("select title from view_article where account = ?", hskcu)
 	if err != nil {
 		log.Println(err)
-
+		Mutex.Unlock()
 		return SuccessFail_("0", "Query err")
 	}
+
+	defer rows.Close()
+
+	Mutex.Unlock()
 
 	var post ArticleNotContribute
 
@@ -587,7 +635,6 @@ func ArticleNotContribute_(hskcu string) string {
 		err = rows.Scan(&title)
 		if err != nil {
 			log.Println(err)
-
 			return SuccessFail_("0", "Scan err")
 		}
 
@@ -595,12 +642,6 @@ func ArticleNotContribute_(hskcu string) string {
 			Title: title,
 		}
 		post.Data = append(post.Data, data)
-	}
-
-	rows.Close()
-
-	if len(post.Data) < 1 {
-		return SuccessFail_("1", "There is no result")
 	}
 
 	post.Code = "1"
@@ -616,13 +657,17 @@ func ArticleNotContribute_(hskcu string) string {
 //获取待审核文章
 
 func ArticleNotExamine_(ueysj string) string {
-
+	Mutex.Lock()
 	rows, err := Db.Query("select id,aid,title,nickname,account,head,date from view_examine")
 	if err != nil {
 		log.Println(err)
-
+		Mutex.Unlock()
 		return SuccessFail_("0", "Query err")
 	}
+
+	defer rows.Close()
+
+	Mutex.Unlock()
 
 	var post ArticleNotExamine
 
@@ -632,7 +677,6 @@ func ArticleNotExamine_(ueysj string) string {
 		err = rows.Scan(&id, &aid, &title, &nickname, &account, &head, &date)
 		if err != nil {
 			log.Println(err)
-
 			return SuccessFail_("0", "Scan err")
 		}
 
@@ -650,9 +694,6 @@ func ArticleNotExamine_(ueysj string) string {
 
 	rows.Close()
 
-	if len(post.Data) < 1 {
-		return SuccessFail_("1", "There is no result")
-	}
 	post.Code = "1"
 	post.Msg = ""
 	result, err := json.MarshalIndent(post, "", " ")
@@ -674,21 +715,30 @@ func ArticleExamine_ac(eshhd, twrch, imvah, tafvm, uehst string) string {
 		return SuccessFail_("0", "Atoi err")
 	}
 
+	Mutex.Lock()
 	conn, err := Db.Begin()
+	if err != nil {
+		log.Println("事物开启失败")
+		Mutex.Unlock()
+		return SuccessFail_("0", "事物开启失败")
+	}
+
 	rows, err := Db.Query("select Caid,Usid,Gaccount from jexamine where Rid = ?", examineId)
 	if err != nil {
 		log.Println(err)
 		conn.Rollback()
-
+		Mutex.Unlock()
 		return SuccessFail_("0", "Query err")
 	}
+
+	defer rows.Close()
 
 	var articleId, subjectId, author string
 	for rows.Next() {
 		err = rows.Scan(&articleId, &subjectId, &author)
 		if err != nil {
 			log.Println(err)
-
+			Mutex.Unlock()
 			return SuccessFail_("0", "Scan err")
 		}
 
@@ -698,7 +748,7 @@ func ArticleExamine_ac(eshhd, twrch, imvah, tafvm, uehst string) string {
 	if err != nil {
 		log.Println(err)
 		conn.Rollback()
-
+		Mutex.Unlock()
 		return SuccessFail_("0", "Update err")
 	}
 
@@ -706,7 +756,7 @@ func ArticleExamine_ac(eshhd, twrch, imvah, tafvm, uehst string) string {
 	if err != nil {
 		log.Println(err)
 		conn.Rollback()
-
+		Mutex.Unlock()
 		return SuccessFail_("0", "Delete err")
 	}
 
@@ -714,7 +764,7 @@ func ArticleExamine_ac(eshhd, twrch, imvah, tafvm, uehst string) string {
 	if err != nil {
 		log.Println(err)
 		conn.Rollback()
-
+		Mutex.Unlock()
 		return SuccessFail_("0", "Update err")
 	}
 
@@ -727,11 +777,12 @@ func ArticleExamine_ac(eshhd, twrch, imvah, tafvm, uehst string) string {
 	if err != nil {
 		log.Println(err)
 		conn.Rollback()
-
+		Mutex.Unlock()
 		return SuccessFail_("0", "Insert err")
 	}
 
 	conn.Commit()
+	Mutex.Unlock()
 
 	return SuccessFail_("1", "通过XXX待审核文章成功！")
 }
@@ -745,21 +796,29 @@ func ArticleExamine_fa(eshhd, twrch, imvah, tafvm, uehst string) string {
 		return SuccessFail_("0", "Atoi err")
 	}
 
+	Mutex.Lock()
 	conn, err := Db.Begin()
+	if err != nil {
+		log.Println("事物开启失败")
+		Mutex.Unlock()
+		return SuccessFail_("0", "事物开启失败")
+	}
 
 	rows, err := Db.Query("select Gaccount from jexamine where Rid = ?", examineId)
 	if err != nil {
 		log.Println(err)
 		conn.Rollback()
-
+		Mutex.Unlock()
 		return SuccessFail_("0", "Query err")
 	}
+
+	defer rows.Close()
 
 	var author string
 	err = rows.Scan(&author)
 	if err != nil {
 		log.Println(err)
-
+		Mutex.Unlock()
 		return SuccessFail_("0", "Scan err")
 	}
 
@@ -767,7 +826,7 @@ func ArticleExamine_fa(eshhd, twrch, imvah, tafvm, uehst string) string {
 	if err != nil {
 		log.Println(err)
 		conn.Rollback()
-
+		Mutex.Unlock()
 		return SuccessFail_("0", "Delete err")
 	}
 
@@ -779,11 +838,12 @@ func ArticleExamine_fa(eshhd, twrch, imvah, tafvm, uehst string) string {
 	if err != nil {
 		log.Println(err)
 		conn.Rollback()
-
+		Mutex.Unlock()
 		return SuccessFail_("0", "Insert err")
 	}
 
 	conn.Commit()
+	Mutex.Unlock()
 
 	return SuccessFail_("1", "拒绝XXX待审核文章成功！")
 }

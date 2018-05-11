@@ -19,12 +19,18 @@ func BlackList_(ewysj, uwyhe string) string {
 		return SuccessFail_("0", "Atoi err")
 	}
 
+	Mutex.Lock()
+
 	rows, err := Db.Query("select account, nickname, head from view_blacklist where owner = ? limit ?,10", ewysj, limit)
 	if err != nil {
 		log.Println(err)
-
+		Mutex.Unlock()
 		return SuccessFail_("0", "Query err")
 	}
+
+	defer rows.Close()
+
+	Mutex.Unlock()
 
 	var post BlackList
 	post.Data = make([]DataBlackList, 0)
@@ -33,7 +39,6 @@ func BlackList_(ewysj, uwyhe string) string {
 		err = rows.Scan(&account, &nickname, &head)
 		if err != nil {
 			log.Println(err)
-
 			return SuccessFail_("0", "Scan err")
 		}
 
@@ -43,12 +48,6 @@ func BlackList_(ewysj, uwyhe string) string {
 			Head:     head,
 		}
 		post.Data = append(post.Data, data)
-	}
-
-	rows.Close()
-
-	if len(post.Data) < 1 {
-		return SuccessFail_("1", "There is no result")
 	}
 
 	post.Code = "1"
@@ -65,13 +64,14 @@ func BlackList_(ewysj, uwyhe string) string {
 //加入黑名单(comlpete)
 
 func BlackAdd_(cjrhw, chewj string) string {
-
+	Mutex.Lock()
 	_, err := Db.Query("insert into nblacklist(Hblackaccount,Vaccount) values (?,?)", chewj, cjrhw)
 	if err != nil {
 		log.Println(err)
-
+		Mutex.Unlock()
 		return SuccessFail_("0", "Insert err")
 	}
+	Mutex.Unlock()
 
 	return SuccessFail_("1", "加入黑名单成功！")
 }
@@ -85,11 +85,13 @@ func BlackDelete_(cjnek string) string {
 		return SuccessFail_("0", "Atoi err")
 	}
 
+	Mutex.Lock()
 	_, err = Db.Query("delete from nblacklist where Tbid = ?", id)
 	if err != nil {
 		log.Println(err)
-
+		Mutex.Unlock()
 		return SuccessFail_("0", "Delete err")
 	}
+	Mutex.Unlock()
 	return SuccessFail_("1", "移除黑名单用户成功！")
 }

@@ -33,29 +33,14 @@ func init() {
 	defer file.Close()
 	data, err := ioutil.ReadAll(file)
 	if err != nil {
-		logger.Fatalln("Failed to ReadFile", err)
+		panic("failed to read config file")
 	}
 
 	config = Configuration{}
 	err = json.Unmarshal(data, &config)
 	if err != nil {
-		logger.Fatalln("Failed to Unmarshal log file", err)
+		panic("Failed to Unmarshal config file")
 	}
-}
-
-func info(args ...interface{}) {
-	logger.SetPrefix("INFO ")
-	logger.Println(args...)
-}
-
-func danger(args ...interface{}) {
-	logger.SetPrefix("ERROR ")
-	logger.Println(args...)
-}
-
-func warning(args ...interface{}) {
-	logger.SetPrefix("WARNING ")
-	logger.Println(args...)
 }
 
 // 版本

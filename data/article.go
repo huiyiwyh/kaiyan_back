@@ -12,12 +12,17 @@ import (
 //获取文章列表(complete)
 //NoneNew
 func ArticleListNoneNew(idonx string) string {
-
+	Mutex.Lock()
 	rows, err := Db.Query("select id,sid,subjectName,title,content,account,nickname,head,date,thumbnail,countComment,countLike,countRead from view_article where date > ?", idonx)
 	if err != nil {
 		log.Println(err)
+		Mutex.Unlock()
 		return SuccessFail_("0", "Query err")
 	}
+
+	defer rows.Close()
+
+	Mutex.Unlock()
 
 	var post ArticleListWithNone
 	post.Data = make([]DataArticleListWithNone, 0)
@@ -28,7 +33,6 @@ func ArticleListNoneNew(idonx string) string {
 		err = rows.Scan(&id, &sid, &subjectName, &title, &content, &account, &nickname, &head, &date, &thumbnail, &countComment, &countLike, &countRead)
 		if err != nil {
 			log.Println(err)
-
 			return SuccessFail_("0", "Scan err")
 		}
 
@@ -49,7 +53,6 @@ func ArticleListNoneNew(idonx string) string {
 		}
 		post.Data = append(post.Data, data)
 	}
-	rows.Close()
 
 	post.Code = "1"
 	post.Msg = ""
@@ -63,19 +66,23 @@ func ArticleListNoneNew(idonx string) string {
 
 //NonePopular
 func ArticleListNonePopular(idonx string) string {
-
 	limit, err := strconv.Atoi(idonx)
 	if err != nil {
 		log.Println(err)
 		return SuccessFail_("0", "Atoi err")
 	}
 
+	Mutex.Lock()
 	rows, err := Db.Query("select id,sid,subjectName,title,content,account,nickname,head,date,thumbnail,countComment,countLike,countRead from view_article limit ?,10", limit)
 	if err != nil {
 		log.Println(err)
-
+		Mutex.Unlock()
 		return SuccessFail_("0", "Query err")
 	}
+
+	defer rows.Close()
+
+	Mutex.Unlock()
 
 	var post ArticleListWithNone
 	post.Data = make([]DataArticleListWithNone, 0)
@@ -107,7 +114,6 @@ func ArticleListNonePopular(idonx string) string {
 		}
 		post.Data = append(post.Data, data)
 	}
-	rows.Close()
 
 	post.Code = "1"
 	post.Msg = ""
@@ -121,14 +127,17 @@ func ArticleListNonePopular(idonx string) string {
 
 //SubjectNew
 func ArticleListSubjectNew(bvnsj, idonx string) string {
-	fmt.Println("dddd")
-
+	Mutex.Lock()
 	rows, err := Db.Query("select id,title,account,nickname,head,date,thumbnail,countComment,countLike,countRead from view_article where sid = ? and date > ?", bvnsj, idonx)
 	if err != nil {
 		log.Println(err)
-
+		Mutex.Unlock()
 		return SuccessFail_("0", "Query err")
 	}
+
+	defer rows.Close()
+
+	Mutex.Unlock()
 
 	var post ArticleListWithSubject
 	post.Data = make([]DataArticleListWithSubject, 0)
@@ -157,7 +166,6 @@ func ArticleListSubjectNew(bvnsj, idonx string) string {
 		}
 		post.Data = append(post.Data, data)
 	}
-	rows.Close()
 
 	post.Code = "1"
 	post.Msg = ""
@@ -178,11 +186,18 @@ func ArticleListSubjectPopular(bvnsj, idonx string) string {
 		return SuccessFail_("0", "Atoi err")
 	}
 
+	Mutex.Lock()
+
 	rows, err := Db.Query("select id,title,account,nickname,head,date,thumbnail,countComment,countLike,countRead from view_article where sid = ? limit ?,10", bvnsj, limit)
 	if err != nil {
 		log.Println(err)
+		Mutex.Unlock()
 		return SuccessFail_("0", "Query err")
 	}
+
+	defer rows.Close()
+
+	Mutex.Unlock()
 
 	var post ArticleListWithSubject
 	post.Data = make([]DataArticleListWithSubject, 0)
@@ -193,7 +208,6 @@ func ArticleListSubjectPopular(bvnsj, idonx string) string {
 		err = rows.Scan(&id, &title, &account, &nickname, &head, &date, &thumbnail, &countComment, &countLike, &countRead)
 		if err != nil {
 			log.Println(err)
-
 			return SuccessFail_("0", "Scan err")
 		}
 
@@ -211,7 +225,6 @@ func ArticleListSubjectPopular(bvnsj, idonx string) string {
 		}
 		post.Data = append(post.Data, data)
 	}
-	rows.Close()
 
 	post.Code = "1"
 	post.Msg = ""
@@ -225,12 +238,17 @@ func ArticleListSubjectPopular(bvnsj, idonx string) string {
 
 //AccountNew
 func ArticleListAccountNew(bvnsj, idonx string) string {
-
+	Mutex.Lock()
 	rows, err := Db.Query("select id,sid,subjectName,title,date,thumbnail,countComment,countLike,countRead from view_article where account = ? and date > ?", bvnsj, idonx)
 	if err != nil {
 		log.Println(err)
+		Mutex.Unlock()
 		return SuccessFail_("0", "Query err")
 	}
+
+	defer rows.Close()
+
+	Mutex.Unlock()
 
 	var post ArticleListWithAccount
 	post.Data = make([]DataArticleListWithAccount, 0)
@@ -258,7 +276,6 @@ func ArticleListAccountNew(bvnsj, idonx string) string {
 		}
 		post.Data = append(post.Data, data)
 	}
-	rows.Close()
 
 	post.Code = "1"
 	post.Msg = ""
@@ -272,12 +289,17 @@ func ArticleListAccountNew(bvnsj, idonx string) string {
 
 //AccountPopular
 func ArticleListAccountPopular(bvnsj, idonx string) string {
-
+	Mutex.Lock()
 	rows, err := Db.Query("select id,sid,subjectName,title,date,thumbnail,countComment,countLike,countRead from view_article where account = ? limit ?,10", bvnsj, idonx)
 	if err != nil {
 		log.Println(err)
+		Mutex.Unlock()
 		return SuccessFail_("0", "Query err")
 	}
+
+	defer rows.Close()
+
+	Mutex.Unlock()
 
 	var post ArticleListWithAccount
 	post.Data = make([]DataArticleListWithAccount, 0)
@@ -305,7 +327,6 @@ func ArticleListAccountPopular(bvnsj, idonx string) string {
 		}
 		post.Data = append(post.Data, data)
 	}
-	rows.Close()
 
 	post.Code = "1"
 	post.Msg = ""
@@ -329,12 +350,18 @@ func ArticleListRanking_(ieudh string, day int64) string {
 	tm := time.Unix(timestamp, 0)
 	time := tm.Format("2006-01-02 15:04")
 
+	Mutex.Lock()
+
 	rows, err := Db.Query("select id,sid,subjectName,title,content,account,nickname,head,date,thumbnail,countComment,countLike,countRead from view_article where date < ? limit ?,10", time, limit)
 	if err != nil {
 		log.Println(err)
-
+		Mutex.Unlock()
 		return SuccessFail_("0", "Query err")
 	}
+
+	defer rows.Close()
+
+	Mutex.Unlock()
 
 	var post ArticleRanking
 	post.Data = make([]DataArticleRanking, 0)
@@ -345,7 +372,6 @@ func ArticleListRanking_(ieudh string, day int64) string {
 		err = rows.Scan(&id, &sid, &subjectName, &title, &content, &account, &nickname, &head, &date, &thumbnail, &countComment, &countLike, &countRead)
 		if err != nil {
 			log.Println(err)
-
 			return SuccessFail_("0", "Scan err")
 		}
 
@@ -366,7 +392,6 @@ func ArticleListRanking_(ieudh string, day int64) string {
 		}
 		post.Data = append(post.Data, data)
 	}
-	rows.Close()
 
 	post.Code = "1"
 	post.Msg = ""
@@ -382,12 +407,17 @@ func ArticleListRanking_(ieudh string, day int64) string {
 //获取喜欢文章(complete)
 
 func ArticleListLike_(xdgje, uegsb string) string {
-
+	Mutex.Lock()
 	rows, err := Db.Query("select id,author, nickname, head, aid, title, date, thumbnail,countComment,countLike,countRead from view_article_like where account = ? and date < ?", xdgje, uegsb)
 	if err != nil {
 		log.Println(err)
+		Mutex.Unlock()
 		return SuccessFail_("0", "Query err")
 	}
+
+	defer rows.Close()
+
+	Mutex.Unlock()
 
 	var post ArticleLike
 	post.Data = make([]DataArticleLike, 0)
@@ -398,7 +428,6 @@ func ArticleListLike_(xdgje, uegsb string) string {
 		err = rows.Scan(&id, &author, &nickname, &head, &aid, &title, &date, &thumbnail, &countComment, &countLike, &countRead)
 		if err != nil {
 			log.Println(err)
-
 			return SuccessFail_("0", "Scan err")
 		}
 
@@ -417,7 +446,6 @@ func ArticleListLike_(xdgje, uegsb string) string {
 		}
 		post.Data = append(post.Data, data)
 	}
-	rows.Close()
 
 	post.Code = "1"
 	post.Msg = ""
@@ -431,13 +459,16 @@ func ArticleListLike_(xdgje, uegsb string) string {
 
 //获取历史记录(complete)
 func ArticleListHistory_(ychwn, siwhb string) string {
-
+	Mutex.Lock()
 	rows, err := Db.Query("select id,author, nickname, head, aid, title, date, thumbnail,countComment,countLike,countRead from view_article_history where account = ? and date < ?", ychwn, siwhb)
 	if err != nil {
 		log.Println(err)
-
+		Mutex.Unlock()
 		return SuccessFail_("0", "Query err")
 	}
+
+	defer rows.Close()
+	Mutex.Unlock()
 
 	var post ArticleHistory
 	post.Data = make([]DataArticleHistory, 0)
@@ -448,7 +479,6 @@ func ArticleListHistory_(ychwn, siwhb string) string {
 		err = rows.Scan(&id, &author, &nickname, &head, &aid, &title, &date, &thumbnail, &countComment, &countLike, &countRead)
 		if err != nil {
 			log.Println(err)
-
 			return SuccessFail_("0", "Scan err")
 		}
 
@@ -467,7 +497,6 @@ func ArticleListHistory_(ychwn, siwhb string) string {
 		}
 		post.Data = append(post.Data, data)
 	}
-	rows.Close()
 
 	post.Code = "1"
 	post.Msg = ""
@@ -482,12 +511,15 @@ func ArticleListHistory_(ychwn, siwhb string) string {
 //获取文章详情(complete)
 
 func ArticleListDetails_(rwhcs, uwhgc string) string {
+	Mutex.Lock()
 	rows, err := Db.Query("select id,account, nickname, head, sid,subjectName, title,content, date, thumbnail,countComment,countLike,countRead,label from view_article where id = ? and account = ?", rwhcs, uwhgc)
 	if err != nil {
 		log.Println(err)
-
+		Mutex.Unlock()
 		return SuccessFail_("0", "Query err")
 	}
+
+	defer rows.Close()
 
 	var post ArticleDetails
 
@@ -497,7 +529,7 @@ func ArticleListDetails_(rwhcs, uwhgc string) string {
 		err = rows.Scan(&id, &account, &nickname, &head, &sid, &subjectName, &title, &content, &date, &thumbnail, &countComment, &countLike, &countRead, &label)
 		if err != nil {
 			log.Println(err)
-
+			Mutex.Unlock()
 			return SuccessFail_("0", "Scan err")
 		}
 
@@ -518,12 +550,11 @@ func ArticleListDetails_(rwhcs, uwhgc string) string {
 			Label:        label,
 		}
 	}
-	rows.Close()
 
 	rows, err = Db.Query("select * from view_article_like where aid = ? and account = ?", rwhcs, uwhgc)
 	if err != nil {
 		log.Println(err)
-
+		Mutex.Unlock()
 		return SuccessFail_("0", "Query err_")
 	}
 	record := 0
@@ -536,7 +567,7 @@ func ArticleListDetails_(rwhcs, uwhgc string) string {
 	} else {
 		post.Data.IsLiked = false
 	}
-	rows.Close()
+	Mutex.Unlock()
 
 	post.Code = "1"
 	post.Msg = ""
@@ -558,12 +589,16 @@ func ArticleListComment_(hnksa, ncvbs string) string {
 		return SuccessFail_("0", "Atoi err")
 	}
 
+	Mutex.Lock()
+
 	rows, err := Db.Query("select article,sender,nickname, head, receiver,date,content from view_comment where article = ? and type = 0 limit ?,10", hnksa, limit)
 	if err != nil {
 		log.Println(err)
-
+		Mutex.Unlock()
 		return SuccessFail_("0", "Query err")
 	}
+
+	defer rows.Close()
 
 	var post ArticleComment
 	post.Data = make([]DataArticleComment, 0)
@@ -573,7 +608,7 @@ func ArticleListComment_(hnksa, ncvbs string) string {
 		err = rows.Scan(&article, &sender, &nickname, &head, &receiver, &date, &content)
 		if err != nil {
 			log.Println(err)
-
+			Mutex.Unlock()
 			return SuccessFail_("0", "Scan err")
 		}
 
@@ -590,9 +625,10 @@ func ArticleListComment_(hnksa, ncvbs string) string {
 		newrows, err := Db.Query("select article,sender,nickname, head, receiver,date,content from view_comment where receiver = ? and type = 1", sender)
 		if err != nil {
 			log.Println(err)
-
+			Mutex.Unlock()
 			return SuccessFail_("0", "Query err_")
 		}
+		defer newrows.Close()
 
 		data.SubComment = make([]DataArticleCommentSubComment, 0)
 
@@ -600,7 +636,7 @@ func ArticleListComment_(hnksa, ncvbs string) string {
 			err = newrows.Scan(&article, &sender, &nickname, &head, &receiver, &date, &content)
 			if err != nil {
 				log.Println(err)
-
+				Mutex.Unlock()
 				return SuccessFail_("0", "Scan err")
 			}
 
@@ -616,10 +652,9 @@ func ArticleListComment_(hnksa, ncvbs string) string {
 			data.SubComment = append(data.SubComment, subComment)
 		}
 		post.Data = append(post.Data, data)
-		newrows.Close()
 	}
-	rows.Close()
 
+	Mutex.Unlock()
 	post.Code = "1"
 	post.Msg = ""
 	result, err := json.MarshalIndent(post, "", " ")
@@ -638,27 +673,33 @@ func ArticleAddComment_(iwuus, kalcb, thske, ywhkd, mnsjf string) string {
 	tm := time.Unix(timestamp, 0)
 	time := tm.Format("2006-01-02 15:04")
 
+	Mutex.Lock()
 	_, err := Db.Exec("insert into dmesscomment (Particle,Vsender,Dreceiver,Scontent,Rtype,Odate) values (?,?,?,?,?,?)", iwuus, kalcb, thske, ywhkd, mnsjf, time)
 	if err != nil {
 		log.Println(err)
-
+		Mutex.Unlock()
 		return SuccessFail_("0", "Insert err")
 	}
-
+	Mutex.Unlock()
 	return SuccessFail_("1", "")
 }
 
 //记录文章阅读信息(complete)
 
 func ArticleAddHistory_(rqgcm, ivhws string) string {
-
+	Mutex.Lock()
 	conn, err := Db.Begin()
+	if err != nil {
+		log.Println("事物开启失败")
+		Mutex.Unlock()
+		return SuccessFail_("0", "事物开启失败")
+	}
 
 	_, err = Db.Exec("update larticle  set Oread = Oread + 1 where Xaid = ? and Vaccount = ?", rqgcm, ivhws)
 	if err != nil {
 		log.Println(err)
 		conn.Rollback()
-
+		Mutex.Unlock()
 		return SuccessFail_("0", "Update err")
 	}
 	timestamp := time.Now().Unix()
@@ -668,10 +709,11 @@ func ArticleAddHistory_(rqgcm, ivhws string) string {
 	if err != nil {
 		log.Println(err)
 		conn.Rollback()
-
+		Mutex.Unlock()
 		return SuccessFail_("0", "Insert err")
 	}
 	conn.Commit()
+	Mutex.Unlock()
 
 	return SuccessFail_("1", "记录成功")
 }
@@ -679,8 +721,13 @@ func ArticleAddHistory_(rqgcm, ivhws string) string {
 //喜欢文章
 
 func ArticleAddLike_(ivwga, rwhcs, uwhgc, mjkns string) string {
-
+	Mutex.Lock()
 	conn, err := Db.Begin()
+	if err != nil {
+		log.Println("事物开启失败")
+		Mutex.Unlock()
+		return SuccessFail_("0", "事物开启失败")
+	}
 
 	timestamp := time.Now().Unix()
 	tm := time.Unix(timestamp, 0)
@@ -689,7 +736,7 @@ func ArticleAddLike_(ivwga, rwhcs, uwhgc, mjkns string) string {
 	if err != nil {
 		log.Println(err)
 		conn.Rollback()
-
+		Mutex.Unlock()
 		return SuccessFail_("0", "Insert err")
 	}
 
@@ -697,7 +744,7 @@ func ArticleAddLike_(ivwga, rwhcs, uwhgc, mjkns string) string {
 	if err != nil {
 		log.Println(err)
 		conn.Rollback()
-
+		Mutex.Unlock()
 		return SuccessFail_("0", "Update err")
 	}
 
@@ -705,7 +752,7 @@ func ArticleAddLike_(ivwga, rwhcs, uwhgc, mjkns string) string {
 	if err != nil {
 		log.Println(err)
 		conn.Rollback()
-
+		Mutex.Unlock()
 		return SuccessFail_("0", "Insert_ err")
 	}
 
@@ -718,16 +765,18 @@ func ArticleAddLike_(ivwga, rwhcs, uwhgc, mjkns string) string {
 		if err != nil {
 			log.Println(err)
 			conn.Rollback()
-
+			Mutex.Unlock()
 			return SuccessFail_("0", "Query err1")
 		}
+
+		defer rows.Close()
 
 		if rows.Next() {
 			_, err = Db.Exec("Update vuserlabel set Lvalue = Lvalue + 6 where Xaccount = ? and Qlabel = ? and Otype = 0", uwhgc, symbol)
 			if err != nil {
 				log.Println(err)
 				conn.Rollback()
-
+				Mutex.Unlock()
 				return SuccessFail_("0", "Update err2")
 			}
 		} else {
@@ -735,35 +784,40 @@ func ArticleAddLike_(ivwga, rwhcs, uwhgc, mjkns string) string {
 			if err != nil {
 				log.Println(err)
 				conn.Rollback()
-
+				Mutex.Unlock()
 				return SuccessFail_("0", "Insert err")
 			}
 		}
-		rows.Close()
 	}
 
 	conn.Commit()
+	Mutex.Unlock()
 
 	return SuccessFail_("1", "XXX操作成功，具体说明到时候再议")
 }
 
 //取消喜欢文章
 func ArticleDeletelike_(wqsvh, zshrs, uqvcj string) string {
-
+	Mutex.Lock()
 	conn, err := Db.Begin()
+	if err != nil {
+		log.Println("事物开启失败")
+		Mutex.Unlock()
+		return SuccessFail_("0", "事物开启失败")
+	}
 
 	_, err = Db.Exec("delete from fuserlike where Taid = ? and Vaccount = ?", wqsvh, zshrs)
 	if err != nil {
 		log.Println(err)
 		conn.Rollback()
-
+		Mutex.Unlock()
 		return SuccessFail_("0", "Delete err")
 	}
 	_, err = Db.Exec("update larticle set Klike = Klike - 1 where Xaid = ?", wqsvh)
 	if err != nil {
 		log.Println(err)
 		conn.Rollback()
-
+		Mutex.Unlock()
 		return SuccessFail_("0", "Update err")
 	}
 
@@ -776,22 +830,25 @@ func ArticleDeletelike_(wqsvh, zshrs, uqvcj string) string {
 		if err != nil {
 			log.Println(err)
 			conn.Rollback()
-
+			Mutex.Unlock()
 			return SuccessFail_("0", "Query err")
 		}
+
+		defer rows.Close()
 
 		if rows.Next() {
 			_, err = Db.Exec("update vuserlabel set Lvalue = Lvalue - 6 where Xaccount = ? and Qlabel = ? and Otype = 0", zshrs, symbol)
 			if err != nil {
 				log.Println(err)
 				conn.Rollback()
+				Mutex.Unlock()
 				return SuccessFail_("0", "Update err")
 			}
 		}
-		rows.Close()
 	}
 
 	conn.Commit()
+	Mutex.Unlock()
 
 	return SuccessFail_("1", "XXX操作成功，具体说明到时候再议")
 }
@@ -799,8 +856,13 @@ func ArticleDeletelike_(wqsvh, zshrs, uqvcj string) string {
 //上传标签值(complete)
 
 func ArtcileUploadSymbolNum_(wafhc, iryvn, yvhen string) string {
-
-	conn, _ := Db.Begin()
+	Mutex.Lock()
+	conn, err := Db.Begin()
+	if err != nil {
+		log.Println("事物开启失败")
+		Mutex.Unlock()
+		return SuccessFail_("0", "事物开启失败")
+	}
 
 	symbols := strings.Split(iryvn, "|")
 	fmt.Println(symbols)
@@ -812,16 +874,18 @@ func ArtcileUploadSymbolNum_(wafhc, iryvn, yvhen string) string {
 		if err != nil {
 			log.Println(err)
 			conn.Rollback()
-
+			Mutex.Unlock()
 			return SuccessFail_("0", "Query err")
 		}
+
+		defer rows.Close()
 
 		if rows.Next() {
 			_, err = Db.Exec("Update vuserlabel set Lvalue = Lvalue - ? where Xaccount = ? and Qlabel = ?", yvhen, wafhc, symbol)
 			if err != nil {
 				log.Println(err)
 				conn.Rollback()
-
+				Mutex.Unlock()
 				return SuccessFail_("0", "Update err")
 			}
 		} else {
@@ -829,13 +893,13 @@ func ArtcileUploadSymbolNum_(wafhc, iryvn, yvhen string) string {
 			if err != nil {
 				log.Println(err)
 				conn.Rollback()
-
+				Mutex.Unlock()
 				return SuccessFail_("0", "Insert err")
 			}
 		}
-		rows.Close()
 	}
 	conn.Commit()
+	Mutex.Unlock()
 
 	return SuccessFail_("1", "XXX操作成功，具体说明到时候再议")
 }
@@ -843,10 +907,11 @@ func ArtcileUploadSymbolNum_(wafhc, iryvn, yvhen string) string {
 //新建文章标签(complete)
 
 func ArticleUploadSymbol_(tgmbj string) string {
-
+	Mutex.Lock()
 	rows, err := Db.Query("select Salid from warticlelabel where Uname = ?", tgmbj)
 	if err != nil {
 		log.Println(err)
+		Mutex.Unlock()
 		return SuccessFail_("0", "Query err")
 	}
 
@@ -859,6 +924,7 @@ func ArticleUploadSymbol_(tgmbj string) string {
 		_, err := Db.Exec("insert into warticlelabel(Uname) values (?)", tgmbj)
 		if err != nil {
 			log.Println(err)
+			Mutex.Unlock()
 			return SuccessFail_("0", "Insert err")
 		}
 		newrows, err := Db.Query("select Salid from warticlelabel where Uname = ?", tgmbj)
@@ -866,10 +932,13 @@ func ArticleUploadSymbol_(tgmbj string) string {
 		if newrows.Next() {
 			newrows.Scan(&Salid)
 		}
+		defer newrows.Close()
+
 		post.Data = strconv.Itoa(Salid)
 		newrows.Close()
 	}
 	rows.Close()
+	Mutex.Unlock()
 
 	post.Code = "1"
 	post.Msg = ""
@@ -909,12 +978,14 @@ func ArticleEdit_(ywjnc, ncdac, porjw, kvdjw, majsh, twgnk string) string {
 	tm := time.Unix(timestamp, 0)
 	time := tm.Format("2006-01-02 15:04")
 
+	Mutex.Lock()
 	_, err := Db.Exec("update larticle set Dtitle = ?,Tcontent = ?,Kpicture = ?,Vlabel = ?,Rdate = ? where Xaid = ? and Vaccount = ?", ncdac, porjw, kvdjw, twgnk, time, ywjnc, majsh)
 	if err != nil {
 		log.Println(err)
-
+		Mutex.Unlock()
 		return SuccessFail_("0", "Update err")
 	}
+	Mutex.Unlock()
 
 	return SuccessFail_("1", "文章编辑成功！")
 }
@@ -926,12 +997,13 @@ func ArticleWrite_(twhck, mncsk, uvcns, yvhek, rwkcb, ovjsb string) string {
 	time_ := tm.Format("060102150405")
 	time := tm.Format("2006-01-02 15:04")
 
+	Mutex.Lock()
 	_, err := Db.Query("insert into larticle (Xaid,Dtitle,Tcontent,Kpicture,Vaccount,Vlabel,Rdate) values (?,?,?,?,?,?,?) ", rwkcb+time_, twhck, mncsk, uvcns, yvhek, rwkcb, ovjsb, time)
 	if err != nil {
 		log.Println(err)
-
+		Mutex.Unlock()
 		return SuccessFail_("0", "Insert err")
 	}
-
+	Mutex.Unlock()
 	return SuccessFail_("1", "发表文章成功！")
 }
