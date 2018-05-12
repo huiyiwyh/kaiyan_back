@@ -16,7 +16,7 @@ import (
 
 func UserLogin_(bhtdm, opawe string) string {
 	Mutex.Lock()
-	rows, err := Db.Query("select nickname,head,brief,countFocus,countFans,countLike,countArticle,countSubject,indexback,countWords,countLiked from view_user where account = ? and password = ?", bhtdm, opawe)
+	rows, err := Db.Query("select account,nickname,head,brief,countFocus,countFans,countLike,countArticle,countSubject,indexback,countWords,countLiked from view_user where account = ? and password = ?", bhtdm, opawe)
 	if err != nil {
 		log.Println(err)
 		Mutex.Unlock()
@@ -25,12 +25,12 @@ func UserLogin_(bhtdm, opawe string) string {
 	defer rows.Close()
 	Mutex.Unlock()
 
-	var post Token
+	var post UserLogin
 
 	if rows.Next() {
-		var nickname, head, brief, indexback string
+		var account, nickname, head, brief, indexback string
 		var countFocus, countFans, countLike, countArticle, countSubject, countWords, countLiked int
-		err = rows.Scan(&nickname, &head, &brief, &countFocus, &countFans, &countLike, &countArticle, &countSubject, &indexback, &countWords, &countLiked)
+		err = rows.Scan(&account, &nickname, &head, &brief, &countFocus, &countFans, &countLike, &countArticle, &countSubject, &indexback, &countWords, &countLiked)
 		if err != nil {
 			log.Println(err)
 			return SuccessFail_("0", "赋值失败")
@@ -38,7 +38,8 @@ func UserLogin_(bhtdm, opawe string) string {
 
 		token := utils.CreateToken()
 
-		post.Data = DataToken{
+		post.Data = DataUserLogin{
+			Account:      account,
 			Nickname:     nickname,
 			Head:         head,
 			Brief:        brief,

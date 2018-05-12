@@ -727,13 +727,14 @@ type DataUserListHomeDetails struct {
 
 //Token
 
-type Token struct {
-	Code string    `json:"code"`
-	Msg  string    `json:"msg"`
-	Data DataToken `json:"data"`
+type UserLogin struct {
+	Code string        `json:"code"`
+	Msg  string        `json:"msg"`
+	Data DataUserLogin `json:"data"`
 }
 
-type DataToken struct {
+type DataUserLogin struct {
+	Account      string `json:"account"`
 	Nickname     string `json:"nickname"`
 	Head         string `json:"head"`
 	Brief        string `json:"brief"`
