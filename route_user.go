@@ -52,7 +52,11 @@ func userLogout(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	//uhyts := r.FormValue("uhyts")
+	uhyts := r.FormValue("uhyts")
+	uhyts_ := utils.Decode(uhyts)
+
+	result := data.SuccessFail_("1", uhyts_+"登出成功")
+	fmt.Fprintf(w, result)
 
 	// cookie := http.Cookie{Name: "account", Path: "/", MaxAge: -1}
 	// http.SetCookie(w, &cookie)
@@ -68,9 +72,11 @@ func userSignup(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("content-type", "application/json")
 
 	ywhft := r.FormValue("ywhft") //account
+	ywhft_ := utils.Decode(ywhft)
 	iuqng := r.FormValue("iuqng") //password
+	iuqng_ := utils.Decode(iuqng)
 
-	result := data.UserSignup_(ywhft, iuqng)
+	result := data.UserSignup_(ywhft_, iuqng_)
 	fmt.Fprintf(w, result)
 }
 
