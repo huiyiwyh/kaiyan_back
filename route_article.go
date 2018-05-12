@@ -181,11 +181,11 @@ func articleAddComment(w http.ResponseWriter, r *http.Request) {
 	thske := r.FormValue("thske")
 	thske_ := utils.Decode(thske)
 	ywhkd := r.FormValue("ywhkd")
-	ywhkd_ := utils.Decode(ywhkd)
+
 	mnsjf := r.FormValue("mnsjf")
 	mnsjf_ := utils.Decode(mnsjf)
 
-	result := data.ArticleAddComment_(iwuus_, kalcb_, thske_, ywhkd_, mnsjf_)
+	result := data.ArticleAddComment_(iwuus_, kalcb_, thske_, ywhkd, mnsjf_)
 	fmt.Fprintf(w, result)
 
 }
@@ -270,13 +270,12 @@ func articleUploadSymbol(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("content-type", "application/json")
 
 	tgmbj := r.FormValue("tgmbj")
-	tgmbj_ := utils.Decode(tgmbj)
 
-	result := data.ArticleUploadSymbol_(tgmbj_)
+	result := data.ArticleUploadSymbol_(tgmbj)
 	fmt.Fprintf(w, result)
 }
 
-//图片上传(complete)
+//图片上传
 
 func articleUploadPicture(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
@@ -366,9 +365,7 @@ func articleEdit(w http.ResponseWriter, r *http.Request) {
 	ywjnc := r.FormValue("ywjnc")
 	ywjnc_ := utils.Decode(ywjnc)
 	ncdac := r.FormValue("ncdac")
-	ncdac_ := utils.Decode(ncdac)
 	porjw := r.FormValue("porjw")
-	porjw_ := utils.Decode(porjw)
 	kvdjw := r.FormValue("kvdjw")
 	kvdjw_ := utils.Decode(kvdjw)
 	majsh := r.FormValue("majsh")
@@ -376,7 +373,7 @@ func articleEdit(w http.ResponseWriter, r *http.Request) {
 	twgnk := r.FormValue("twgnk")
 	twgnk_ := utils.Decode(twgnk)
 
-	result := data.ArticleEdit_(ywjnc_, ncdac_, porjw_, kvdjw_, majsh_, twgnk_)
+	result := data.ArticleEdit_(ywjnc_, ncdac, porjw, kvdjw_, majsh_, twgnk_)
 	fmt.Fprintf(w, result)
 
 }
@@ -391,9 +388,7 @@ func articleWrite(w http.ResponseWriter, r *http.Request) {
 	twhck := r.FormValue("twhck")
 	twhck_ := utils.Decode(twhck)
 	mncsk := r.FormValue("mncsk")
-	mncsk_ := utils.Decode(mncsk)
 	uvcns := r.FormValue("uvcns")
-	uvcns_ := utils.Decode(uvcns)
 	yvhek := r.FormValue("yvhek")
 	yvhek_ := utils.Decode(yvhek)
 	rwkcb := r.FormValue("rwkcb")
@@ -401,6 +396,6 @@ func articleWrite(w http.ResponseWriter, r *http.Request) {
 	ovjsb := r.FormValue("ovjsb")
 	ovjsb_ := utils.Decode(ovjsb)
 
-	result := data.ArticleWrite_(twhck_, mncsk_, uvcns_, yvhek_, rwkcb_, ovjsb_)
+	result := data.ArticleWrite_(twhck_, mncsk, uvcns, yvhek_, rwkcb_, ovjsb_)
 	fmt.Fprintf(w, result)
 }

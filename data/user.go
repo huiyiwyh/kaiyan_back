@@ -153,7 +153,7 @@ func UserDetails_(jchen string) string {
 
 func UserModifyHead_(hcnsg, yshuc string) string {
 	Mutex.Lock()
-	_, err := Db.Exec("update ruser set Uhead = ? where Raccount = ?", yshuc, hcnsg)
+	_, err := Db.Exec("SET SQL_SAFE_UPDATES = 0;update ruser set Uhead = ? where Raccount = ?;SET SQL_SAFE_UPDATES = 1;", yshuc, hcnsg)
 	if err != nil {
 		log.Println(err)
 		Mutex.Unlock()
@@ -198,7 +198,7 @@ func UserModifyBrief_(tehas, bncjs string) string {
 
 func UserModifyPassword_(jksnd, nklsh, wrqsd string) string {
 	Mutex.Lock()
-	_, err := Db.Exec("update ruser set Ipassword = ? where Raccount = ? and Ipassword = ?", wrqsd, jksnd, nklsh)
+	_, err := Db.Exec("SET SQL_SAFE_UPDATES = 0;update ruser set Ipassword = ? where Raccount = ? and Ipassword = ?;SET SQL_SAFE_UPDATES = 1;", wrqsd, jksnd, nklsh)
 	if err != nil {
 		log.Println(err)
 		Mutex.Unlock()

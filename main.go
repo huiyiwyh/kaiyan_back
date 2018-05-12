@@ -99,6 +99,8 @@ func main() {
 	mux.HandleFunc("/user/Focus", userFocus)                           //关注用户
 	mux.HandleFunc("/user/CancelFocus", userCancelFocus)               //取消关注用户
 
+	//mux.Handle("/", http.FileServer(http.Dir("./"))) //文件服务器
+
 	server := &http.Server{
 		Addr:           config.Address,
 		Handler:        mux,

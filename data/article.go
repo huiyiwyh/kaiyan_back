@@ -974,7 +974,6 @@ func ArticleUploadPicture_(twhck string) string {
 //编辑文章(complete)
 
 func ArticleEdit_(ywjnc, ncdac, porjw, kvdjw, majsh, twgnk string) string {
-
 	timestamp := time.Now().Unix()
 	tm := time.Unix(timestamp, 0)
 	time := tm.Format("2006-01-02 15:04")

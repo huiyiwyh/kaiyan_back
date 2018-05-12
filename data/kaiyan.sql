@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 2018-05-12 18:10:12
+-- Generation Time: 2018-05-12 20:33:21
 -- 服务器版本： 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -45,14 +45,6 @@ CREATE TABLE `cmessfocus` (
   `Greceiver` varchar(12) COLLATE utf8_bin NOT NULL COMMENT '接收者账号',
   `Qdate` char(16) COLLATE utf8_bin NOT NULL COMMENT '关注日期'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=COMPACT;
-
---
--- 转存表中的数据 `cmessfocus`
---
-
-INSERT INTO `cmessfocus` (`Ufid`, `Xsender`, `Greceiver`, `Qdate`) VALUES
-(1, '879646527', '879646529', '2018-03-21 14:05'),
-(2, '879646528', '879646529', '2017-11-07 08:24');
 
 -- --------------------------------------------------------
 
@@ -104,13 +96,6 @@ CREATE TABLE `hautfocus` (
   `Fdate` char(16) COLLATE utf8_bin NOT NULL COMMENT '关注日期'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
---
--- 转存表中的数据 `hautfocus`
---
-
-INSERT INTO `hautfocus` (`Yafid`, `Tautaccount`, `Daccount`, `Fdate`) VALUES
-(1, '879646528', '879646529', '2018-05-01 12:14');
-
 -- --------------------------------------------------------
 
 --
@@ -148,26 +133,26 @@ CREATE TABLE `hsubject` (
 --
 
 INSERT INTO `hsubject` (`Usid`, `Yname`, `Kbrief`, `Uthumbnail`, `Ebelong`, `Hcountarticle`, `Scountfocus`, `Ydate`, `Blabel`) VALUES
-(1, '旅游', '“旅”是旅行，外出，即为了实现某一目的而在空间上从甲地到乙地的行进过程；“游”是外出游览、观光、娱乐，即为达到这些目的所作的旅行。二者合起来即旅游。所以，旅行偏重于行，旅游不但有“行”，且有观光、娱乐含义。', 'subject/1.jpg', '17826857056', 2, 12, '2018-05-09 12:14', '1|3'),
-(2, '移动端开发', 'https://www.cnblogs.com/qijunj...  - 百度快照\r\n移动开发_百度百科\r\n移动开发也称为手机开发，或叫做移动互联网开发。是指以手机、PDA、UMPC等便携终端为基础，进行相应的开发工作。', 'subject/2.jpg', '17826857055', 1, 8, '2018-05-14 11:15', '5|6'),
-(3, '前端开发', '扬我大前端！', 'subject/3.jpg', '17826857054', 0, 1, '2018-05-09 10:54', '5|6'),
-(4, '历史', '忘记历史就等于背叛', 'subject/4.jpg', '15458752345', 1, 12, '2018-05-09 12:41', '12'),
-(5, '读书', '读书和不读书，到底差在了哪里？', 'subject/5.jpg', '13554755478', 1, 2, '2018-05-10 11:07', '7'),
-(6, '美食', '唯爱与美食不可辜负', 'subject/6.jpg', '13583787452', 1, 4, '2018-05-13 02:13', '8|9'),
-(7, '体育', '人生百态，体育人生', 'subject/7.jpg', '17878785432', 1, 17, '2018-05-12 12:03', '2'),
-(8, '电影', '生活不比电影，生活比电影苦', 'subject/8.jpg', '17868752546', 2, 5, '2018-05-11 11:13', '11'),
-(9, '娱乐圈', '娱乐圈是个圈，兜兜转转又回来', 'subject/9.jpg', '17854125425', 1, 20, '2018-05-13 07:13', '9'),
-(10, '国学', '国学即中国固有的学术，而传统文化是指中国传统社会，中华民族的整体生活方式和价值系统，其精神学术层面，包括知识、信仰、艺术、宗教、哲学、法律、道德等。', 'subject/10.jpg', '17854235412', 1, 1, '2018-05-15 12:26', '7'),
-(11, '创业', '只要行动，人生没有太晚的开始', 'subject/11.jpg', '17826857056', 1, 15, '2018-05-15 07:13', '10'),
-(12, '小说', '借一斑略知全豹 ，以一目尽传精神。', 'subject/12.jpg', '15854754254', 0, 17, '2018-05-12 12:24', '7'),
-(13, '生活', '每个人都是生活家  ', 'subject/13.jpg', '15754856125', 1, 9, '2018-05-10 10:17', '8'),
-(14, '故事', '我有故事，你有酒吗？', 'subject/14.jpg', '15589632542', 0, 12, '2018-05-1312:21', '11'),
-(15, '摄影', '用快门捕捉你双眼所见，心有所感的一切', 'subject/15.jpg', '15558754125', 1, 9, '2018-05-10 10:10', '4|9'),
-(16, '电竞游戏', '不玩游戏，过不好人生', 'subject/16.jpg', '15554754123', 1, 3, '2018-05-12 12:12', '9'),
-(17, '随笔集', '一切温暖、冷酷，长的、短的，亲情、友情、爱情，皆可成章', 'subject/17.jpg', '15545211123', 2, 14, '2018-05-16 13:26', '8'),
-(18, '投资理财', '投资理财相关，投资理念分享，投资方式不限于固定资产、金融产品、股权投资等', 'subject/18.jpg', '15458752345', 2, 6, '2018-05-09 01:13', '8|10'),
-(19, 'iOS开发技巧', '内容主要包括OC、swift等涉及到iOS开发进阶的内容', 'subject/19.jpg', '13854214512', 0, 10, '2018-05-12 12:23', '5|6'),
-(20, '高效学习', '交流和探讨最高效的学习方法，让知识落地，让知识创造价值。', 'subject/20.jpg', '13754215245', 1, 5, '2018-05-11 12:13', '5');
+(1, '旅游', '“旅”是旅行，外出，即为了实现某一目的而在空间上从甲地到乙地的行进过程；“游”是外出游览、观光、娱乐，即为达到这些目的所作的旅行。二者合起来即旅游。所以，旅行偏重于行，旅游不但有“行”，且有观光、娱乐含义。', 'subject/17826857056180509121445.jpg', '17826857056', 2, 12, '2018-05-09 12:14', '1|3'),
+(2, '移动端开发', 'https://www.cnblogs.com/qijunj...  - 百度快照\r\n移动开发_百度百科\r\n移动开发也称为手机开发，或叫做移动互联网开发。是指以手机、PDA、UMPC等便携终端为基础，进行相应的开发工作。', 'subject/17826857055180514111523.jpg', '17826857055', 1, 8, '2018-05-14 11:15', '5|6'),
+(3, '前端开发', '扬我大前端！', 'subject/17826857054180509105431.jpg', '17826857054', 0, 1, '2018-05-09 10:54', '5|6'),
+(4, '历史', '忘记历史就等于背叛', 'subject/15458752345180509124112.jpg', '15458752345', 1, 12, '2018-05-09 12:41', '12'),
+(5, '读书', '读书和不读书，到底差在了哪里？', 'subject/13554755478180510110752.jpg', '13554755478', 1, 2, '2018-05-10 11:07', '7'),
+(6, '美食', '唯爱与美食不可辜负', 'subject/13583787452180513021314.jpg', '13583787452', 1, 4, '2018-05-13 02:13', '8|9'),
+(7, '体育', '人生百态，体育人生', 'subject/17878785432180512120324.jpg', '17878785432', 1, 17, '2018-05-12 12:03', '2'),
+(8, '电影', '生活不比电影，生活比电影苦', 'subject/17868752546180511111334.jpg', '17868752546', 2, 5, '2018-05-11 11:13', '11'),
+(9, '娱乐圈', '娱乐圈是个圈，兜兜转转又回来', 'subject/17854125425180513071335.jpg', '17854125425', 1, 20, '2018-05-13 07:13', '9'),
+(10, '国学', '国学即中国固有的学术，而传统文化是指中国传统社会，中华民族的整体生活方式和价值系统，其精神学术层面，包括知识、信仰、艺术、宗教、哲学、法律、道德等。', 'subject/17854235412180515122653.jpg', '17854235412', 1, 1, '2018-05-15 12:26', '7'),
+(11, '创业', '只要行动，人生没有太晚的开始', 'subject/17826857056180515071345.jpg', '17826857056', 1, 15, '2018-05-15 07:13', '10'),
+(12, '小说', '借一斑略知全豹 ，以一目尽传精神。', 'subject/15854754254180512122446.jpg', '15854754254', 0, 17, '2018-05-12 12:24', '7'),
+(13, '生活', '每个人都是生活家  ', 'subject/15754856125180510101752.jpg', '15754856125', 1, 9, '2018-05-10 10:17', '8'),
+(14, '故事', '我有故事，你有酒吗？', 'subject/15589632542180513122147.jpg', '15589632542', 0, 12, '2018-05-1312:21', '11'),
+(15, '摄影', '用快门捕捉你双眼所见，心有所感的一切', 'subject/15558754125180510101041.jpg', '15558754125', 1, 9, '2018-05-10 10:10', '4|9'),
+(16, '电竞游戏', '不玩游戏，过不好人生', 'subject/15554754123180512121235.jpg', '15554754123', 1, 3, '2018-05-12 12:12', '9'),
+(17, '随笔集', '一切温暖、冷酷，长的、短的，亲情、友情、爱情，皆可成章', 'subject/15545211123180516132635.jpg', '15545211123', 2, 14, '2018-05-16 13:26', '8'),
+(18, '投资理财', '投资理财相关，投资理念分享，投资方式不限于固定资产、金融产品、股权投资等', 'subject/15458752345180509011353.jpg', '15458752345', 2, 6, '2018-05-09 01:13', '8|10'),
+(19, 'iOS开发技巧', '内容主要包括OC、swift等涉及到iOS开发进阶的内容', 'subject/13854214512180512122347.jpg', '13854214512', 0, 10, '2018-05-12 12:23', '5|6'),
+(20, '高效学习', '交流和探讨最高效的学习方法，让知识落地，让知识创造价值。', 'subject/13754215245180511121336.jpg', '13754215245', 1, 5, '2018-05-11 12:13', '5');
 
 -- --------------------------------------------------------
 
@@ -567,15 +552,6 @@ CREATE TABLE `rsubfocus` (
   `lrank` int(11) NOT NULL DEFAULT '0' COMMENT '排列顺序'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
---
--- 转存表中的数据 `rsubfocus`
---
-
-INSERT INTO `rsubfocus` (`Vsfid`, `Ksid`, `Saccount`, `lrank`) VALUES
-(1, 1, '879646529', 0),
-(2, 2, '879646529', 0),
-(3, 3, '879646529', 0);
-
 -- --------------------------------------------------------
 
 --
@@ -615,9 +591,9 @@ INSERT INTO `ruser` (`Raccount`, `Ipassword`, `Hnickname`, `Uhead`, `Jbrief`, `H
 ('15589632542', '765454o', '想你的夜', 'user/15589632542.jpg', '生病了要输液，你问我输什么液，我说想你的夜。', 0, 0, 0, 0, 0, 'index/default.jpg', 0, 0),
 ('15754856125', 'kkk123456', '编程砖家', 'user/15754856125.jpg', '思考快你一步', 0, 0, 0, 1, 0, 'index/default.jpg', 0, 0),
 ('15854754254', 'r5428545', '雄霸天下', 'user/15854754254.jpg', '成也风云，败也风云', 0, 0, 0, 0, 0, 'index/default.jpg', 0, 0),
-('17826857054', '123456', '天使不投资人', 'user/17826857054.jpg', '我是天使不投资人', 2, 0, 0, 0, 0, 'index/default.jpg', 0, 0),
-('17826857055', '123456', '耗子爱骑车', 'user/17826857055.jpg', '坏人获胜的唯一方法就是好人都袖手旁观', 1, 1, 0, 1, 2, 'index/default.jpg', 400, 2),
-('17826857056', '123456', '游学者、墨槿', 'user/17826857056.jpg', '人生不是戏剧，而我亦非主角', 2, 2, 0, 3, 1, 'index/default.jpg', 100, 1),
+('17826857054', 'MTIzNDU2', '天使不投资人', 'user/17826857054.jpg', '我是天使不投资人', 2, 0, 0, 0, 0, 'index/default.jpg', 0, 0),
+('17826857055', 'MTIzNDU2', '耗子爱骑车', 'user/17826857055.jpg', '坏人获胜的唯一方法就是好人都袖手旁观', 1, 1, 0, 1, 2, 'index/default.jpg', 400, 2),
+('17826857056', 'MTIzNDU2', '游学者、墨槿', 'user/17826857056.jpg', '人生不是戏剧，而我亦非主角', 2, 2, 0, 3, 1, 'index/default.jpg', 100, 1),
 ('17854125425', '776558l', '世间无我这般人', 'user/17854125425.jpg', '手触日月摘星辰，世间无我这般人', 0, 0, 0, 1, 0, 'index/default.jpg', 0, 0),
 ('17854235412', 'a123321', '行者孙孙行者', 'user/17854235412.jpg', '我叫你一声，你敢答应吗？', 0, 0, 0, 1, 0, 'index/default.jpg', 0, 0),
 ('17855425544', 't7895478', '雪花秀', 'user/17855425544.jpg', '最喜欢冬天一片片飘落的雪花', 0, 0, 0, 0, 0, 'index/default.jpg', 0, 0),
@@ -666,871 +642,316 @@ CREATE TABLE `umesssubject` (
 -- --------------------------------------------------------
 
 --
--- 替换视图以便查看 `view_action`
--- (See below for the actual view)
+-- 表的结构 `view_action`
 --
+
 CREATE TABLE `view_action` (
-`id` varchar(50)
-,`key` varchar(22)
-,`value` varchar(32)
-,`account` varchar(12)
-,`type` int(11)
-,`date` char(16)
-);
+  `id` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+  `key` varchar(22) COLLATE utf8_bin DEFAULT NULL,
+  `value` varchar(32) COLLATE utf8_bin DEFAULT NULL,
+  `account` varchar(12) COLLATE utf8_bin DEFAULT NULL,
+  `type` int(11) DEFAULT NULL,
+  `date` char(16) COLLATE utf8_bin DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
 --
--- 替换视图以便查看 `view_article`
--- (See below for the actual view)
+-- 表的结构 `view_article`
 --
+
 CREATE TABLE `view_article` (
-`id` varchar(24)
-,`title` varchar(32)
-,`content` varchar(8192)
-,`date` char(16)
-,`countLike` int(11)
-,`countComment` int(11)
-,`countRead` int(11)
-,`thumbnail` varchar(80)
-,`label` varchar(20)
-,`account` varchar(12)
-,`nickname` varchar(10)
-,`head` varchar(30)
-,`sid` int(11)
-,`subjectName` varchar(12)
-);
+  `id` varchar(24) COLLATE utf8_bin DEFAULT NULL,
+  `title` varchar(32) COLLATE utf8_bin DEFAULT NULL,
+  `content` varchar(8192) COLLATE utf8_bin DEFAULT NULL,
+  `date` char(16) COLLATE utf8_bin DEFAULT NULL,
+  `countLike` int(11) DEFAULT NULL,
+  `countComment` int(11) DEFAULT NULL,
+  `countRead` int(11) DEFAULT NULL,
+  `thumbnail` varchar(80) COLLATE utf8_bin DEFAULT NULL,
+  `label` varchar(20) COLLATE utf8_bin DEFAULT NULL,
+  `account` varchar(12) COLLATE utf8_bin DEFAULT NULL,
+  `nickname` varchar(10) COLLATE utf8_bin DEFAULT NULL,
+  `head` varchar(30) COLLATE utf8_bin DEFAULT NULL,
+  `sid` int(11) DEFAULT NULL,
+  `subjectName` varchar(12) COLLATE utf8_bin DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
 --
--- 替换视图以便查看 `view_article_history`
--- (See below for the actual view)
+-- 表的结构 `view_article_like`
 --
-CREATE TABLE `view_article_history` (
-);
 
--- --------------------------------------------------------
-
---
--- 替换视图以便查看 `view_article_like`
--- (See below for the actual view)
---
 CREATE TABLE `view_article_like` (
-`id` int(11)
-,`author` varchar(12)
-,`nickname` varchar(10)
-,`head` varchar(30)
-,`aid` varchar(24)
-,`title` varchar(32)
-,`date` char(16)
-,`countLike` int(11)
-,`countComment` int(11)
-,`countRead` int(11)
-,`thumbnail` varchar(80)
-,`likeDate` char(16)
-,`account` varchar(12)
-);
+  `id` int(11) DEFAULT NULL,
+  `author` varchar(12) COLLATE utf8_bin DEFAULT NULL,
+  `nickname` varchar(10) COLLATE utf8_bin DEFAULT NULL,
+  `head` varchar(30) COLLATE utf8_bin DEFAULT NULL,
+  `aid` varchar(24) COLLATE utf8_bin DEFAULT NULL,
+  `title` varchar(32) COLLATE utf8_bin DEFAULT NULL,
+  `date` char(16) COLLATE utf8_bin DEFAULT NULL,
+  `countLike` int(11) DEFAULT NULL,
+  `countComment` int(11) DEFAULT NULL,
+  `countRead` int(11) DEFAULT NULL,
+  `thumbnail` varchar(80) COLLATE utf8_bin DEFAULT NULL,
+  `likeDate` char(16) COLLATE utf8_bin DEFAULT NULL,
+  `account` varchar(12) COLLATE utf8_bin DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
 --
--- 替换视图以便查看 `view_author_focus`
--- (See below for the actual view)
+-- 表的结构 `view_author_focus`
 --
+
 CREATE TABLE `view_author_focus` (
-`account` varchar(12)
-,`nickname` varchar(10)
-,`head` varchar(30)
-,`title` text
-,`aid` varchar(24)
-,`owner` varchar(12)
-);
+  `account` varchar(12) COLLATE utf8_bin DEFAULT NULL,
+  `nickname` varchar(10) COLLATE utf8_bin DEFAULT NULL,
+  `head` varchar(30) COLLATE utf8_bin DEFAULT NULL,
+  `title` text COLLATE utf8_bin,
+  `aid` varchar(24) COLLATE utf8_bin DEFAULT NULL,
+  `owner` varchar(12) COLLATE utf8_bin DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
 --
--- 替换视图以便查看 `view_blacklist`
--- (See below for the actual view)
+-- 表的结构 `view_blacklist`
 --
+
 CREATE TABLE `view_blacklist` (
-`bid` int(11)
-,`account` varchar(12)
-,`nickname` varchar(10)
-,`head` varchar(30)
-,`owner` varchar(12)
-);
+  `bid` int(11) DEFAULT NULL,
+  `account` varchar(12) COLLATE utf8_bin DEFAULT NULL,
+  `nickname` varchar(10) COLLATE utf8_bin DEFAULT NULL,
+  `head` varchar(30) COLLATE utf8_bin DEFAULT NULL,
+  `owner` varchar(12) COLLATE utf8_bin DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
 --
--- 替换视图以便查看 `view_comment`
--- (See below for the actual view)
+-- 表的结构 `view_comment`
 --
+
 CREATE TABLE `view_comment` (
-`id` int(11)
-,`sender` varchar(12)
-,`nickname` varchar(10)
-,`head` varchar(30)
-,`receiver` varchar(12)
-,`date` char(16)
-,`content` varchar(128)
-,`title` varchar(32)
-,`article` varchar(22)
-,`type` char(1)
-);
+  `id` int(11) DEFAULT NULL,
+  `sender` varchar(12) COLLATE utf8_bin DEFAULT NULL,
+  `nickname` varchar(10) COLLATE utf8_bin DEFAULT NULL,
+  `head` varchar(30) COLLATE utf8_bin DEFAULT NULL,
+  `receiver` varchar(12) COLLATE utf8_bin DEFAULT NULL,
+  `date` char(16) COLLATE utf8_bin DEFAULT NULL,
+  `content` varchar(128) COLLATE utf8_bin DEFAULT NULL,
+  `title` varchar(32) COLLATE utf8_bin DEFAULT NULL,
+  `article` varchar(22) COLLATE utf8_bin DEFAULT NULL,
+  `type` char(1) COLLATE utf8_bin DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
 --
--- 替换视图以便查看 `view_examine`
--- (See below for the actual view)
+-- 表的结构 `view_examine`
 --
+
 CREATE TABLE `view_examine` (
-`id` int(11)
-,`sid` varchar(24)
-,`aid` varchar(24)
-,`title` varchar(32)
-,`nickname` varchar(10)
-,`account` varchar(12)
-,`head` varchar(30)
-,`date` char(16)
-);
+  `id` int(11) DEFAULT NULL,
+  `sid` varchar(24) COLLATE utf8_bin DEFAULT NULL,
+  `aid` varchar(24) COLLATE utf8_bin DEFAULT NULL,
+  `title` varchar(32) COLLATE utf8_bin DEFAULT NULL,
+  `nickname` varchar(10) COLLATE utf8_bin DEFAULT NULL,
+  `account` varchar(12) COLLATE utf8_bin DEFAULT NULL,
+  `head` varchar(30) COLLATE utf8_bin DEFAULT NULL,
+  `date` char(16) COLLATE utf8_bin DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
 --
--- 替换视图以便查看 `view_history_search`
--- (See below for the actual view)
+-- 表的结构 `view_history_search`
 --
+
 CREATE TABLE `view_history_search` (
-`id` varchar(24)
-,`content` varchar(30)
-,`date` char(16)
-,`account` varchar(12)
-);
+  `id` varchar(24) COLLATE utf8_bin DEFAULT NULL,
+  `content` varchar(30) COLLATE utf8_bin DEFAULT NULL,
+  `date` char(16) COLLATE utf8_bin DEFAULT NULL,
+  `account` varchar(12) COLLATE utf8_bin DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
 --
--- 替换视图以便查看 `view_history_search_popular`
--- (See below for the actual view)
+-- 表的结构 `view_history_search_popular`
 --
+
 CREATE TABLE `view_history_search_popular` (
-`count` bigint(21)
-,`content` text
-);
+  `count` bigint(21) DEFAULT NULL,
+  `content` text COLLATE utf8_bin
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
 --
--- 替换视图以便查看 `view_message`
--- (See below for the actual view)
+-- 表的结构 `view_message`
 --
+
 CREATE TABLE `view_message` (
-`id` int(11)
-,`sender` varchar(12)
-,`date` char(16)
-,`head` varchar(30)
-,`content` varchar(128)
-,`receiver` varchar(12)
-,`isRead` char(1)
-);
+  `id` int(11) DEFAULT NULL,
+  `sender` varchar(12) COLLATE utf8_bin DEFAULT NULL,
+  `date` char(16) COLLATE utf8_bin DEFAULT NULL,
+  `head` varchar(30) COLLATE utf8_bin DEFAULT NULL,
+  `content` varchar(128) COLLATE utf8_bin DEFAULT NULL,
+  `receiver` varchar(12) COLLATE utf8_bin DEFAULT NULL,
+  `isRead` char(1) COLLATE utf8_bin DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
 --
--- 替换视图以便查看 `view_message_list`
--- (See below for the actual view)
+-- 表的结构 `view_message_list`
 --
+
 CREATE TABLE `view_message_list` (
-`id` int(11)
-,`sender` varchar(12)
-,`receiver` varchar(12)
-,`isRead` char(1)
-,`nickname` varchar(10)
-,`head` varchar(30)
-,`content` text
-,`date` text
-);
+  `id` int(11) DEFAULT NULL,
+  `sender` varchar(12) COLLATE utf8_bin DEFAULT NULL,
+  `receiver` varchar(12) COLLATE utf8_bin DEFAULT NULL,
+  `isRead` char(1) COLLATE utf8_bin DEFAULT NULL,
+  `nickname` varchar(10) COLLATE utf8_bin DEFAULT NULL,
+  `head` varchar(30) COLLATE utf8_bin DEFAULT NULL,
+  `content` text COLLATE utf8_bin,
+  `date` text COLLATE utf8_bin
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
 --
--- 替换视图以便查看 `view_messfocus`
--- (See below for the actual view)
+-- 表的结构 `view_messfocus`
 --
+
 CREATE TABLE `view_messfocus` (
-`sender` varchar(12)
-,`nickname` varchar(10)
-,`date` char(16)
-,`account` varchar(12)
-);
+  `sender` varchar(12) COLLATE utf8_bin DEFAULT NULL,
+  `nickname` varchar(10) COLLATE utf8_bin DEFAULT NULL,
+  `date` char(16) COLLATE utf8_bin DEFAULT NULL,
+  `account` varchar(12) COLLATE utf8_bin DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
 --
--- 替换视图以便查看 `view_messlike`
--- (See below for the actual view)
+-- 表的结构 `view_messlike`
 --
+
 CREATE TABLE `view_messlike` (
-`sender` varchar(12)
-,`date` char(16)
-,`nickname` varchar(10)
-,`head` varchar(30)
-,`article` varchar(24)
-,`title` varchar(32)
-);
+  `sender` varchar(12) COLLATE utf8_bin DEFAULT NULL,
+  `date` char(16) COLLATE utf8_bin DEFAULT NULL,
+  `nickname` varchar(10) COLLATE utf8_bin DEFAULT NULL,
+  `head` varchar(30) COLLATE utf8_bin DEFAULT NULL,
+  `article` varchar(24) COLLATE utf8_bin DEFAULT NULL,
+  `title` varchar(32) COLLATE utf8_bin DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
 --
--- 替换视图以便查看 `view_messsubject`
--- (See below for the actual view)
+-- 表的结构 `view_messsubject`
 --
+
 CREATE TABLE `view_messsubject` (
-`id` int(11)
-,`sid` varchar(24)
-,`aid` varchar(24)
-,`title` varchar(32)
-,`nickname` varchar(10)
-,`sender` varchar(12)
-,`receiver` varchar(12)
-,`head` varchar(30)
-,`date` char(16)
-);
+  `id` int(11) DEFAULT NULL,
+  `sid` varchar(24) COLLATE utf8_bin DEFAULT NULL,
+  `aid` varchar(24) COLLATE utf8_bin DEFAULT NULL,
+  `title` varchar(32) COLLATE utf8_bin DEFAULT NULL,
+  `nickname` varchar(10) COLLATE utf8_bin DEFAULT NULL,
+  `sender` varchar(12) COLLATE utf8_bin DEFAULT NULL,
+  `receiver` varchar(12) COLLATE utf8_bin DEFAULT NULL,
+  `head` varchar(30) COLLATE utf8_bin DEFAULT NULL,
+  `date` char(16) COLLATE utf8_bin DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
 --
--- 替换视图以便查看 `view_rank_author`
--- (See below for the actual view)
+-- 表的结构 `view_rank_author`
 --
+
 CREATE TABLE `view_rank_author` (
-`account` varchar(12)
-,`nickname` varchar(10)
-,`head` varchar(30)
-,`aid` varchar(24)
-,`title` text
-);
+  `account` varchar(12) COLLATE utf8_bin DEFAULT NULL,
+  `nickname` varchar(10) COLLATE utf8_bin DEFAULT NULL,
+  `head` varchar(30) COLLATE utf8_bin DEFAULT NULL,
+  `aid` varchar(24) COLLATE utf8_bin DEFAULT NULL,
+  `title` text COLLATE utf8_bin
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
 --
--- 替换视图以便查看 `view_subject`
--- (See below for the actual view)
+-- 表的结构 `view_subject`
 --
+
 CREATE TABLE `view_subject` (
-`id` int(11)
-,`name` varchar(12)
-,`brief` varchar(128)
-,`thumbnail` varchar(150)
-,`nickname` varchar(10)
-,`date` char(16)
-,`owner` varchar(12)
-,`countArticle` int(11)
-,`countFocus` int(11)
-,`label` varchar(20)
-);
+  `id` int(11) DEFAULT NULL,
+  `name` varchar(12) COLLATE utf8_bin DEFAULT NULL,
+  `brief` varchar(128) COLLATE utf8_bin DEFAULT NULL,
+  `thumbnail` varchar(150) COLLATE utf8_bin DEFAULT NULL,
+  `nickname` varchar(10) COLLATE utf8_bin DEFAULT NULL,
+  `date` char(16) COLLATE utf8_bin DEFAULT NULL,
+  `owner` varchar(12) COLLATE utf8_bin DEFAULT NULL,
+  `countArticle` int(11) DEFAULT NULL,
+  `countFocus` int(11) DEFAULT NULL,
+  `label` varchar(20) COLLATE utf8_bin DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
 --
--- 替换视图以便查看 `view_subject_focus`
--- (See below for the actual view)
+-- 表的结构 `view_subject_focus`
 --
+
 CREATE TABLE `view_subject_focus` (
-`id` int(11)
-,`account` varchar(12)
-,`name` varchar(12)
-,`brief` varchar(128)
-,`thumbnail` varchar(150)
-,`countArticle` int(11)
-,`countFocus` int(11)
-);
+  `id` int(11) DEFAULT NULL,
+  `account` varchar(12) COLLATE utf8_bin DEFAULT NULL,
+  `name` varchar(12) COLLATE utf8_bin DEFAULT NULL,
+  `brief` varchar(128) COLLATE utf8_bin DEFAULT NULL,
+  `thumbnail` varchar(150) COLLATE utf8_bin DEFAULT NULL,
+  `countArticle` int(11) DEFAULT NULL,
+  `countFocus` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
 --
--- 替换视图以便查看 `view_user`
--- (See below for the actual view)
+-- 表的结构 `view_user`
 --
+
 CREATE TABLE `view_user` (
-`account` varchar(12)
-,`password` varchar(20)
-,`nickname` varchar(10)
-,`head` varchar(30)
-,`brief` varchar(48)
-,`countFocus` int(11)
-,`countFans` int(11)
-,`countLike` int(11)
-,`countArticle` int(11)
-,`countSubject` int(11)
-,`indexback` varchar(30)
-,`countWords` int(11)
-,`countLiked` int(11)
-);
+  `account` varchar(12) COLLATE utf8_bin DEFAULT NULL,
+  `password` varchar(20) COLLATE utf8_bin DEFAULT NULL,
+  `nickname` varchar(10) COLLATE utf8_bin DEFAULT NULL,
+  `head` varchar(30) COLLATE utf8_bin DEFAULT NULL,
+  `brief` varchar(48) COLLATE utf8_bin DEFAULT NULL,
+  `countFocus` int(11) DEFAULT NULL,
+  `countFans` int(11) DEFAULT NULL,
+  `countLike` int(11) DEFAULT NULL,
+  `countArticle` int(11) DEFAULT NULL,
+  `countSubject` int(11) DEFAULT NULL,
+  `indexback` varchar(30) COLLATE utf8_bin DEFAULT NULL,
+  `countWords` int(11) DEFAULT NULL,
+  `countLiked` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
 --
--- 替换视图以便查看 `view_userfocus`
--- (See below for the actual view)
+-- 表的结构 `view_userfocus`
 --
+
 CREATE TABLE `view_userfocus` (
-`account` varchar(12)
-,`nickname` varchar(10)
-,`head` varchar(30)
-,`countwords` int(11)
-,`countliked` int(11)
-,`owner` varchar(12)
-);
-
--- --------------------------------------------------------
-
---
--- 表的结构 `vuserlabel`
---
-
-CREATE TABLE `vuserlabel` (
-  `Xaccount` varchar(12) COLLATE utf8_bin NOT NULL COMMENT '用户账号',
-  `Qlabel` int(11) NOT NULL COMMENT '标签号',
-  `Lvalue` int(11) NOT NULL COMMENT '标签值',
-  `Otype` char(1) COLLATE utf8_bin NOT NULL COMMENT '标签类型'
+  `account` varchar(12) COLLATE utf8_bin DEFAULT NULL,
+  `nickname` varchar(10) COLLATE utf8_bin DEFAULT NULL,
+  `head` varchar(30) COLLATE utf8_bin DEFAULT NULL,
+  `countwords` int(11) DEFAULT NULL,
+  `countliked` int(11) DEFAULT NULL,
+  `owner` varchar(12) COLLATE utf8_bin DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
--- --------------------------------------------------------
-
---
--- 表的结构 `warticlelabel`
---
-
-CREATE TABLE `warticlelabel` (
-  `Salid` int(11) NOT NULL COMMENT '文章标签号',
-  `Uname` varchar(10) COLLATE utf8_bin NOT NULL COMMENT '标签名'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
--- --------------------------------------------------------
-
---
--- 表的结构 `yhissearch`
---
-
-CREATE TABLE `yhissearch` (
-  `Hsid` varchar(24) COLLATE utf8_bin NOT NULL COMMENT '搜索记录号',
-  `Econtent` varchar(30) COLLATE utf8_bin NOT NULL COMMENT '搜索内容',
-  `Wdate` char(16) COLLATE utf8_bin NOT NULL COMMENT '搜索日期',
-  `Jaccount` varchar(12) COLLATE utf8_bin NOT NULL COMMENT '搜索者'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
---
--- 转存表中的数据 `yhissearch`
---
-
-INSERT INTO `yhissearch` (`Hsid`, `Econtent`, `Wdate`, `Jaccount`) VALUES
-('879646529180411201435', '区块链', '2018-04-11 20:14', '879646529'),
-('879646529180411211435', '原型设计', '2018-04-11 21:14', '879646529'),
-('879646529180411231435', '区块链', '2018-04-11 23:14', '879646528'),
-('8796465291804141713', 'sketch', '2018-04-14 17:13', '879646529'),
-('8796465291804141715', '反恐', '2018-04-14 17:15', '879646527'),
-('8796465291804151713', 'axure', '2018-04-15 17:13', '879646529'),
-('8796465291804151715', '缉私', '2018-04-15 17:15', '879646527'),
-('8796465291804161713', 'photoshop', '2018-04-16 17:13', '879646529'),
-('8796465291804161715', '国旗', '2018-04-16 17:15', '879646527'),
-('8796465291804171713', '高保真', '2018-04-17 17:13', '879646529'),
-('8796465291804171715', '救灾', '2018-04-17 17:15', '879646527'),
-('8796465291804181713', '付费连载', '2018-04-18 17:13', '879646529'),
-('879646529180418715', '惩治', '2018-04-18 17:15', '879646527'),
-('8796465291804191713', '吃瓜群众岱岱', '2018-04-19 17:13', '879646529'),
-('8796465291804191715', '高危', '2018-04-19 17:15', '879646527'),
-('8796465291804201713', '考研', '2018-04-20 17:13', '879646529'),
-('8796465291804201715', '国歌', '2018-04-20 17:15', '879646527'),
-('8796465291804211713', '蒋坤元', '2018-04-21 17:13', '879646529'),
-('8796465291804211715', '案发', '2018-04-21 17:15', '879646527'),
-('8796465291804221713', '简书交友', '2018-04-22 17:13', '879646529'),
-('8796465291804221715', '小程序', '2018-04-22 17:15', '879646527'),
-('8796465291804231715', '反腐', '2018-04-23 17:15', '879646527'),
-('8796465291804241715', 'vue', '2018-04-24 17:15', '879646527'),
-('8796465291804251715', '故事', '2018-04-25 17:15', '879646527'),
-('8796465291804261715', '白云麦田', '2018-04-26 17:15', '879646527');
-
--- --------------------------------------------------------
-
---
--- 表的结构 `ysubjectlabel`
---
-
-CREATE TABLE `ysubjectlabel` (
-  `Tslid` int(11) NOT NULL COMMENT '专题标签号',
-  `Rname` varchar(10) COLLATE utf8_bin NOT NULL COMMENT '标签名'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
--- --------------------------------------------------------
-
---
--- 视图结构 `view_action`
---
-DROP TABLE IF EXISTS `view_action`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_action`  AS  select `ma`.`Eaid` AS `id`,`ma`.`Ukey` AS `key`,`ma`.`Rvalue` AS `value`,`ma`.`Vaccount` AS `account`,`ma`.`Htype` AS `type`,`ma`.`Bdate` AS `date` from `maction` `ma` order by `ma`.`Bdate` desc ;
-
--- --------------------------------------------------------
-
---
--- 视图结构 `view_article`
---
-DROP TABLE IF EXISTS `view_article`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_article`  AS  select `la`.`Xaid` AS `id`,`la`.`Dtitle` AS `title`,`la`.`Tcontent` AS `content`,`la`.`Rdate` AS `date`,`la`.`Klike` AS `countLike`,`la`.`Wcomment` AS `countComment`,`la`.`Oread` AS `countRead`,`la`.`Kpicture` AS `thumbnail`,`la`.`Vlabel` AS `label`,`ru`.`Raccount` AS `account`,`ru`.`Hnickname` AS `nickname`,`ru`.`Uhead` AS `head`,`hs`.`Usid` AS `sid`,`hs`.`Yname` AS `subjectName` from ((`larticle` `la` join `ruser` `ru`) join `hsubject` `hs`) where ((`la`.`Psid` = `hs`.`Usid`) and (`la`.`Vaccount` = `ru`.`Raccount`)) order by `la`.`Rdate` desc ;
-
--- --------------------------------------------------------
-
---
--- 视图结构 `view_article_history`
---
-DROP TABLE IF EXISTS `view_article_history`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_article_history`  AS  select `h`.`Chid` AS `id`,`u`.`Raccount` AS `author`,`u`.`Hnickname` AS `nickname`,`u`.`Uhead` AS `head`,`a`.`Xaid` AS `aid`,`a`.`Dtitle` AS `title`,`a`.`Rdate` AS `date`,`a`.`Klike` AS `countLike`,`a`.`Wcomment` AS `countComment`,`a`.`Oread` AS `countRead`,`a`.`Kpicture` AS `thumbnail`,`h`.`Pdate` AS `historyDate`,`h`.`Aaccount` AS `account` from ((`ohistory` `h` left join `ruser` `u` on((`h`.`Aaccount` = `u`.`Raccount`))) left join `larticle` `a` on((`h`.`Gaid` = `a`.`Xaid`))) order by `h`.`Pdate` desc ;
-
--- --------------------------------------------------------
-
---
--- 视图结构 `view_article_like`
---
-DROP TABLE IF EXISTS `view_article_like`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_article_like`  AS  select `ul`.`Hulid` AS `id`,`u`.`Raccount` AS `author`,`u`.`Hnickname` AS `nickname`,`u`.`Uhead` AS `head`,`a`.`Xaid` AS `aid`,`a`.`Dtitle` AS `title`,`a`.`Rdate` AS `date`,`a`.`Klike` AS `countLike`,`a`.`Wcomment` AS `countComment`,`a`.`Oread` AS `countRead`,`a`.`Kpicture` AS `thumbnail`,`ul`.`Idate` AS `likeDate`,`ul`.`Vaccount` AS `account` from ((`fuserlike` `ul` left join `ruser` `u` on((`ul`.`Rautaccount` = `u`.`Raccount`))) left join `larticle` `a` on((`ul`.`Taid` = `a`.`Xaid`))) order by `ul`.`Idate` desc ;
-
--- --------------------------------------------------------
-
---
--- 视图结构 `view_author_focus`
---
-DROP TABLE IF EXISTS `view_author_focus`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_author_focus`  AS  select `haf`.`Tautaccount` AS `account`,`ru`.`Hnickname` AS `nickname`,`ru`.`Uhead` AS `head`,substring_index(group_concat(`la`.`Dtitle` order by `la`.`Rdate` DESC separator ','),',',1) AS `title`,`la`.`Xaid` AS `aid`,`haf`.`Daccount` AS `owner` from ((`hautfocus` `haf` left join `larticle` `la` on((`haf`.`Tautaccount` = `la`.`Vaccount`))) left join `ruser` `ru` on((`haf`.`Tautaccount` = `ru`.`Raccount`))) group by `ru`.`Raccount` ;
-
--- --------------------------------------------------------
-
---
--- 视图结构 `view_blacklist`
---
-DROP TABLE IF EXISTS `view_blacklist`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_blacklist`  AS  select `nb`.`Tbid` AS `bid`,`nb`.`Hblackaccount` AS `account`,`u`.`Hnickname` AS `nickname`,`u`.`Uhead` AS `head`,`nb`.`Vaccount` AS `owner` from (`nblacklist` `nb` join `ruser` `u`) where (`nb`.`Hblackaccount` = `u`.`Raccount`) order by `u`.`Hnickname` desc ;
-
--- --------------------------------------------------------
-
---
--- 视图结构 `view_comment`
---
-DROP TABLE IF EXISTS `view_comment`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_comment`  AS  select `mc`.`Ecid` AS `id`,`u`.`Raccount` AS `sender`,`u`.`Hnickname` AS `nickname`,`u`.`Uhead` AS `head`,`mc`.`Dreceiver` AS `receiver`,`mc`.`Odate` AS `date`,`mc`.`Scontent` AS `content`,`la`.`Dtitle` AS `title`,`mc`.`Particle` AS `article`,`mc`.`Rtype` AS `type` from ((`dmesscomment` `mc` left join `ruser` `u` on((`mc`.`Vsender` = `u`.`Raccount`))) left join `larticle` `la` on((`mc`.`Particle` = `la`.`Xaid`))) ;
-
--- --------------------------------------------------------
-
---
--- 视图结构 `view_examine`
---
-DROP TABLE IF EXISTS `view_examine`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_examine`  AS  select `je`.`Rid` AS `id`,`je`.`Usid` AS `sid`,`la`.`Xaid` AS `aid`,`la`.`Dtitle` AS `title`,`ru`.`Hnickname` AS `nickname`,`ru`.`Raccount` AS `account`,`ru`.`Uhead` AS `head`,`je`.`Edate` AS `date` from ((`jexamine` `je` left join `ruser` `ru` on((`je`.`Gaccount` = `ru`.`Raccount`))) left join `larticle` `la` on((`je`.`Caid` = `la`.`Xaid`))) ;
-
--- --------------------------------------------------------
-
---
--- 视图结构 `view_history_search`
---
-DROP TABLE IF EXISTS `view_history_search`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_history_search`  AS  select `yhs`.`Hsid` AS `id`,`yhs`.`Econtent` AS `content`,`yhs`.`Wdate` AS `date`,`yhs`.`Jaccount` AS `account` from `yhissearch` `yhs` order by `yhs`.`Wdate` desc ;
-
--- --------------------------------------------------------
-
---
--- 视图结构 `view_history_search_popular`
---
-DROP TABLE IF EXISTS `view_history_search_popular`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_history_search_popular`  AS  select count(0) AS `count`,substring_index(group_concat(`yhs`.`Econtent` order by `yhs`.`Wdate` ASC separator ','),',',1) AS `content` from `yhissearch` `yhs` group by `yhs`.`Econtent` ;
-
--- --------------------------------------------------------
-
---
--- 视图结构 `view_message`
---
-DROP TABLE IF EXISTS `view_message`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_message`  AS  select `sm`.`Dmid` AS `id`,`sm`.`Esender` AS `sender`,`sm`.`Rdate` AS `date`,`ru`.`Uhead` AS `head`,`sm`.`Pcontent` AS `content`,`sm`.`Oreceiver` AS `receiver`,`sm`.`GisRead` AS `isRead` from (`smessage` `sm` left join `ruser` `ru` on((`sm`.`Esender` = `ru`.`Raccount`))) order by `sm`.`Rdate` desc ;
-
--- --------------------------------------------------------
-
---
--- 视图结构 `view_message_list`
---
-DROP TABLE IF EXISTS `view_message_list`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_message_list`  AS  select `sm`.`Dmid` AS `id`,`sm`.`Esender` AS `sender`,`sm`.`Oreceiver` AS `receiver`,`sm`.`GisRead` AS `isRead`,`ru`.`Hnickname` AS `nickname`,`ru`.`Uhead` AS `head`,substring_index(group_concat(`sm`.`Pcontent` order by `sm`.`Rdate` DESC separator ','),',',1) AS `content`,substring_index(group_concat(`sm`.`Rdate` order by `sm`.`Rdate` DESC separator ','),',',1) AS `date` from (`smessage` `sm` left join `ruser` `ru` on((`sm`.`Esender` = `ru`.`Raccount`))) group by `sm`.`Esender` ;
-
--- --------------------------------------------------------
-
---
--- 视图结构 `view_messfocus`
---
-DROP TABLE IF EXISTS `view_messfocus`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_messfocus`  AS  select `f`.`Tautaccount` AS `sender`,`u`.`Hnickname` AS `nickname`,`f`.`Fdate` AS `date`,`f`.`Daccount` AS `account` from (`hautfocus` `f` left join `ruser` `u` on((`f`.`Tautaccount` = `u`.`Raccount`))) order by `f`.`Fdate` desc ;
-
--- --------------------------------------------------------
-
---
--- 视图结构 `view_messlike`
---
-DROP TABLE IF EXISTS `view_messlike`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_messlike`  AS  select `hml`.`Ssender` AS `sender`,`hml`.`Wdate` AS `date`,`ru`.`Hnickname` AS `nickname`,`ru`.`Uhead` AS `head`,`la`.`Xaid` AS `article`,`la`.`Dtitle` AS `title` from ((`hmesslike` `hml` left join `ruser` `ru` on((`hml`.`Ssender` = `ru`.`Raccount`))) left join `larticle` `la` on((`hml`.`Varticle` = `la`.`Xaid`))) order by `hml`.`Wdate` desc ;
-
--- --------------------------------------------------------
-
---
--- 视图结构 `view_messsubject`
---
-DROP TABLE IF EXISTS `view_messsubject`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_messsubject`  AS  select `ms`.`Did` AS `id`,`ms`.`Isubject` AS `sid`,`la`.`Xaid` AS `aid`,`la`.`Dtitle` AS `title`,`ru`.`Hnickname` AS `nickname`,`ru`.`Raccount` AS `sender`,`ms`.`Qreceiver` AS `receiver`,`ru`.`Uhead` AS `head`,`ms`.`Ydate` AS `date` from ((`umesssubject` `ms` left join `ruser` `ru` on((`ms`.`Wsender` = `ru`.`Raccount`))) left join `larticle` `la` on((`ms`.`Carticle` = `la`.`Xaid`))) ;
-
--- --------------------------------------------------------
-
---
--- 视图结构 `view_rank_author`
---
-DROP TABLE IF EXISTS `view_rank_author`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_rank_author`  AS  select `ru`.`Raccount` AS `account`,`ru`.`Hnickname` AS `nickname`,`ru`.`Uhead` AS `head`,`la`.`Xaid` AS `aid`,substring_index(group_concat(`la`.`Dtitle` order by `la`.`Rdate` DESC,',' ASC separator ','),',',1) AS `title` from (`ruser` `ru` left join `larticle` `la` on((`ru`.`Raccount` = `la`.`Vaccount`))) group by `ru`.`Raccount` order by `ru`.`Gcountliked` desc ;
-
--- --------------------------------------------------------
-
---
--- 视图结构 `view_subject`
---
-DROP TABLE IF EXISTS `view_subject`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_subject`  AS  select `hs`.`Usid` AS `id`,`hs`.`Yname` AS `name`,`hs`.`Kbrief` AS `brief`,`hs`.`Uthumbnail` AS `thumbnail`,`ru`.`Hnickname` AS `nickname`,`hs`.`Ydate` AS `date`,`hs`.`Ebelong` AS `owner`,`hs`.`Hcountarticle` AS `countArticle`,`hs`.`Scountfocus` AS `countFocus`,`hs`.`Blabel` AS `label` from (`hsubject` `hs` join `ruser` `ru`) where (`hs`.`Ebelong` = `ru`.`Raccount`) order by `hs`.`Scountfocus` desc ;
-
--- --------------------------------------------------------
-
---
--- 视图结构 `view_subject_focus`
---
-DROP TABLE IF EXISTS `view_subject_focus`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_subject_focus`  AS  select `rsf`.`Ksid` AS `id`,`rsf`.`Saccount` AS `account`,`hs`.`Yname` AS `name`,`hs`.`Kbrief` AS `brief`,`hs`.`Uthumbnail` AS `thumbnail`,`hs`.`Hcountarticle` AS `countArticle`,`hs`.`Scountfocus` AS `countFocus` from (`rsubfocus` `rsf` left join `hsubject` `hs` on((`rsf`.`Ksid` = `hs`.`Usid`))) ;
-
--- --------------------------------------------------------
-
---
--- 视图结构 `view_user`
---
-DROP TABLE IF EXISTS `view_user`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_user`  AS  select `u`.`Raccount` AS `account`,`u`.`Ipassword` AS `password`,`u`.`Hnickname` AS `nickname`,`u`.`Uhead` AS `head`,`u`.`Jbrief` AS `brief`,`u`.`Hcountfocus` AS `countFocus`,`u`.`Kcountfans` AS `countFans`,`u`.`Ycountlike` AS `countLike`,`u`.`Xcountarticle` AS `countArticle`,`u`.`Ecountsubject` AS `countSubject`,`u`.`Rindexback` AS `indexback`,`u`.`Bcountwords` AS `countWords`,`u`.`Gcountliked` AS `countLiked` from `ruser` `u` order by `u`.`Gcountliked` desc ;
-
--- --------------------------------------------------------
-
---
--- 视图结构 `view_userfocus`
---
-DROP TABLE IF EXISTS `view_userfocus`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_userfocus`  AS  select `u`.`Raccount` AS `account`,`u`.`Hnickname` AS `nickname`,`u`.`Uhead` AS `head`,`u`.`Bcountwords` AS `countwords`,`u`.`Gcountliked` AS `countliked`,`af`.`Daccount` AS `owner` from (`ruser` `u` join `hautfocus` `af`) where (`u`.`Raccount` = `af`.`Tautaccount`) order by `u`.`Hnickname` desc ;
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `cmessfocus`
---
-ALTER TABLE `cmessfocus`
-  ADD PRIMARY KEY (`Ufid`),
-  ADD KEY `fk_user_messfocus1` (`Xsender`),
-  ADD KEY `fk_user_messfocus2` (`Greceiver`);
-
---
--- Indexes for table `dmesscomment`
---
-ALTER TABLE `dmesscomment`
-  ADD PRIMARY KEY (`Ecid`),
-  ADD KEY `fk_article_messcomment` (`Particle`),
-  ADD KEY `fk_user_messcomment1` (`Vsender`),
-  ADD KEY `fk_user_messcomment2` (`Dreceiver`);
-
---
--- Indexes for table `fuserlike`
---
-ALTER TABLE `fuserlike`
-  ADD PRIMARY KEY (`Hulid`),
-  ADD KEY `fk_article_userlike` (`Taid`),
-  ADD KEY `fk_user_userlike1` (`Rautaccount`),
-  ADD KEY `fk_user_userlike2` (`Vaccount`);
-
---
--- Indexes for table `hautfocus`
---
-ALTER TABLE `hautfocus`
-  ADD PRIMARY KEY (`Yafid`),
-  ADD KEY `fk_user_autfocus1` (`Tautaccount`),
-  ADD KEY `fk_user_autfocus2` (`Daccount`);
-
---
--- Indexes for table `hmesslike`
---
-ALTER TABLE `hmesslike`
-  ADD PRIMARY KEY (`Tlid`),
-  ADD KEY `fk_user_messlike1` (`Ssender`),
-  ADD KEY `fk_user_messlike2` (`Ireceiver`),
-  ADD KEY `fk_article_messlike` (`Varticle`);
-
---
--- Indexes for table `hsubject`
---
-ALTER TABLE `hsubject`
-  ADD PRIMARY KEY (`Usid`);
-
---
--- Indexes for table `jexamine`
---
-ALTER TABLE `jexamine`
-  ADD PRIMARY KEY (`Rid`);
-
---
--- Indexes for table `larticle`
---
-ALTER TABLE `larticle`
-  ADD PRIMARY KEY (`Xaid`),
-  ADD KEY `fk_user_article` (`Vaccount`),
-  ADD KEY `fk_subkect_article` (`Psid`);
-
---
--- Indexes for table `maction`
---
-ALTER TABLE `maction`
-  ADD PRIMARY KEY (`Eaid`),
-  ADD KEY `fk_user_maction` (`Vaccount`);
-
---
--- Indexes for table `nblacklist`
---
-ALTER TABLE `nblacklist`
-  ADD PRIMARY KEY (`Tbid`),
-  ADD KEY `fk_user_blacklist1` (`Vaccount`),
-  ADD KEY `fk_user_blacklist2` (`Hblackaccount`);
-
---
--- Indexes for table `ohistory`
---
-ALTER TABLE `ohistory`
-  ADD PRIMARY KEY (`Gaid`,`Aaccount`),
-  ADD KEY `fk_user_history` (`Aaccount`);
-
---
--- Indexes for table `rsubfocus`
---
-ALTER TABLE `rsubfocus`
-  ADD PRIMARY KEY (`Vsfid`),
-  ADD KEY `fk_user_subfocus` (`Saccount`),
-  ADD KEY `fk_subject_subfocus` (`Ksid`);
-
---
--- Indexes for table `ruser`
---
-ALTER TABLE `ruser`
-  ADD PRIMARY KEY (`Raccount`);
-
---
--- Indexes for table `smessage`
---
-ALTER TABLE `smessage`
-  ADD PRIMARY KEY (`Dmid`),
-  ADD KEY `fk_user_message1` (`Esender`),
-  ADD KEY `fk_user_message2` (`Oreceiver`);
-
---
--- Indexes for table `umesssubject`
---
-ALTER TABLE `umesssubject`
-  ADD PRIMARY KEY (`Did`),
-  ADD KEY `fk_user_messlike1` (`Wsender`),
-  ADD KEY `fk_user_messlike2` (`Qreceiver`),
-  ADD KEY `fk_article_messlike` (`Carticle`);
-
---
--- Indexes for table `warticlelabel`
---
-ALTER TABLE `warticlelabel`
-  ADD PRIMARY KEY (`Salid`),
-  ADD UNIQUE KEY `Uname` (`Uname`);
-
---
--- Indexes for table `yhissearch`
---
-ALTER TABLE `yhissearch`
-  ADD PRIMARY KEY (`Hsid`),
-  ADD KEY `Jaccount` (`Jaccount`);
-
---
--- Indexes for table `ysubjectlabel`
---
-ALTER TABLE `ysubjectlabel`
-  ADD PRIMARY KEY (`Tslid`),
-  ADD UNIQUE KEY `Rname` (`Rname`);
-
---
--- 在导出的表使用AUTO_INCREMENT
---
-
---
--- 使用表AUTO_INCREMENT `cmessfocus`
---
-ALTER TABLE `cmessfocus`
-  MODIFY `Ufid` int(11) NOT NULL AUTO_INCREMENT COMMENT '关注号', AUTO_INCREMENT=3;
---
--- 使用表AUTO_INCREMENT `dmesscomment`
---
-ALTER TABLE `dmesscomment`
-  MODIFY `Ecid` int(11) NOT NULL AUTO_INCREMENT COMMENT '评论号', AUTO_INCREMENT=2;
---
--- 使用表AUTO_INCREMENT `fuserlike`
---
-ALTER TABLE `fuserlike`
-  MODIFY `Hulid` int(11) NOT NULL AUTO_INCREMENT COMMENT '用户喜欢号';
---
--- 使用表AUTO_INCREMENT `hautfocus`
---
-ALTER TABLE `hautfocus`
-  MODIFY `Yafid` int(11) NOT NULL AUTO_INCREMENT COMMENT '作者关注号', AUTO_INCREMENT=2;
---
--- 使用表AUTO_INCREMENT `hmesslike`
---
-ALTER TABLE `hmesslike`
-  MODIFY `Tlid` int(11) NOT NULL AUTO_INCREMENT COMMENT '喜欢号';
---
--- 使用表AUTO_INCREMENT `jexamine`
---
-ALTER TABLE `jexamine`
-  MODIFY `Rid` int(11) NOT NULL AUTO_INCREMENT COMMENT '审核号';
---
--- 使用表AUTO_INCREMENT `nblacklist`
---
-ALTER TABLE `nblacklist`
-  MODIFY `Tbid` int(11) NOT NULL AUTO_INCREMENT COMMENT '黑名单号';
---
--- 使用表AUTO_INCREMENT `rsubfocus`
---
-ALTER TABLE `rsubfocus`
-  MODIFY `Vsfid` int(11) NOT NULL AUTO_INCREMENT COMMENT '专题关注号', AUTO_INCREMENT=4;
---
--- 使用表AUTO_INCREMENT `smessage`
---
-ALTER TABLE `smessage`
-  MODIFY `Dmid` int(11) NOT NULL AUTO_INCREMENT COMMENT '私信号', AUTO_INCREMENT=4;
---
--- 使用表AUTO_INCREMENT `umesssubject`
---
-ALTER TABLE `umesssubject`
-  MODIFY `Did` int(11) NOT NULL AUTO_INCREMENT COMMENT '专题审核号';
---
--- 使用表AUTO_INCREMENT `warticlelabel`
---
-ALTER TABLE `warticlelabel`
-  MODIFY `Salid` int(11) NOT NULL AUTO_INCREMENT COMMENT '文章标签号';
---
--- 使用表AUTO_INCREMENT `ysubjectlabel`
---
-ALTER TABLE `ysubjectlabel`
-  MODIFY `Tslid` int(11) NOT NULL AUTO_INCREMENT COMMENT '专题标签号';
---
--- 限制导出的表
---
-
---
--- 限制表 `cmessfocus`
---
-ALTER TABLE `cmessfocus`
-  ADD CONSTRAINT `fk_user_messfocus1` FOREIGN KEY (`Xsender`) REFERENCES `ruser` (`Raccount`),
-  ADD CONSTRAINT `fk_user_messfocus2` FOREIGN KEY (`Greceiver`) REFERENCES `ruser` (`Raccount`);
-
---
--- 限制表 `dmesscomment`
---
-ALTER TABLE `dmesscomment`
-  ADD CONSTRAINT `fk_article_messcomment` FOREIGN KEY (`Particle`) REFERENCES `larticle` (`Xaid`),
-  ADD CONSTRAINT `fk_user_messcomment1` FOREIGN KEY (`Vsender`) REFERENCES `ruser` (`Raccount`),
-  ADD CONSTRAINT `fk_user_messcomment2` FOREIGN KEY (`Dreceiver`) REFERENCES `ruser` (`Raccount`);
-
---
--- 限制表 `fuserlike`
---
-ALTER TABLE `fuserlike`
-  ADD CONSTRAINT `fk_article_userlike` FOREIGN KEY (`Taid`) REFERENCES `larticle` (`Xaid`),
-  ADD CONSTRAINT `fk_user_userlike1` FOREIGN KEY (`Rautaccount`) REFERENCES `ruser` (`Raccount`),
-  ADD CONSTRAINT `fk_user_userlike2` FOREIGN KEY (`Vaccount`) REFERENCES `ruser` (`Raccount`);
-
---
--- 限制表 `hautfocus`
---
-ALTER TABLE `hautfocus`
-  ADD CONSTRAINT `fk_user_autfocus1` FOREIGN KEY (`Tautaccount`) REFERENCES `ruser` (`Raccount`),
-  ADD CONSTRAINT `fk_user_autfocus2` FOREIGN KEY (`Daccount`) REFERENCES `ruser` (`Raccount`);
-
---
--- 限制表 `hmesslike`
---
-ALTER TABLE `hmesslike`
-  ADD CONSTRAINT `fk_article_messlike` FOREIGN KEY (`Varticle`) REFERENCES `larticle` (`Xaid`),
-  ADD CONSTRAINT `fk_user_messlike1` FOREIGN KEY (`Ssender`) REFERENCES `ruser` (`Raccount`),
-  ADD CONSTRAINT `fk_user_messlike2` FOREIGN KEY (`Ireceiver`) REFERENCES `ruser` (`Raccount`);
-
---
--- 限制表 `maction`
---
-ALTER TABLE `maction`
-  ADD CONSTRAINT `fk_user_maction` FOREIGN KEY (`Vaccount`) REFERENCES `ruser` (`Raccount`);
-
---
--- 限制表 `nblacklist`
---
-ALTER TABLE `nblacklist`
-  ADD CONSTRAINT `fk_user_blacklist1` FOREIGN KEY (`Vaccount`) REFERENCES `ruser` (`Raccount`),
-  ADD CONSTRAINT `fk_user_blacklist2` FOREIGN KEY (`Hblackaccount`) REFERENCES `ruser` (`Raccount`);
-
---
--- 限制表 `ohistory`
---
-ALTER TABLE `ohistory`
-  ADD CONSTRAINT `fk_article_history` FOREIGN KEY (`Gaid`) REFERENCES `larticle` (`Xaid`),
-  ADD CONSTRAINT `fk_user_history` FOREIGN KEY (`Aaccount`) REFERENCES `ruser` (`Raccount`);
-
---
--- 限制表 `rsubfocus`
---
-ALTER TABLE `rsubfocus`
-  ADD CONSTRAINT `fk_subject_subfocus` FOREIGN KEY (`Ksid`) REFERENCES `hsubject` (`Usid`),
-  ADD CONSTRAINT `fk_user_subfocus` FOREIGN KEY (`Saccount`) REFERENCES `ruser` (`Raccount`);
-
---
--- 限制表 `smessage`
---
-ALTER TABLE `smessage`
-  ADD CONSTRAINT `fk_user_message1` FOREIGN KEY (`Esender`) REFERENCES `ruser` (`Raccount`),
-  ADD CONSTRAINT `fk_user_message2` FOREIGN KEY (`Oreceiver`) REFERENCES `ruser` (`Raccount`);
-
---
--- 限制表 `yhissearch`
---
-ALTER TABLE `yhissearch`
-  ADD CONSTRAINT `yhissearch_ibfk_1` FOREIGN KEY (`Jaccount`) REFERENCES `ruser` (`Raccount`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

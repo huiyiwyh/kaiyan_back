@@ -6,6 +6,7 @@ import (
 	"kaiyan/data"
 	"kaiyan/utils"
 	"os"
+	"time"
 
 	"net/http"
 )
@@ -80,9 +81,7 @@ func subjectAdd(w http.ResponseWriter, r *http.Request) {
 	ythcs := r.FormValue("ythcs")
 	ythcs_ := utils.Decode(ythcs)
 	utyeh := r.FormValue("utyeh")
-	utyeh_ := utils.Decode(utyeh)
 	ertqh := r.FormValue("ertqh")
-	ertqh_ := utils.Decode(ertqh)
 	vjmsk := r.FormValue("vjmsk")
 	vjmsk_ := utils.Decode(vjmsk)
 
@@ -95,9 +94,11 @@ func subjectAdd(w http.ResponseWriter, r *http.Request) {
 	}
 	defer file.Close()
 
-	utils.CreateDir("user/" + ythcs_)
+	timestamp := time.Now().Unix()
+	tm := time.Unix(timestamp, 0)
+	time := tm.Format("0601021504")
 
-	fW, err := os.Create("user/" + ythcs_ + ".jpg")
+	fW, err := os.Create("subject/" + ythcs_ + time + ".jpg")
 	if err != nil {
 		fmt.Println("文件创建失败")
 		result := data.SuccessFail_("0", "文件创建失败")
@@ -115,7 +116,7 @@ func subjectAdd(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	result := data.SubjectAdd_(ythcs_, utyeh_, ertqh_, "user/"+ythcs_+".jpg", vjmsk_)
+	result := data.SubjectAdd_(ythcs_, utyeh, ertqh, "subject/"+ythcs_+time+".jpg", vjmsk_)
 	fmt.Fprintf(w, result)
 }
 
@@ -141,9 +142,8 @@ func subjectUploadSymbol(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("content-type", "application/json")
 
 	tjnsv := r.FormValue("tjnsv")
-	tjnsv_ := utils.Decode(tjnsv)
 
-	result := data.SubjectUploadSymbol_(tjnsv_)
+	result := data.SubjectUploadSymbol_(tjnsv)
 	fmt.Fprintf(w, result)
 }
 
@@ -243,16 +243,15 @@ func articleExamine(w http.ResponseWriter, r *http.Request) {
 	imvah := r.FormValue("imvah")
 	imvah_ := utils.Decode(imvah)
 	tafvm := r.FormValue("tafvm")
-	tafvm_ := utils.Decode(tafvm)
 	uehst := r.FormValue("uehst")
 	uehst_ := utils.Decode(uehst)
 
 	var result string
 	switch twrch_ {
 	case "1":
-		result = data.ArticleExamine_ac(eshhd_, twrch_, imvah_, tafvm_, uehst_)
+		result = data.ArticleExamine_ac(eshhd_, twrch_, imvah_, tafvm, uehst_)
 	case "0":
-		result = data.ArticleExamine_fa(eshhd_, twrch_, imvah_, tafvm_, uehst_)
+		result = data.ArticleExamine_fa(eshhd_, twrch_, imvah_, tafvm, uehst_)
 	default:
 		result = data.SuccessFail_("0", "wrong code")
 	}
