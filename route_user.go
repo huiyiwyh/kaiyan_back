@@ -42,7 +42,7 @@ func userLogin(w http.ResponseWriter, r *http.Request) {
 
 func userLogout(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Add("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
 	w.Header().Set("content-type", "application/json")
 
 	token := r.Header["Token"][0]
@@ -84,7 +84,7 @@ func userSignup(w http.ResponseWriter, r *http.Request) {
 
 func userDetails(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Add("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
 	w.Header().Set("content-type", "application/json")
 
 	token := r.Header["Token"][0]
@@ -105,7 +105,7 @@ func userDetails(w http.ResponseWriter, r *http.Request) {
 
 func userModifyHead(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Add("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
 	w.Header().Set("content-type", "application/json")
 
 	token := r.Header["Token"][0]
@@ -154,7 +154,7 @@ func userModifyHead(w http.ResponseWriter, r *http.Request) {
 
 func userModifyNickname(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Add("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
 	w.Header().Set("content-type", "application/json")
 
 	token := r.Header["Token"][0]
@@ -177,7 +177,7 @@ func userModifyNickname(w http.ResponseWriter, r *http.Request) {
 
 func userModifyBrief(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Add("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
 	w.Header().Set("content-type", "application/json")
 
 	token := r.Header["Token"][0]
@@ -200,7 +200,7 @@ func userModifyBrief(w http.ResponseWriter, r *http.Request) {
 
 func userModifyPassword(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Add("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
 	w.Header().Set("content-type", "application/json")
 
 	token := r.Header["Token"][0]
@@ -225,7 +225,7 @@ func userModifyPassword(w http.ResponseWriter, r *http.Request) {
 
 func userDynamic(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Add("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
 	w.Header().Set("content-type", "application/json")
 
 	token := r.Header["Token"][0]
@@ -250,7 +250,7 @@ func userDynamic(w http.ResponseWriter, r *http.Request) {
 
 func userListMessage(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Add("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
 	w.Header().Set("content-type", "application/json")
 
 	token := r.Header["Token"][0]
@@ -273,7 +273,7 @@ func userListMessage(w http.ResponseWriter, r *http.Request) {
 
 func userListMessageDetails(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Add("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
 	w.Header().Set("content-type", "application/json")
 
 	token := r.Header["Token"][0]
@@ -298,7 +298,7 @@ func userListMessageDetails(w http.ResponseWriter, r *http.Request) {
 
 func userSearchFri(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Add("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
 	w.Header().Set("content-type", "application/json")
 
 	token := r.Header["Token"][0]
@@ -319,7 +319,7 @@ func userSearchFri(w http.ResponseWriter, r *http.Request) {
 
 func userSendMessage(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Add("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
 	w.Header().Set("content-type", "application/json")
 
 	token := r.Header["Token"][0]
@@ -344,7 +344,7 @@ func userSendMessage(w http.ResponseWriter, r *http.Request) {
 
 func userListComment(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Add("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
 	w.Header().Set("content-type", "application/json")
 
 	token := r.Header["Token"][0]
@@ -367,7 +367,7 @@ func userListComment(w http.ResponseWriter, r *http.Request) {
 
 func userAddComment(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Add("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
 	w.Header().Set("content-type", "application/json")
 
 	token := r.Header["Token"][0]
@@ -394,7 +394,7 @@ func userAddComment(w http.ResponseWriter, r *http.Request) {
 
 func userListLike(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Add("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
 	w.Header().Set("content-type", "application/json")
 
 	token := r.Header["Token"][0]
@@ -416,7 +416,7 @@ func userListLike(w http.ResponseWriter, r *http.Request) {
 //获取关注列表
 func userListFocus(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Add("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
 	w.Header().Set("content-type", "application/json")
 
 	token := r.Header["Token"][0]
@@ -438,7 +438,7 @@ func userListFocus(w http.ResponseWriter, r *http.Request) {
 //获取用户主页信息
 func userListHomeDetails(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Add("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
 	w.Header().Set("content-type", "application/json")
 
 	token := r.Header["Token"][0]
@@ -461,7 +461,7 @@ func userListHomeDetails(w http.ResponseWriter, r *http.Request) {
 
 func userFocus(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Add("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
 	w.Header().Set("content-type", "application/json")
 
 	token := r.Header["Token"][0]
@@ -483,7 +483,7 @@ func userFocus(w http.ResponseWriter, r *http.Request) {
 //取消关注用户
 func userCancelFocus(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Add("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Add("Access-Control-Allow-Headers", "COrigin, X-Requested-With, Content-Type, Accept, Token")
 	w.Header().Set("content-type", "application/json")
 
 	token := r.Header["Token"][0]

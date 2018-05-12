@@ -90,7 +90,7 @@ func UserSignup_(ywhft, iuqng string) string {
 		//将生成的code，放入levelDB
 	}
 
-	_, err = Db.Exec("insert into ruser(Raccount,Hnickname,Ipassword,Jbrief) values (?,?,?,?)", ywhft, "", iuqng, " ")
+	_, err = Db.Exec("insert into ruser(Raccount,Hnickname,Ipassword) values (?,?,?)", ywhft, "u"+ywhft, iuqng)
 	if err != nil {
 		Mutex.Unlock()
 		return SuccessFail_("0", "插入失败")

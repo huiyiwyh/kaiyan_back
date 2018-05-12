@@ -2,8 +2,10 @@ package main
 
 import (
 	"fmt"
+	"io"
 	"kaiyan/data"
 	"kaiyan/utils"
+	"os"
 
 	"net/http"
 )
@@ -81,12 +83,39 @@ func subjectAdd(w http.ResponseWriter, r *http.Request) {
 	utyeh_ := utils.Decode(utyeh)
 	ertqh := r.FormValue("ertqh")
 	ertqh_ := utils.Decode(ertqh)
-	oiyhx := r.FormValue("oiyhx")
-	oiyhx_ := utils.Decode(oiyhx)
 	vjmsk := r.FormValue("vjmsk")
 	vjmsk_ := utils.Decode(vjmsk)
 
-	result := data.SubjectAdd_(ythcs_, utyeh_, ertqh_, oiyhx_, vjmsk_)
+	file, _, err := r.FormFile("oiyhx")
+	if err != nil {
+		fmt.Println(err)
+		result := data.SuccessFail_("0", "图片获取失败")
+		fmt.Fprintf(w, result)
+		return
+	}
+	defer file.Close()
+
+	utils.CreateDir("user/" + ythcs_)
+
+	fW, err := os.Create("user/" + ythcs_ + ".jpg")
+	if err != nil {
+		fmt.Println("文件创建失败")
+		result := data.SuccessFail_("0", "文件创建失败")
+		fmt.Fprintf(w, result)
+		return
+	}
+
+	defer fW.Close()
+
+	_, err = io.Copy(fW, file)
+	if err != nil {
+		fmt.Println("文件保存失败")
+		result := data.SuccessFail_("0", "文件保存失败")
+		fmt.Fprintf(w, result)
+		return
+	}
+
+	result := data.SubjectAdd_(ythcs_, utyeh_, ertqh_, "user/"+ythcs_+".jpg", vjmsk_)
 	fmt.Fprintf(w, result)
 }
 
