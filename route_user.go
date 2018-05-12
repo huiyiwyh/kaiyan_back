@@ -54,11 +54,10 @@ func userSignUp(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("content-type", "application/json")
 
 	ywhft := r.FormValue("ywhft") //account
-	urhsf := r.FormValue("urhsf") //name
 	iuqng := r.FormValue("iuqng") //password
 
 	var result string
-	result = data.UserSignUp_(ywhft, urhsf, iuqng)
+	result = data.UserSignUp_(ywhft, iuqng)
 	fmt.Fprintf(w, result)
 }
 

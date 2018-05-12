@@ -25,7 +25,7 @@ func SubjectFocus_(grbfs, ckege, uiksh string) string {
 		log.Println(err)
 		conn.Rollback()
 		Mutex.Unlock()
-		return SuccessFail_("0", "Insert err")
+		return SuccessFail_("0", "插入失败")
 	}
 
 	_, err = Db.Exec("update hsubject set Scountfocus = Scountfocus + 1 where Usid = ?", grbfs)
@@ -33,7 +33,7 @@ func SubjectFocus_(grbfs, ckege, uiksh string) string {
 		log.Println(err)
 		conn.Rollback()
 		Mutex.Unlock()
-		return SuccessFail_("0", "Update err")
+		return SuccessFail_("0", "更新失败")
 	}
 
 	// _, err = Db.Exec("insert into hmesslike (Ireceiver,Varticle,Ssender,Wdate) values (?,?,?,?)", ivwga, rwhcs, uwhgc, time)
@@ -53,7 +53,7 @@ func SubjectFocus_(grbfs, ckege, uiksh string) string {
 			log.Println(err)
 			conn.Rollback()
 			Mutex.Unlock()
-			return SuccessFail_("0", "Query err")
+			return SuccessFail_("0", "查询失败")
 		}
 		defer rows.Close()
 
@@ -63,7 +63,7 @@ func SubjectFocus_(grbfs, ckege, uiksh string) string {
 				log.Println(err)
 				conn.Rollback()
 				Mutex.Unlock()
-				return SuccessFail_("0", "Update err")
+				return SuccessFail_("0", "更新失败")
 			}
 		} else {
 			_, err = Db.Exec("Insert into vuserlabel(Xaccount,Qlabel,Lvalue,Otype) values(?,?,6,1)", ckege, symbol)
@@ -71,7 +71,7 @@ func SubjectFocus_(grbfs, ckege, uiksh string) string {
 				log.Println(err)
 				conn.Rollback()
 				Mutex.Unlock()
-				return SuccessFail_("0", "Insert err")
+				return SuccessFail_("0", "插入失败")
 			}
 		}
 	}
@@ -99,14 +99,14 @@ func SubjectCancleFocus_(grbfs, ckege, uiksh string) string {
 		log.Println(err)
 		conn.Rollback()
 		Mutex.Unlock()
-		return SuccessFail_("0", "Delete err")
+		return SuccessFail_("0", "删除失败")
 	}
 	_, err = Db.Exec("update hsubject set  = Scountfocus - 1 where Usid = ?", grbfs)
 	if err != nil {
 		log.Println(err)
 		conn.Rollback()
 		Mutex.Unlock()
-		return SuccessFail_("0", "Update err")
+		return SuccessFail_("0", "更新失败")
 	}
 
 	symbols := strings.Split(uiksh, "|")
@@ -119,7 +119,7 @@ func SubjectCancleFocus_(grbfs, ckege, uiksh string) string {
 			log.Println(err)
 			conn.Rollback()
 			Mutex.Unlock()
-			return SuccessFail_("0", "Query err")
+			return SuccessFail_("0", "查询失败")
 		}
 
 		defer rows.Close()
@@ -130,7 +130,7 @@ func SubjectCancleFocus_(grbfs, ckege, uiksh string) string {
 				log.Println(err)
 				conn.Rollback()
 				Mutex.Unlock()
-				return SuccessFail_("0", "Update err")
+				return SuccessFail_("0", "更新失败")
 			}
 		}
 	}
@@ -159,7 +159,7 @@ func SubjectUploadSymbol_(tjnsv string) string {
 		log.Println(err)
 		conn.Rollback()
 		Mutex.Unlock()
-		return SuccessFail_("0", "Query err")
+		return SuccessFail_("0", "查询失败")
 	}
 
 	defer rows.Close()
@@ -174,7 +174,7 @@ func SubjectUploadSymbol_(tjnsv string) string {
 			log.Println(err)
 			conn.Rollback()
 			Mutex.Unlock()
-			return SuccessFail_("0", "Delete err")
+			return SuccessFail_("0", "删除失败")
 		}
 
 		newrows, err := Db.Query("select Tslid from ysubjectlabel where Rname = ?", tjnsv)
@@ -182,7 +182,7 @@ func SubjectUploadSymbol_(tjnsv string) string {
 			log.Println(err)
 			conn.Rollback()
 			Mutex.Unlock()
-			return SuccessFail_("0", "Query err")
+			return SuccessFail_("0", "查询失败")
 		}
 		newrows.Close()
 
@@ -194,7 +194,7 @@ func SubjectUploadSymbol_(tjnsv string) string {
 			log.Println(err)
 			conn.Rollback()
 			Mutex.Unlock()
-			return SuccessFail_("0", "Insert err")
+			return SuccessFail_("0", "插入失败")
 		}
 	}
 
@@ -218,7 +218,7 @@ func SubjectListFocus_(budhs string, tehsc string) string {
 	limit, err := strconv.Atoi(tehsc)
 	if err != nil {
 		log.Println(err)
-		return SuccessFail_("0", "Atoi err")
+		return SuccessFail_("0", "字符串转字符失败")
 	}
 
 	Mutex.Lock()
@@ -227,7 +227,7 @@ func SubjectListFocus_(budhs string, tehsc string) string {
 	if err != nil {
 		log.Println(err)
 		Mutex.Unlock()
-		return SuccessFail_("0", "Query err")
+		return SuccessFail_("0", "查询失败")
 	}
 
 	defer rows.Close()
@@ -243,7 +243,7 @@ func SubjectListFocus_(budhs string, tehsc string) string {
 		err = rows.Scan(&id, &name, &brief, &thumbnail, &countArticle, &countFocus)
 		if err != nil {
 			log.Println(err)
-			return SuccessFail_("0", "Scan err")
+			return SuccessFail_("0", "赋值失败")
 		}
 
 		data := DataSubjectListFocus{
@@ -276,7 +276,7 @@ func SubjectListTime(wyejs string) string {
 	if err != nil {
 		log.Println(err)
 		Mutex.Unlock()
-		return SuccessFail_("0", "Query err")
+		return SuccessFail_("0", "查询失败")
 	}
 
 	defer rows.Close()
@@ -292,7 +292,7 @@ func SubjectListTime(wyejs string) string {
 		err = rows.Scan(&id, &name, &nickname, &thumbnail, &countArticle, &countFocus, &date)
 		if err != nil {
 			log.Println(err)
-			return SuccessFail_("0", "Scan err")
+			return SuccessFail_("0", "赋值失败")
 		}
 
 		data := DataSubjectList{
@@ -322,7 +322,7 @@ func SubjectListNum(wyejs string) string {
 	limit, err := strconv.Atoi(wyejs)
 	if err != nil {
 		log.Println(err)
-		return SuccessFail_("0", "Atoi err")
+		return SuccessFail_("0", "字符串转字符失败")
 	}
 
 	Mutex.Lock()
@@ -330,7 +330,7 @@ func SubjectListNum(wyejs string) string {
 	if err != nil {
 		log.Println(err)
 		Mutex.Unlock()
-		return SuccessFail_("0", "Query err")
+		return SuccessFail_("0", "查询失败")
 	}
 
 	defer rows.Close()
@@ -346,7 +346,7 @@ func SubjectListNum(wyejs string) string {
 		err = rows.Scan(&id, &name, &nickname, &thumbnail, &countArticle, &countFocus, &date)
 		if err != nil {
 			log.Println(err)
-			return SuccessFail_("0", "Scan err")
+			return SuccessFail_("0", "赋值失败")
 		}
 
 		data := DataSubjectList{
@@ -378,7 +378,7 @@ func SubjectListAccount(kvjed string) string {
 	if err != nil {
 		log.Println(err)
 		Mutex.Unlock()
-		return SuccessFail_("0", "Query err")
+		return SuccessFail_("0", "查询失败")
 	}
 
 	defer rows.Close()
@@ -394,7 +394,7 @@ func SubjectListAccount(kvjed string) string {
 		err = rows.Scan(&id, &name, &nickname, &thumbnail, &countArticle, &countFocus, &date)
 		if err != nil {
 			log.Println(err)
-			return SuccessFail_("0", "Scan err")
+			return SuccessFail_("0", "赋值失败")
 		}
 
 		data := DataSubjectList{
@@ -426,7 +426,7 @@ func SubjectListDetails_(grbfs, ckege string) string {
 	subjectId, err := strconv.Atoi(grbfs)
 	if err != nil {
 		log.Println(err)
-		return SuccessFail_("0", "Atoi err")
+		return SuccessFail_("0", "字符串转字符失败")
 	}
 
 	Mutex.Lock()
@@ -435,7 +435,7 @@ func SubjectListDetails_(grbfs, ckege string) string {
 	if err != nil {
 		log.Println(err)
 		Mutex.Unlock()
-		return SuccessFail_("0", "Query err")
+		return SuccessFail_("0", "查询失败")
 	}
 
 	defer rows.Close()
@@ -450,7 +450,7 @@ func SubjectListDetails_(grbfs, ckege string) string {
 		err = rows.Scan(&id, &name, &brief, &thumbnail, &owner, &nickname, &countArticle, &countFocus, &label)
 		if err != nil {
 			log.Println(err)
-			return SuccessFail_("0", "Scan err")
+			return SuccessFail_("0", "赋值失败")
 		}
 
 		if owner == ckege {
@@ -500,7 +500,7 @@ func SubjectAdd_(ythcs, utyeh, ertqh, oiyhx, vjmsk string) string {
 	if err != nil {
 		log.Println(err)
 		Mutex.Unlock()
-		return SuccessFail_("0", "Query err")
+		return SuccessFail_("0", "查询失败")
 	}
 
 	defer rows.Close()
@@ -621,7 +621,7 @@ func ArticleNotContribute_(hskcu string) string {
 	if err != nil {
 		log.Println(err)
 		Mutex.Unlock()
-		return SuccessFail_("0", "Query err")
+		return SuccessFail_("0", "查询失败")
 	}
 
 	defer rows.Close()
@@ -635,7 +635,7 @@ func ArticleNotContribute_(hskcu string) string {
 		err = rows.Scan(&title)
 		if err != nil {
 			log.Println(err)
-			return SuccessFail_("0", "Scan err")
+			return SuccessFail_("0", "赋值失败")
 		}
 
 		data := DataArticleNotContribute{
@@ -662,7 +662,7 @@ func ArticleNotExamine_(ueysj string) string {
 	if err != nil {
 		log.Println(err)
 		Mutex.Unlock()
-		return SuccessFail_("0", "Query err")
+		return SuccessFail_("0", "查询失败")
 	}
 
 	defer rows.Close()
@@ -677,7 +677,7 @@ func ArticleNotExamine_(ueysj string) string {
 		err = rows.Scan(&id, &aid, &title, &nickname, &account, &head, &date)
 		if err != nil {
 			log.Println(err)
-			return SuccessFail_("0", "Scan err")
+			return SuccessFail_("0", "赋值失败")
 		}
 
 		data := DataArticleNotExamine{
@@ -712,7 +712,7 @@ func ArticleExamine_ac(eshhd, twrch, imvah, tafvm, uehst string) string {
 	examineId, err := strconv.Atoi(eshhd)
 	if err != nil {
 		log.Println(err)
-		return SuccessFail_("0", "Atoi err")
+		return SuccessFail_("0", "字符串转字符失败")
 	}
 
 	Mutex.Lock()
@@ -728,7 +728,7 @@ func ArticleExamine_ac(eshhd, twrch, imvah, tafvm, uehst string) string {
 		log.Println(err)
 		conn.Rollback()
 		Mutex.Unlock()
-		return SuccessFail_("0", "Query err")
+		return SuccessFail_("0", "查询失败")
 	}
 
 	defer rows.Close()
@@ -739,7 +739,7 @@ func ArticleExamine_ac(eshhd, twrch, imvah, tafvm, uehst string) string {
 		if err != nil {
 			log.Println(err)
 			Mutex.Unlock()
-			return SuccessFail_("0", "Scan err")
+			return SuccessFail_("0", "赋值失败")
 		}
 
 		fmt.Println(articleId, subjectId, author)
@@ -749,7 +749,7 @@ func ArticleExamine_ac(eshhd, twrch, imvah, tafvm, uehst string) string {
 		log.Println(err)
 		conn.Rollback()
 		Mutex.Unlock()
-		return SuccessFail_("0", "Update err")
+		return SuccessFail_("0", "更新失败")
 	}
 
 	_, err = Db.Exec("delete from jexamine where Rid = ?", examineId)
@@ -757,7 +757,7 @@ func ArticleExamine_ac(eshhd, twrch, imvah, tafvm, uehst string) string {
 		log.Println(err)
 		conn.Rollback()
 		Mutex.Unlock()
-		return SuccessFail_("0", "Delete err")
+		return SuccessFail_("0", "删除失败")
 	}
 
 	_, err = Db.Exec("update hsubject set Hcountarticle = Hcountarticle + 1 where Usid =  ?", subjectId)
@@ -765,7 +765,7 @@ func ArticleExamine_ac(eshhd, twrch, imvah, tafvm, uehst string) string {
 		log.Println(err)
 		conn.Rollback()
 		Mutex.Unlock()
-		return SuccessFail_("0", "Update err")
+		return SuccessFail_("0", "更新失败")
 	}
 
 	timestamp := time.Now().Unix()
@@ -778,7 +778,7 @@ func ArticleExamine_ac(eshhd, twrch, imvah, tafvm, uehst string) string {
 		log.Println(err)
 		conn.Rollback()
 		Mutex.Unlock()
-		return SuccessFail_("0", "Insert err")
+		return SuccessFail_("0", "插入失败")
 	}
 
 	conn.Commit()
@@ -793,7 +793,7 @@ func ArticleExamine_fa(eshhd, twrch, imvah, tafvm, uehst string) string {
 	examineId, err := strconv.Atoi(eshhd)
 	if err != nil {
 		log.Println(err)
-		return SuccessFail_("0", "Atoi err")
+		return SuccessFail_("0", "字符串转字符失败")
 	}
 
 	Mutex.Lock()
@@ -809,7 +809,7 @@ func ArticleExamine_fa(eshhd, twrch, imvah, tafvm, uehst string) string {
 		log.Println(err)
 		conn.Rollback()
 		Mutex.Unlock()
-		return SuccessFail_("0", "Query err")
+		return SuccessFail_("0", "查询失败")
 	}
 
 	defer rows.Close()
@@ -819,7 +819,7 @@ func ArticleExamine_fa(eshhd, twrch, imvah, tafvm, uehst string) string {
 	if err != nil {
 		log.Println(err)
 		Mutex.Unlock()
-		return SuccessFail_("0", "Scan err")
+		return SuccessFail_("0", "赋值失败")
 	}
 
 	_, err = Db.Exec("delete from jexamine where Rid = ?", examineId)
@@ -827,7 +827,7 @@ func ArticleExamine_fa(eshhd, twrch, imvah, tafvm, uehst string) string {
 		log.Println(err)
 		conn.Rollback()
 		Mutex.Unlock()
-		return SuccessFail_("0", "Delete err")
+		return SuccessFail_("0", "删除失败")
 	}
 
 	timestamp := time.Now().Unix()
@@ -839,7 +839,7 @@ func ArticleExamine_fa(eshhd, twrch, imvah, tafvm, uehst string) string {
 		log.Println(err)
 		conn.Rollback()
 		Mutex.Unlock()
-		return SuccessFail_("0", "Insert err")
+		return SuccessFail_("0", "插入失败")
 	}
 
 	conn.Commit()

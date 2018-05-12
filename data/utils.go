@@ -44,3 +44,7 @@ func FailMarshalIndent(err error) string {
 	log.Println(err)
 	return "transfer to json failed!"
 }
+
+func smsSend(phoneNum string) {
+
+}

@@ -16,7 +16,7 @@ func BlackList_(ewysj, uwyhe string) string {
 	limit, err := strconv.Atoi(uwyhe)
 	if err != nil {
 		log.Println()
-		return SuccessFail_("0", "Atoi err")
+		return SuccessFail_("0", "字符串转字符失败")
 	}
 
 	Mutex.Lock()
@@ -25,7 +25,7 @@ func BlackList_(ewysj, uwyhe string) string {
 	if err != nil {
 		log.Println(err)
 		Mutex.Unlock()
-		return SuccessFail_("0", "Query err")
+		return SuccessFail_("0", "查询失败")
 	}
 
 	defer rows.Close()
@@ -39,7 +39,7 @@ func BlackList_(ewysj, uwyhe string) string {
 		err = rows.Scan(&account, &nickname, &head)
 		if err != nil {
 			log.Println(err)
-			return SuccessFail_("0", "Scan err")
+			return SuccessFail_("0", "赋值失败")
 		}
 
 		data := DataBlackList{
@@ -69,7 +69,7 @@ func BlackAdd_(cjrhw, chewj string) string {
 	if err != nil {
 		log.Println(err)
 		Mutex.Unlock()
-		return SuccessFail_("0", "Insert err")
+		return SuccessFail_("0", "插入失败")
 	}
 	Mutex.Unlock()
 
@@ -82,7 +82,7 @@ func BlackDelete_(cjnek string) string {
 	id, err := strconv.Atoi(cjnek)
 	if err != nil {
 		log.Println(err)
-		return SuccessFail_("0", "Atoi err")
+		return SuccessFail_("0", "字符串转字符失败")
 	}
 
 	Mutex.Lock()
@@ -90,7 +90,7 @@ func BlackDelete_(cjnek string) string {
 	if err != nil {
 		log.Println(err)
 		Mutex.Unlock()
-		return SuccessFail_("0", "Delete err")
+		return SuccessFail_("0", "删除失败")
 	}
 	Mutex.Unlock()
 	return SuccessFail_("1", "移除黑名单用户成功！")

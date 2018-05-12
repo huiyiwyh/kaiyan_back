@@ -58,7 +58,7 @@ func ArticleListRec(Account string) string {
 		log.Println(err)
 		conn.Rollback()
 		Mutex.Unlock()
-		return SuccessFail_("0", "Query err1")
+		return SuccessFail_("0", "查询失败1")
 	}
 
 	defer rows.Close()
@@ -79,7 +79,7 @@ func ArticleListRec(Account string) string {
 		log.Println(err)
 		conn.Rollback()
 		Mutex.Unlock()
-		return SuccessFail_("0", "Query err2")
+		return SuccessFail_("0", "查询失败2")
 	}
 	for rows.Next() {
 		var articleid, labelstring string
@@ -104,7 +104,7 @@ func ArticleListRec(Account string) string {
 			log.Println(err)
 			conn.Rollback()
 			Mutex.Unlock()
-			return SuccessFail_("0", "Query err3")
+			return SuccessFail_("0", "查询失败3")
 		}
 
 		defer newRows.Close()

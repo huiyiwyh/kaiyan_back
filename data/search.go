@@ -19,7 +19,7 @@ func SearchPopular_() string {
 	if err != nil {
 		log.Println(err)
 		Mutex.Unlock()
-		return SuccessFail_("0", "Query err")
+		return SuccessFail_("0", "查询失败")
 	}
 
 	defer rows.Close()
@@ -51,7 +51,7 @@ func SearchPopular_() string {
 		if err != nil {
 			log.Println(err)
 			Mutex.Unlock()
-			return SuccessFail_("0", "Query err")
+			return SuccessFail_("0", "查询失败")
 		}
 
 		for rows.Next() {
@@ -60,7 +60,7 @@ func SearchPopular_() string {
 			if err != nil {
 				log.Println(err)
 				Mutex.Unlock()
-				return SuccessFail_("0", "Scan err")
+				return SuccessFail_("0", "赋值失败")
 			}
 
 			data := DataSearchPopular{
@@ -90,7 +90,7 @@ func SearchHistroy_(jehcd string) string {
 	if err != nil {
 		log.Println(err)
 		Mutex.Unlock()
-		return SuccessFail_("0", "Query err")
+		return SuccessFail_("0", "查询失败")
 	}
 
 	defer rows.Close()
@@ -104,7 +104,7 @@ func SearchHistroy_(jehcd string) string {
 		err = rows.Scan(&id, &name)
 		if err != nil {
 			log.Println(err)
-			return SuccessFail_("0", "Scan err")
+			return SuccessFail_("0", "赋值失败")
 		}
 		data := DataSearchHistory{
 			Id:   id,
@@ -148,7 +148,7 @@ func Search_(okshc string) string {
 	if err != nil {
 		log.Println(err)
 		Mutex.Unlock()
-		return SuccessFail_("0", "Query err")
+		return SuccessFail_("0", "查询失败")
 	}
 
 	defer rows.Close()
@@ -159,7 +159,7 @@ func Search_(okshc string) string {
 		if err != nil {
 			log.Println(err)
 			Mutex.Unlock()
-			return SuccessFail_("0", "Scan err")
+			return SuccessFail_("0", "赋值失败")
 		}
 
 		data := DataSearchUser{
@@ -174,7 +174,7 @@ func Search_(okshc string) string {
 	if err != nil {
 		log.Println(err)
 		Mutex.Unlock()
-		return SuccessFail_("0", "Query err")
+		return SuccessFail_("0", "查询失败")
 	}
 
 	for rows.Next() {
@@ -183,7 +183,7 @@ func Search_(okshc string) string {
 		if err != nil {
 			log.Println(err)
 			Mutex.Unlock()
-			return SuccessFail_("0", "Scan err")
+			return SuccessFail_("0", "赋值失败")
 		}
 
 		data := DataSearchSubject{
@@ -198,7 +198,7 @@ func Search_(okshc string) string {
 	if err != nil {
 		log.Println(err)
 		Mutex.Unlock()
-		return SuccessFail_("0", "Query err")
+		return SuccessFail_("0", "查询失败")
 	}
 
 	for rows.Next() {
@@ -208,7 +208,7 @@ func Search_(okshc string) string {
 		if err != nil {
 			log.Println(err)
 			Mutex.Unlock()
-			return SuccessFail_("0", "Scan err")
+			return SuccessFail_("0", "赋值失败")
 		}
 
 		data := DataSearchArticle{
@@ -259,7 +259,7 @@ func SearchUser_(hwjco, irksh string) string {
 	limit, err := strconv.Atoi(irksh)
 	if err != nil {
 		log.Println(err)
-		return SuccessFail_("0", "Atoi err")
+		return SuccessFail_("0", "字符串转字符失败")
 	}
 
 	Mutex.Lock()
@@ -267,7 +267,7 @@ func SearchUser_(hwjco, irksh string) string {
 	if err != nil {
 		log.Println(err)
 		Mutex.Unlock()
-		return SuccessFail_("0", "Query err")
+		return SuccessFail_("0", "查询失败")
 	}
 
 	defer rows.Close()
@@ -280,7 +280,7 @@ func SearchUser_(hwjco, irksh string) string {
 		if err != nil {
 			log.Println(err)
 			Mutex.Unlock()
-			return SuccessFail_("0", "Scan err")
+			return SuccessFail_("0", "赋值失败")
 		}
 
 		data := DataSearchUser_{
@@ -295,7 +295,7 @@ func SearchUser_(hwjco, irksh string) string {
 		if err != nil {
 			log.Println(err)
 			Mutex.Unlock()
-			return SuccessFail_("0", "Query err_")
+			return SuccessFail_("0", "查询失败_")
 		}
 
 		defer newrows.Close()
@@ -306,7 +306,7 @@ func SearchUser_(hwjco, irksh string) string {
 			if err != nil {
 				log.Println(err)
 				Mutex.Unlock()
-				return SuccessFail_("0", "Scan err")
+				return SuccessFail_("0", "赋值失败")
 			}
 
 			article := DataSearchUser_Article{
@@ -350,7 +350,7 @@ func SearchSubject_(hwjco, irksh string) string {
 	limit, err := strconv.Atoi(irksh)
 	if err != nil {
 		log.Println(err)
-		return SuccessFail_("0", "Atoi err")
+		return SuccessFail_("0", "字符串转字符失败")
 	}
 
 	Mutex.Lock()
@@ -358,7 +358,7 @@ func SearchSubject_(hwjco, irksh string) string {
 	if err != nil {
 		log.Println(err)
 		Mutex.Unlock()
-		return SuccessFail_("0", "Query err")
+		return SuccessFail_("0", "查询失败")
 	}
 
 	defer rows.Close()
@@ -373,7 +373,7 @@ func SearchSubject_(hwjco, irksh string) string {
 		err = rows.Scan(&id, &name, &thumbnail, &brief, &countFocus, &countArticle)
 		if err != nil {
 			log.Println(err)
-			return SuccessFail_("0", "Scan err")
+			return SuccessFail_("0", "赋值失败")
 		}
 
 		data := DataSearchSubject_{
@@ -417,7 +417,7 @@ func SearchArticle_(abehs, jwkah string) string {
 	if err != nil {
 		log.Println(err)
 
-		return SuccessFail_("0", "Atoi err")
+		return SuccessFail_("0", "字符串转字符失败")
 	}
 
 	Mutex.Lock()
@@ -426,7 +426,7 @@ func SearchArticle_(abehs, jwkah string) string {
 	if err != nil {
 		log.Println(err)
 		Mutex.Unlock()
-		return SuccessFail_("0", "Query err")
+		return SuccessFail_("0", "查询失败")
 	}
 
 	defer rows.Close()
@@ -442,7 +442,7 @@ func SearchArticle_(abehs, jwkah string) string {
 		if err != nil {
 			log.Println(err)
 
-			return SuccessFail_("0", "Scan err")
+			return SuccessFail_("0", "赋值失败")
 		}
 
 		data := DataSearchArticle{

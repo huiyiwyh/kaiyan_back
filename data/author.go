@@ -18,7 +18,7 @@ func AuthorListFollow(geacg, iicje string) string {
 	if err != nil {
 		log.Println(err)
 		Mutex.Unlock()
-		return SuccessFail_("0", "Atoi err")
+		return SuccessFail_("0", "字符串转字符失败")
 	}
 
 	Mutex.Lock()
@@ -26,7 +26,7 @@ func AuthorListFollow(geacg, iicje string) string {
 	if err != nil {
 		log.Println(err)
 		Mutex.Unlock()
-		return SuccessFail_("0", "Query err")
+		return SuccessFail_("0", "查询失败")
 	}
 
 	defer rows.Close()
@@ -41,7 +41,7 @@ func AuthorListFollow(geacg, iicje string) string {
 		err = rows.Scan(&account, &nickname, &head, &aid, &title)
 		if err != nil {
 			log.Println(err)
-			return SuccessFail_("0", "Scan err")
+			return SuccessFail_("0", "赋值失败")
 		}
 
 		data := DataAuthorFollow{
@@ -70,7 +70,7 @@ func AuthorListFollowAll(geacg, iicje string) string {
 	limit, err := strconv.Atoi(iicje)
 	if err != nil {
 		log.Println(err)
-		return SuccessFail_("0", "Atoi err")
+		return SuccessFail_("0", "字符串转字符失败")
 	}
 
 	Mutex.Lock()
@@ -79,7 +79,7 @@ func AuthorListFollowAll(geacg, iicje string) string {
 	if err != nil {
 		log.Println(err)
 		Mutex.Unlock()
-		return SuccessFail_("0", "Query err")
+		return SuccessFail_("0", "查询失败")
 	}
 
 	defer rows.Close()
@@ -94,7 +94,7 @@ func AuthorListFollowAll(geacg, iicje string) string {
 		err = rows.Scan(&account, &nickname, &head, &countWords, &countLiked)
 		if err != nil {
 			log.Println(err)
-			return SuccessFail_("0", "Scan err")
+			return SuccessFail_("0", "赋值失败")
 		}
 
 		data := DataAuthorFollowAll{
@@ -124,7 +124,7 @@ func AuthorListFans(geacg, iicje string) string {
 	limit, err := strconv.Atoi(iicje)
 	if err != nil {
 		log.Println(err)
-		return SuccessFail_("0", "Atoi err")
+		return SuccessFail_("0", "字符串转字符失败")
 	}
 
 	Mutex.Lock()
@@ -133,7 +133,7 @@ func AuthorListFans(geacg, iicje string) string {
 	if err != nil {
 		log.Println(err)
 		Mutex.Unlock()
-		return SuccessFail_("0", "Query err")
+		return SuccessFail_("0", "查询失败")
 	}
 
 	defer rows.Close()
@@ -148,7 +148,7 @@ func AuthorListFans(geacg, iicje string) string {
 		err = rows.Scan(&account, &nickname, &head, &countWords, &countLiked)
 		if err != nil {
 			log.Println(err)
-			return SuccessFail_("0", "Scan err")
+			return SuccessFail_("0", "赋值失败")
 		}
 
 		data := DataAuthorFans{
@@ -178,7 +178,7 @@ func AuthorListRanking_(jeheh string) string {
 	limit, err := strconv.Atoi(jeheh)
 	if err != nil {
 		log.Println(err)
-		return SuccessFail_("0", "Atoi err")
+		return SuccessFail_("0", "字符串转字符失败")
 	}
 
 	Mutex.Lock()
@@ -187,7 +187,7 @@ func AuthorListRanking_(jeheh string) string {
 	if err != nil {
 		log.Println(err)
 		Mutex.Unlock()
-		return SuccessFail_("0", "Query err")
+		return SuccessFail_("0", "查询失败")
 	}
 
 	defer rows.Close()
@@ -202,7 +202,7 @@ func AuthorListRanking_(jeheh string) string {
 		err = rows.Scan(&account, &nickname, &head, &aid, &title)
 		if err != nil {
 			log.Println(err)
-			return SuccessFail_("0", "Scan err")
+			return SuccessFail_("0", "赋值失败")
 		}
 
 		data := DataAuthorRanking{
