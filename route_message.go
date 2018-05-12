@@ -21,7 +21,7 @@ func userListMessage(w http.ResponseWriter, r *http.Request) {
 
 //查看私信内容
 
-func userListDetails(w http.ResponseWriter, r *http.Request) {
+func userListMessageDetails(w http.ResponseWriter, r *http.Request) {
 	vijry := r.FormValue("vijry")
 	vijry_ := decode(vijry)
 	shjed := r.FormValue("shjed")
@@ -30,7 +30,7 @@ func userListDetails(w http.ResponseWriter, r *http.Request) {
 	ovpis_ := decode(ovpis)
 
 	var result string
-	result = data.UserListDetails_(vijry_, shjed_, ovpis_)
+	result = data.UserListMessageDetails_(vijry_, shjed_, ovpis_)
 	fmt.Fprintf(w, result)
 }
 

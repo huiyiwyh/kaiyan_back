@@ -614,13 +614,13 @@ type DataUserListMessage struct {
 
 //查看私信内容
 
-type UserListDetails struct {
-	Code string                `json:"code"`
-	Msg  string                `json:"msg"`
-	Data []DataUserListDetails `json:"data"`
+type UserListMessageDetails struct {
+	Code string                       `json:"code"`
+	Msg  string                       `json:"msg"`
+	Data []DataUserListMessageDetails `json:"data"`
 }
 
-type DataUserListDetails struct {
+type DataUserListMessageDetails struct {
 	Id       string `json:"id"`
 	Sender   string `json:"sender"`
 	Receiver string `json:"receiver"`
@@ -699,9 +699,9 @@ type DataUserListFocus struct {
 //获取用户主页信息
 
 type UserListHomeDetails struct {
-	Code string              `json:"code"`
-	Msg  string              `json:"msg"`
-	Data []DataUserListFocus `json:"data"`
+	Code string                  `json:"code"`
+	Msg  string                  `json:"msg"`
+	Data DataUserListHomeDetails `json:"data"`
 }
 
 type DataUserListHomeDetails struct {
@@ -713,6 +713,7 @@ type DataUserListHomeDetails struct {
 	CountFans    int    `json:"countFans"`
 	CountLike    int    `json:"countLike"`
 	CountArticle int    `json:"countArticle"`
+	CountSubject int    `json:"countSubject"`
 	Indexback    string `json:"indexback"`
 	CountWords   int    `json:"countWords"`
 	CountLiked   int    `json:"countLiked"`
