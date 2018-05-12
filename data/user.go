@@ -2,7 +2,8 @@ package data
 
 import (
 	"encoding/json"
-	"fmt"
+	"kaiyan/utils"
+
 	"log"
 	"strconv"
 	"time"
@@ -12,31 +13,63 @@ import (
 //
 
 //登陆
-func Authenticate(bhtdm, opawe string) bool {
-	Mutex.Lock()
-	rows, err := Db.Query("select * from ruser where Raccount = ? and Ipassword = ?", bhtdm, opawe)
-	if err != nil {
-		Mutex.Unlock()
-		return false
-	}
 
+func UserLogin_(bhtdm, opawe string) string {
+	Mutex.Lock()
+	rows, err := Db.Query("select nickname,head,brief,countFocus,countFans,countLike,countArticle,countSubject,indexback,countWords,countLiked from view_user where account = ? and password = ?", bhtdm, opawe)
+	if err != nil {
+		log.Println(err)
+		Mutex.Unlock()
+		return SuccessFail_("0", "查询失败")
+	}
 	defer rows.Close()
+	Mutex.Unlock()
+
+	var post Token
 
 	if rows.Next() {
-		fmt.Println("Yes")
-		Mutex.Unlock()
-		return true
+		var nickname, head, brief, indexback string
+		var countFocus, countFans, countLike, countArticle, countSubject, countWords, countLiked int
+		err = rows.Scan(&nickname, &head, &brief, &countFocus, &countFans, &countLike, &countArticle, &countSubject, &indexback, &countWords, &countLiked)
+		if err != nil {
+			log.Println(err)
+			return SuccessFail_("0", "赋值失败")
+		}
+
+		token := utils.CreateToken()
+
+		post.Data = DataToken{
+			Nickname:     nickname,
+			Head:         head,
+			Brief:        brief,
+			CountFocus:   countFocus,
+			CountFans:    countFans,
+			CountLike:    countLike,
+			CountArticle: countArticle,
+			CountSubject: countSubject,
+			Indexback:    indexback,
+			CountWords:   countWords,
+			CountLiked:   countLiked,
+			Token:        token,
+		}
+	} else {
+		return SuccessFail_("0", "用户名或密码错误")
 	}
 
-	fmt.Println("No")
-	Mutex.Unlock()
-	return false
+	post.Code = "1"
+	post.Msg = ""
+	result, err := json.MarshalIndent(post, "", " ")
+	if err != nil {
+		return FailMarshalIndent(err)
+	}
+
+	return string(result)
 }
 
 //登出
 
 //注册
-func UserSignUp_(ywhft, iuqng string) string {
+func UserSignup_(ywhft, iuqng string) string {
 	Mutex.Lock()
 
 	rows, err := Db.Query("select * from ruser where Raccount = ?", ywhft)
@@ -281,7 +314,7 @@ func UserListMessage_(cjfhe, jhsyd string) string {
 
 //查看私信内容
 
-func UserListMsgDet_(vijry, shjed, ovpis string) string {
+func UserListMessageDetails_(vijry, shjed, ovpis string) string {
 	Mutex.Lock()
 	rows, err := Db.Query("select id,sender,receiver,content,head,date,isRead from view_message where sender IN (?, ?)", ovpis, shjed)
 	if err != nil {
@@ -616,6 +649,7 @@ func UserListHomeDetails_(wtxhn, yjwmk string) string {
 		log.Println(err)
 		Mutex.Unlock()
 		return SuccessFail_("0", "查询失败")
+
 	}
 	if rows.Next() {
 		post.Data.IsFocused = true

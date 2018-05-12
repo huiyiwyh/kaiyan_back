@@ -3,7 +3,9 @@ package data
 import (
 	_ "database/sql"
 	"encoding/json"
+
 	"log"
+
 	"sync"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -42,9 +44,5 @@ func SuccessFail_(code, msg string) string {
 
 func FailMarshalIndent(err error) string {
 	log.Println(err)
-	return "transfer to json failed!"
-}
-
-func smsSend(phoneNum string) {
-
+	return "转换json格式失败"
 }

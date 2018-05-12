@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"io"
 	"kaiyan/data"
+	"kaiyan/utils"
+
 	"log"
 	"net/http"
 	"os"
@@ -18,10 +20,9 @@ func articleListRec(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("content-type", "application/json")
 
 	thsue := r.FormValue("thsue")
-	thsue_ := decode(thsue)
+	thsue_ := utils.Decode(thsue)
 
-	var result string
-	result = data.ArticleListRec(thsue_)
+	result := data.ArticleListRec(thsue_)
 	fmt.Fprintf(w, result)
 }
 
@@ -33,15 +34,15 @@ func articleList(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("content-type", "application/json")
 
 	dhcjs := r.FormValue("dhcjs")
-	dhcjs_ := decode(dhcjs)
+	dhcjs_ := utils.Decode(dhcjs)
 	utysh := r.FormValue("utysh")
-	utysh_ := decode(utysh)
+	utysh_ := utils.Decode(utysh)
 
 	var result string
 	switch dhcjs_ {
 	case "0":
 		idonx := r.FormValue("idonx")
-		idonx_ := decode(idonx)
+		idonx_ := utils.Decode(idonx)
 		if utysh_ == "1" {
 			result = data.ArticleListNoneNew(idonx_)
 		} else {
@@ -49,9 +50,9 @@ func articleList(w http.ResponseWriter, r *http.Request) {
 		}
 	case "1":
 		bvnsj := r.FormValue("bvnsj")
-		bvnsj_ := decode(bvnsj)
+		bvnsj_ := utils.Decode(bvnsj)
 		idonx := r.FormValue("idonx")
-		idonx_ := decode(idonx)
+		idonx_ := utils.Decode(idonx)
 		if utysh_ == "1" {
 			result = data.ArticleListSubjectNew(bvnsj_, idonx_)
 		} else {
@@ -59,9 +60,9 @@ func articleList(w http.ResponseWriter, r *http.Request) {
 		}
 	case "2":
 		bvnsj := r.FormValue("bvnsj")
-		bvnsj_ := decode(bvnsj)
+		bvnsj_ := utils.Decode(bvnsj)
 		idonx := r.FormValue("idonx")
-		idonx_ := decode(idonx)
+		idonx_ := utils.Decode(idonx)
 		if utysh_ == "1" {
 			result = data.ArticleListAccountNew(bvnsj_, idonx_)
 		} else {
@@ -80,14 +81,13 @@ func articleListRanking(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("content-type", "application/json")
 
 	ieudh := r.FormValue("ieudh")
-	ieudh_ := decode(ieudh)
+	ieudh_ := utils.Decode(ieudh)
 	hfeyd := r.FormValue("hfeyd")
-	hfeyd_ := decode(hfeyd)
+	hfeyd_ := utils.Decode(hfeyd)
 
 	var day int64
 
 	var result string
-
 	switch hfeyd_ {
 	case "1":
 		day = 86400
@@ -110,13 +110,12 @@ func articleListLike(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("content-type", "application/json")
 
 	xdgje := r.FormValue("xdgje")
-	xdgje_ := decode(xdgje)
+	xdgje_ := utils.Decode(xdgje)
 
 	uegsb := r.FormValue("uegsb")
-	uegsb_ := decode(uegsb)
+	uegsb_ := utils.Decode(uegsb)
 
-	var result string
-	result = data.ArticleListLike_(xdgje_, uegsb_)
+	result := data.ArticleListLike_(xdgje_, uegsb_)
 	fmt.Fprintf(w, result)
 }
 
@@ -128,12 +127,11 @@ func articleListHistory(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("content-type", "application/json")
 
 	ychwn := r.FormValue("ychwn")
-	ychwn_ := decode(ychwn)
+	ychwn_ := utils.Decode(ychwn)
 	siwhb := r.FormValue("siwhb")
-	siwhb_ := decode(siwhb)
+	siwhb_ := utils.Decode(siwhb)
 
-	var result string
-	result = data.ArticleListHistory_(ychwn_, siwhb_)
+	result := data.ArticleListHistory_(ychwn_, siwhb_)
 	fmt.Fprintf(w, result)
 }
 
@@ -145,12 +143,11 @@ func articleListDetails(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("content-type", "application/json")
 
 	rwhcs := r.FormValue("rwhcs")
-	rwhcs_ := decode(rwhcs)
+	rwhcs_ := utils.Decode(rwhcs)
 	uwhgc := r.FormValue("uwhgc")
-	uwhgc_ := decode(uwhgc)
+	uwhgc_ := utils.Decode(uwhgc)
 
-	var result string
-	result = data.ArticleListDetails_(rwhcs_, uwhgc_)
+	result := data.ArticleListDetails_(rwhcs_, uwhgc_)
 	fmt.Fprintf(w, result)
 }
 
@@ -162,12 +159,11 @@ func articleListComment(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("content-type", "application/json")
 
 	hnksa := r.FormValue("hnksa")
-	hnksa_ := decode(hnksa)
+	hnksa_ := utils.Decode(hnksa)
 	ncvbs := r.FormValue("ncvbs")
-	ncvbs_ := decode(ncvbs)
+	ncvbs_ := utils.Decode(ncvbs)
 
-	var result string
-	result = data.ArticleListComment_(hnksa_, ncvbs_)
+	result := data.ArticleListComment_(hnksa_, ncvbs_)
 	fmt.Fprintf(w, result)
 }
 
@@ -179,18 +175,17 @@ func articleAddComment(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("content-type", "application/json")
 
 	iwuus := r.FormValue("iwuus")
-	iwuus_ := decode(iwuus)
+	iwuus_ := utils.Decode(iwuus)
 	kalcb := r.FormValue("kalcb")
-	kalcb_ := decode(kalcb)
+	kalcb_ := utils.Decode(kalcb)
 	thske := r.FormValue("thske")
-	thske_ := decode(thske)
+	thske_ := utils.Decode(thske)
 	ywhkd := r.FormValue("ywhkd")
-	ywhkd_ := decode(ywhkd)
+	ywhkd_ := utils.Decode(ywhkd)
 	mnsjf := r.FormValue("mnsjf")
-	mnsjf_ := decode(mnsjf)
+	mnsjf_ := utils.Decode(mnsjf)
 
-	var result string
-	result = data.ArticleAddComment_(iwuus_, kalcb_, thske_, ywhkd_, mnsjf_)
+	result := data.ArticleAddComment_(iwuus_, kalcb_, thske_, ywhkd_, mnsjf_)
 	fmt.Fprintf(w, result)
 
 }
@@ -203,12 +198,11 @@ func articleAddHistory(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("content-type", "application/json")
 
 	rqgcm := r.FormValue("rqgcm")
-	rqgcm_ := decode(rqgcm)
+	rqgcm_ := utils.Decode(rqgcm)
 	ivhws := r.FormValue("ivhws")
-	ivhws_ := decode(ivhws)
+	ivhws_ := utils.Decode(ivhws)
 
-	var result string
-	result = data.ArticleAddHistory_(rqgcm_, ivhws_)
+	result := data.ArticleAddHistory_(rqgcm_, ivhws_)
 	fmt.Fprintf(w, result)
 
 }
@@ -221,16 +215,15 @@ func articleAddLike(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("content-type", "application/json")
 
 	ivwga := r.FormValue("ivwga")
-	ivwga_ := decode(ivwga)
+	ivwga_ := utils.Decode(ivwga)
 	rwhcs := r.FormValue("rwhcs")
-	rwhcs_ := decode(rwhcs)
+	rwhcs_ := utils.Decode(rwhcs)
 	uwhgc := r.FormValue("uwhgc")
-	uwhgc_ := decode(uwhgc)
+	uwhgc_ := utils.Decode(uwhgc)
 	mjkns := r.FormValue("mjkns")
-	mjkns_ := decode(mjkns)
+	mjkns_ := utils.Decode(mjkns)
 
-	var result string
-	result = data.ArticleAddLike_(ivwga_, rwhcs_, uwhgc_, mjkns_)
+	result := data.ArticleAddLike_(ivwga_, rwhcs_, uwhgc_, mjkns_)
 	fmt.Fprintf(w, result)
 }
 
@@ -242,14 +235,13 @@ func articleDeletelike(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("content-type", "application/json")
 
 	wqsvh := r.FormValue("wqsvh")
-	wqsvh_ := decode(wqsvh)
+	wqsvh_ := utils.Decode(wqsvh)
 	zshrs := r.FormValue("zshrs")
-	zshrs_ := decode(zshrs)
+	zshrs_ := utils.Decode(zshrs)
 	uqvcj := r.FormValue("uqvcj")
-	uqvcj_ := decode(uqvcj)
+	uqvcj_ := utils.Decode(uqvcj)
 
-	var result string
-	result = data.ArticleDeletelike_(wqsvh_, zshrs_, uqvcj_)
+	result := data.ArticleDeletelike_(wqsvh_, zshrs_, uqvcj_)
 	fmt.Fprintf(w, result)
 }
 
@@ -260,14 +252,13 @@ func articleUploadSymbolNum(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("content-type", "application/json")
 
 	wafhc := r.FormValue("wafhc")
-	wafhc_ := decode(wafhc)
+	wafhc_ := utils.Decode(wafhc)
 	iryvn := r.FormValue("iryvn")
-	iryvn_ := decode(iryvn)
+	iryvn_ := utils.Decode(iryvn)
 	yvhen := r.FormValue("yvhen")
-	yvhen_ := decode(yvhen)
+	yvhen_ := utils.Decode(yvhen)
 
-	var result string
-	result = data.ArtcileUploadSymbolNum_(wafhc_, iryvn_, yvhen_)
+	result := data.ArtcileUploadSymbolNum_(wafhc_, iryvn_, yvhen_)
 	fmt.Fprintf(w, result)
 }
 
@@ -279,10 +270,9 @@ func articleUploadSymbol(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("content-type", "application/json")
 
 	tgmbj := r.FormValue("tgmbj")
-	tgmbj_ := decode(tgmbj)
+	tgmbj_ := utils.Decode(tgmbj)
 
-	var result string
-	result = data.ArticleUploadSymbol_(tgmbj_)
+	result := data.ArticleUploadSymbol_(tgmbj_)
 	fmt.Fprintf(w, result)
 }
 
@@ -294,19 +284,19 @@ func articleUploadPicture(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("content-type", "application/json")
 
 	var err error
-	var result string
+
 	twhck := r.FormValue("twhck")
-	twhck_ := decode(twhck)
+	twhck_ := utils.Decode(twhck)
 	file, _, err := r.FormFile("oxjwg")
 	if err != nil {
 		fmt.Println(err)
-		result = data.SuccessFail_("0", "图片获取失败")
+		result := data.SuccessFail_("0", "图片获取失败")
 		fmt.Fprintf(w, result)
 		return
 	}
 	defer file.Close()
 
-	createDir("article/" + twhck_)
+	utils.CreateDir("article/" + twhck_)
 
 	timestamp := time.Now().Unix()
 	tm := time.Unix(timestamp, 0)
@@ -315,7 +305,7 @@ func articleUploadPicture(w http.ResponseWriter, r *http.Request) {
 	fW, err := os.Create("article/" + twhck_ + "/" + time + ".jpg")
 	if err != nil {
 		fmt.Println("文件创建失败")
-		result = data.SuccessFail_("0", "文件创建失败")
+		result := data.SuccessFail_("0", "文件创建失败")
 		fmt.Fprintf(w, result)
 		return
 	}
@@ -325,12 +315,12 @@ func articleUploadPicture(w http.ResponseWriter, r *http.Request) {
 	_, err = io.Copy(fW, file)
 	if err != nil {
 		fmt.Println("文件保存失败")
-		result = data.SuccessFail_("0", "文件保存失败")
+		result := data.SuccessFail_("0", "文件保存失败")
 		fmt.Fprintf(w, result)
 		return
 	}
 
-	result = data.ArticleUploadPicture_("kaiyan/article/" + twhck_ + "/" + time + ".jpg")
+	result := data.ArticleUploadPicture_("kaiyan/article/" + twhck_ + "/" + time + ".jpg")
 	fmt.Fprintf(w, result)
 }
 
@@ -342,18 +332,20 @@ func articleCancel(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("content-type", "application/json")
 
 	iuhwc := r.FormValue("iuhwc")
-	iuhwc_ := decode(iuhwc)
+	iuhwc_ := utils.Decode(iuhwc)
+
 	var result string
 
 	_dir := "article/" + iuhwc_
 
-	exist, err := pathExists(_dir)
+	exist, err := utils.PathExists(_dir)
 	if !exist {
 		log.Println(err)
 		result = data.SuccessFail_("0", "文件夹不存在")
 	}
 
 	err = os.RemoveAll(_dir)
+
 	if err != nil {
 		log.Println(err)
 		result = data.SuccessFail_("0", "文件删除失败")
@@ -372,20 +364,19 @@ func articleEdit(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("content-type", "application/json")
 
 	ywjnc := r.FormValue("ywjnc")
-	ywjnc_ := decode(ywjnc)
+	ywjnc_ := utils.Decode(ywjnc)
 	ncdac := r.FormValue("ncdac")
-	ncdac_ := decode(ncdac)
+	ncdac_ := utils.Decode(ncdac)
 	porjw := r.FormValue("porjw")
-	porjw_ := decode(porjw)
+	porjw_ := utils.Decode(porjw)
 	kvdjw := r.FormValue("kvdjw")
-	kvdjw_ := decode(kvdjw)
+	kvdjw_ := utils.Decode(kvdjw)
 	majsh := r.FormValue("majsh")
-	majsh_ := decode(majsh)
+	majsh_ := utils.Decode(majsh)
 	twgnk := r.FormValue("twgnk")
-	twgnk_ := decode(twgnk)
+	twgnk_ := utils.Decode(twgnk)
 
-	var result string
-	result = data.ArticleEdit_(ywjnc_, ncdac_, porjw_, kvdjw_, majsh_, twgnk_)
+	result := data.ArticleEdit_(ywjnc_, ncdac_, porjw_, kvdjw_, majsh_, twgnk_)
 	fmt.Fprintf(w, result)
 
 }
@@ -398,19 +389,18 @@ func articleWrite(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("content-type", "application/json")
 
 	twhck := r.FormValue("twhck")
-	twhck_ := decode(twhck)
+	twhck_ := utils.Decode(twhck)
 	mncsk := r.FormValue("mncsk")
-	mncsk_ := decode(mncsk)
+	mncsk_ := utils.Decode(mncsk)
 	uvcns := r.FormValue("uvcns")
-	uvcns_ := decode(uvcns)
+	uvcns_ := utils.Decode(uvcns)
 	yvhek := r.FormValue("yvhek")
-	yvhek_ := decode(yvhek)
+	yvhek_ := utils.Decode(yvhek)
 	rwkcb := r.FormValue("rwkcb")
-	rwkcb_ := decode(rwkcb)
+	rwkcb_ := utils.Decode(rwkcb)
 	ovjsb := r.FormValue("ovjsb")
-	ovjsb_ := decode(ovjsb)
+	ovjsb_ := utils.Decode(ovjsb)
 
-	var result string
-	result = data.ArticleWrite_(twhck_, mncsk_, uvcns_, yvhek_, rwkcb_, ovjsb_)
+	result := data.ArticleWrite_(twhck_, mncsk_, uvcns_, yvhek_, rwkcb_, ovjsb_)
 	fmt.Fprintf(w, result)
 }

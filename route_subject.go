@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"kaiyan/data"
+	"kaiyan/utils"
+
 	"net/http"
 )
 
@@ -14,22 +16,21 @@ func subjectList(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("content-type", "application/json")
 
 	vhdes := r.FormValue("vhdes")
-	vhdes_ := decode(vhdes)
+	vhdes_ := utils.Decode(vhdes)
 
 	var result string
-
 	switch vhdes_ {
 	case "1":
 		wyejs := r.FormValue("wyejs")
-		wyejs_ := decode(wyejs)
+		wyejs_ := utils.Decode(wyejs)
 		result = data.SubjectListTime(wyejs_)
 	case "2":
 		wyejs := r.FormValue("wyejs")
-		wyejs_ := decode(wyejs)
+		wyejs_ := utils.Decode(wyejs)
 		result = data.SubjectListNum(wyejs_)
 	case "3":
 		kvjed := r.FormValue("kvjed")
-		kvjed_ := decode(kvjed)
+		kvjed_ := utils.Decode(kvjed)
 		result = data.SubjectListAccount(kvjed_)
 	}
 	fmt.Fprintf(w, result)
@@ -43,12 +44,11 @@ func subjectListFocus(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("content-type", "application/json")
 
 	budhs := r.FormValue("budhs")
-	budhs_ := decode(budhs)
+	budhs_ := utils.Decode(budhs)
 	tehsc := r.FormValue("tehsc")
-	tehsc_ := decode(tehsc)
+	tehsc_ := utils.Decode(tehsc)
 
-	var result string
-	result = data.SubjectListFocus_(budhs_, tehsc_)
+	result := data.SubjectListFocus_(budhs_, tehsc_)
 	fmt.Fprintf(w, result)
 }
 
@@ -60,12 +60,11 @@ func subjectListDetails(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("content-type", "application/json")
 
 	grbfs := r.FormValue("grbfs")
-	grbfs_ := decode(grbfs)
+	grbfs_ := utils.Decode(grbfs)
 	ckege := r.FormValue("ckege")
-	ckege_ := decode(ckege)
+	ckege_ := utils.Decode(ckege)
 
-	var result string
-	result = data.SubjectListDetails_(grbfs_, ckege_)
+	result := data.SubjectListDetails_(grbfs_, ckege_)
 	fmt.Fprintf(w, result)
 }
 
@@ -77,18 +76,17 @@ func subjectAdd(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("content-type", "application/json")
 
 	ythcs := r.FormValue("ythcs")
-	ythcs_ := decode(ythcs)
+	ythcs_ := utils.Decode(ythcs)
 	utyeh := r.FormValue("utyeh")
-	utyeh_ := decode(utyeh)
+	utyeh_ := utils.Decode(utyeh)
 	ertqh := r.FormValue("ertqh")
-	ertqh_ := decode(ertqh)
+	ertqh_ := utils.Decode(ertqh)
 	oiyhx := r.FormValue("oiyhx")
-	oiyhx_ := decode(oiyhx)
+	oiyhx_ := utils.Decode(oiyhx)
 	vjmsk := r.FormValue("vjmsk")
-	vjmsk_ := decode(vjmsk)
+	vjmsk_ := utils.Decode(vjmsk)
 
-	var result string
-	result = data.SubjectAdd_(ythcs_, utyeh_, ertqh_, oiyhx_, vjmsk_)
+	result := data.SubjectAdd_(ythcs_, utyeh_, ertqh_, oiyhx_, vjmsk_)
 	fmt.Fprintf(w, result)
 }
 
@@ -100,10 +98,9 @@ func subjectDelete(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("content-type", "application/json")
 
 	rejcs := r.FormValue("rejcs")
-	rejcs_ := decode(rejcs)
+	rejcs_ := utils.Decode(rejcs)
 
-	var result string
-	result = data.SubjectDelete_(rejcs_)
+	result := data.SubjectDelete_(rejcs_)
 	fmt.Fprintf(w, result)
 }
 
@@ -115,10 +112,9 @@ func subjectUploadSymbol(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("content-type", "application/json")
 
 	tjnsv := r.FormValue("tjnsv")
-	tjnsv_ := decode(tjnsv)
+	tjnsv_ := utils.Decode(tjnsv)
 
-	var result string
-	result = data.SubjectUploadSymbol_(tjnsv_)
+	result := data.SubjectUploadSymbol_(tjnsv_)
 	fmt.Fprintf(w, result)
 }
 
@@ -130,14 +126,13 @@ func subjectFocus(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("content-type", "application/json")
 
 	grbfs := r.FormValue("grbfs")
-	grbfs_ := decode(grbfs)
+	grbfs_ := utils.Decode(grbfs)
 	ckege := r.FormValue("ckege")
-	ckege_ := decode(ckege)
+	ckege_ := utils.Decode(ckege)
 	uiksh := r.FormValue("uiksh")
-	uiksh_ := decode(uiksh)
+	uiksh_ := utils.Decode(uiksh)
 
-	var result string
-	result = data.SubjectFocus_(grbfs_, ckege_, uiksh_)
+	result := data.SubjectFocus_(grbfs_, ckege_, uiksh_)
 	fmt.Fprintf(w, result)
 }
 
@@ -149,14 +144,13 @@ func subjectCancleFocus(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("content-type", "application/json")
 
 	grbfs := r.FormValue("grbfs")
-	grbfs_ := decode(grbfs)
+	grbfs_ := utils.Decode(grbfs)
 	ckege := r.FormValue("ckege")
-	ckege_ := decode(ckege)
+	ckege_ := utils.Decode(ckege)
 	uiksh := r.FormValue("uiksh")
-	uiksh_ := decode(uiksh)
+	uiksh_ := utils.Decode(uiksh)
 
-	var result string
-	result = data.SubjectCancleFocus_(grbfs_, ckege_, uiksh_)
+	result := data.SubjectCancleFocus_(grbfs_, ckege_, uiksh_)
 	fmt.Fprintf(w, result)
 }
 
@@ -168,16 +162,15 @@ func articleContribute(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("content-type", "application/json")
 
 	ychsw := r.FormValue("ychsw")
-	ychsw_ := decode(ychsw)
+	ychsw_ := utils.Decode(ychsw)
 	hsyce := r.FormValue("hsyce")
-	hsyce_ := decode(hsyce)
+	hsyce_ := utils.Decode(hsyce)
 	anscj := r.FormValue("anscj")
-	anscj_ := decode(anscj)
+	anscj_ := utils.Decode(anscj)
 	rywjc := r.FormValue("rywjc")
-	rywjc_ := decode(rywjc)
+	rywjc_ := utils.Decode(rywjc)
 
-	var result string
-	result = data.ArticleContribute_(ychsw_, hsyce_, anscj_, rywjc_)
+	result := data.ArticleContribute_(ychsw_, hsyce_, anscj_, rywjc_)
 	fmt.Fprintf(w, result)
 }
 
@@ -188,10 +181,9 @@ func articleNotContribute(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("content-type", "application/json")
 
 	hskcu := r.FormValue("hskcu")
-	hskcu_ := decode(hskcu)
+	hskcu_ := utils.Decode(hskcu)
 
-	var result string
-	result = data.ArticleNotContribute_(hskcu_)
+	result := data.ArticleNotContribute_(hskcu_)
 	fmt.Fprintf(w, result)
 }
 
@@ -203,10 +195,9 @@ func articleNotExamine(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("content-type", "application/json")
 
 	ueysj := r.FormValue("ueysj")
-	ueysj_ := decode(ueysj)
+	ueysj_ := utils.Decode(ueysj)
 
-	var result string
-	result = data.ArticleNotExamine_(ueysj_)
+	result := data.ArticleNotExamine_(ueysj_)
 	fmt.Fprintf(w, result)
 }
 
@@ -217,15 +208,15 @@ func articleExamine(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("content-type", "application/json")
 
 	eshhd := r.FormValue("eshhd")
-	eshhd_ := decode(eshhd)
+	eshhd_ := utils.Decode(eshhd)
 	twrch := r.FormValue("twrch")
-	twrch_ := decode(twrch)
+	twrch_ := utils.Decode(twrch)
 	imvah := r.FormValue("imvah")
-	imvah_ := decode(imvah)
+	imvah_ := utils.Decode(imvah)
 	tafvm := r.FormValue("tafvm")
-	tafvm_ := decode(tafvm)
+	tafvm_ := utils.Decode(tafvm)
 	uehst := r.FormValue("uehst")
-	uehst_ := decode(uehst)
+	uehst_ := utils.Decode(uehst)
 
 	var result string
 	switch twrch_ {

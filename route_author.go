@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"kaiyan/data"
+	"kaiyan/utils"
+
 	"net/http"
 )
 
@@ -14,14 +16,13 @@ func authorList(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("content-type", "application/json")
 
 	utydk := r.FormValue("utydk")
-	utydk_ := decode(utydk)
+	utydk_ := utils.Decode(utydk)
 	geacg := r.FormValue("geacg")
-	geacg_ := decode(geacg)
+	geacg_ := utils.Decode(geacg)
 	iicje := r.FormValue("iicje")
-	iicje_ := decode(iicje)
+	iicje_ := utils.Decode(iicje)
 
 	var result string
-
 	switch utydk_ {
 	case "1":
 		result = data.AuthorListFollow(geacg_, iicje_)
@@ -43,10 +44,8 @@ func authorListRanking(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("content-type", "application/json")
 
 	jeheh := r.FormValue("jeheh")
-	jeheh_ := decode(jeheh)
+	jeheh_ := utils.Decode(jeheh)
 
-	var result string
-
-	result = data.AuthorListRanking_(jeheh_)
+	result := data.AuthorListRanking_(jeheh_)
 	fmt.Fprintf(w, result)
 }

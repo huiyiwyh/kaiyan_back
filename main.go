@@ -16,6 +16,7 @@ func main() {
 	//
 
 	// 主页
+
 	mux.HandleFunc("/", index)
 
 	// 错误处理（待定）
@@ -78,7 +79,7 @@ func main() {
 	//用户接口
 	mux.HandleFunc("/user/Login", userLogin)
 	mux.HandleFunc("/user/Logout", userLogout)
-	mux.HandleFunc("/user/SignUp", userSignUp)
+	mux.HandleFunc("/user/Signup", userSignup)
 	mux.HandleFunc("/user/Details", userDetails)
 	mux.HandleFunc("/user/ModifyHead", userModifyHead)
 	mux.HandleFunc("/user/ModifyNickname", userModifyNickname)

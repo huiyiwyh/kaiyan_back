@@ -724,3 +724,26 @@ type DataUserListHomeDetails struct {
 //取消关注用户
 
 //获取专题消息列表
+
+//Token
+
+type Token struct {
+	Code string    `json:"code"`
+	Msg  string    `json:"msg"`
+	Data DataToken `json:"data"`
+}
+
+type DataToken struct {
+	Nickname     string `json:"nickname"`
+	Head         string `json:"head"`
+	Brief        string `json:"brief"`
+	CountFocus   int    `json:"countFocus"`
+	CountFans    int    `json:"countFans"`
+	CountLike    int    `json:"countLike"`
+	CountArticle int    `json:"countArticle"`
+	CountSubject int    `json:"countsubject"`
+	Indexback    string `json:"indexback"`
+	CountWords   int    `json:"countwords"`
+	CountLiked   int    `json:"countLiked"`
+	Token        string `json:"token"`
+}

@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"kaiyan/data"
+	"kaiyan/utils"
+
 	"net/http"
 )
 
@@ -17,12 +19,11 @@ func blackList(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("content-type", "application/json")
 
 	ewysj := r.FormValue("ewysj")
-	ewysj_ := decode(ewysj)
+	ewysj_ := utils.Decode(ewysj)
 	uwyhe := r.FormValue("uwyhe")
-	uwyhe_ := decode(uwyhe)
+	uwyhe_ := utils.Decode(uwyhe)
 
-	var result string
-	result = data.BlackList_(ewysj_, uwyhe_)
+	result := data.BlackList_(ewysj_, uwyhe_)
 	fmt.Fprintf(w, result)
 }
 
@@ -34,12 +35,11 @@ func blackAdd(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("content-type", "application/json")
 
 	cjrhw := r.FormValue("cjrhw")
-	cjrhw_ := decode(cjrhw)
+	cjrhw_ := utils.Decode(cjrhw)
 	chewj := r.FormValue("chewj")
-	chewj_ := decode(chewj)
+	chewj_ := utils.Decode(chewj)
 
-	var result string
-	result = data.BlackAdd_(cjrhw_, chewj_)
+	result := data.BlackAdd_(cjrhw_, chewj_)
 	fmt.Fprintf(w, result)
 }
 
@@ -51,9 +51,8 @@ func blackDelete(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("content-type", "application/json")
 
 	cjnek := r.FormValue("cjnek")
-	cjnek_ := decode(cjnek)
+	cjnek_ := utils.Decode(cjnek)
 
-	var result string
-	result = data.BlackDelete_(cjnek_)
+	result := data.BlackDelete_(cjnek_)
 	fmt.Fprintf(w, result)
 }

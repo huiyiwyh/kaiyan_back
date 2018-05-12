@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"kaiyan/data"
+	"kaiyan/utils"
+
 	"net/http"
 )
 
@@ -16,8 +18,7 @@ func searchPopular(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("Access-Control-Allow-Headers", "Content-Type")
 	w.Header().Set("content-type", "application/json")
 
-	var result string
-	result = data.SearchPopular_()
+	result := data.SearchPopular_()
 	fmt.Fprintf(w, result)
 }
 
@@ -29,11 +30,10 @@ func searchHistory(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("content-type", "application/json")
 
 	jehcd := r.FormValue("jehcd")
-	jehcd_ := decode(jehcd)
+	jehcd_ := utils.Decode(jehcd)
 	fmt.Println(jehcd)
 
-	var result string
-	result = data.SearchHistroy_(jehcd_)
+	result := data.SearchHistroy_(jehcd_)
 	fmt.Fprintf(w, result)
 }
 
@@ -45,12 +45,11 @@ func searchDelete(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("content-type", "application/json")
 
 	uejsh := r.FormValue("uejsh")
-	uejsh_ := decode(uejsh)
+	uejsh_ := utils.Decode(uejsh)
 	yehjc := r.FormValue("yehjc")
-	yehjc_ := decode(yehjc)
+	yehjc_ := utils.Decode(yehjc)
 
-	var result string
-	result = data.SearchDelete_(uejsh_, yehjc_)
+	result := data.SearchDelete_(uejsh_, yehjc_)
 	fmt.Fprintf(w, result)
 }
 
@@ -62,10 +61,9 @@ func search(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("content-type", "application/json")
 
 	okshc := r.FormValue("okshc")
-	okshc_ := decode(okshc)
+	okshc_ := utils.Decode(okshc)
 
-	var result string
-	result = data.Search_(okshc_)
+	result := data.Search_(okshc_)
 	fmt.Fprintf(w, result)
 }
 
@@ -77,12 +75,11 @@ func searchUser(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("content-type", "application/json")
 
 	hwjco := r.FormValue("hwjco")
-	hwjco_ := decode(hwjco)
+	hwjco_ := utils.Decode(hwjco)
 	irksh := r.FormValue("irksh")
-	irksh_ := decode(irksh)
+	irksh_ := utils.Decode(irksh)
 
-	var result string
-	result = data.SearchUser_(hwjco_, irksh_)
+	result := data.SearchUser_(hwjco_, irksh_)
 	fmt.Fprintf(w, result)
 }
 
@@ -94,12 +91,11 @@ func searchSubject(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("content-type", "application/json")
 
 	hwjco := r.FormValue("hwjco")
-	hwjco_ := decode(hwjco)
+	hwjco_ := utils.Decode(hwjco)
 	irksh := r.FormValue("irksh")
-	irksh_ := decode(irksh)
+	irksh_ := utils.Decode(irksh)
 
-	var result string
-	result = data.SearchSubject_(hwjco_, irksh_)
+	result := data.SearchSubject_(hwjco_, irksh_)
 	fmt.Fprintf(w, result)
 }
 
@@ -111,11 +107,10 @@ func searchArticle(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("content-type", "application/json")
 
 	abehs := r.FormValue("abehs")
-	abehs_ := decode(abehs)
+	abehs_ := utils.Decode(abehs)
 	jwkah := r.FormValue("jwkah")
-	jwkah_ := decode(jwkah)
+	jwkah_ := utils.Decode(jwkah)
 
-	var result string
-	result = data.SearchArticle_(abehs_, jwkah_)
+	result := data.SearchArticle_(abehs_, jwkah_)
 	fmt.Fprintf(w, result)
 }
