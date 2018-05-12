@@ -1,11 +1,12 @@
 package main
 
 import (
+	"encoding/base64"
 	"fmt"
-	"io"
+	"io/ioutil"
 	"kaiyan/data"
 	"kaiyan/utils"
-	"os"
+	"strings"
 	"time"
 
 	"net/http"
@@ -84,34 +85,19 @@ func subjectAdd(w http.ResponseWriter, r *http.Request) {
 	ertqh := r.FormValue("ertqh")
 	vjmsk := r.FormValue("vjmsk")
 	vjmsk_ := utils.Decode(vjmsk)
+	oiyhx := r.FormValue("oiyhx")
 
-	file, _, err := r.FormFile("oiyhx")
-	if err != nil {
-		fmt.Println(err)
-		result := data.SuccessFail_("0", "图片获取失败")
-		fmt.Fprintf(w, result)
-		return
-	}
-	defer file.Close()
+	oiyhx_ := strings.Split(oiyhx, ",")
 
 	timestamp := time.Now().Unix()
 	tm := time.Unix(timestamp, 0)
 	time := tm.Format("0601021504")
 
-	fW, err := os.Create("subject/" + ythcs_ + time + ".jpg")
+	buffer, _ := base64.StdEncoding.DecodeString(oiyhx_[1])              //成图片文件并把文件写入到buffer
+	err := ioutil.WriteFile("subject/"+ythcs_+time+".jpg", buffer, 0666) //buffer输出到jpg文件中（不做处理，直接写到文件）
 	if err != nil {
-		fmt.Println("文件创建失败")
-		result := data.SuccessFail_("0", "文件创建失败")
-		fmt.Fprintf(w, result)
-		return
-	}
-
-	defer fW.Close()
-
-	_, err = io.Copy(fW, file)
-	if err != nil {
-		fmt.Println("文件保存失败")
-		result := data.SuccessFail_("0", "文件保存失败")
+		fmt.Println(err)
+		result := data.SuccessFail_("0", "图片获取失败")
 		fmt.Fprintf(w, result)
 		return
 	}

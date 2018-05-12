@@ -1,13 +1,14 @@
 package main
 
 import (
+	"encoding/base64"
 	"fmt"
-	"io"
+	"io/ioutil"
 	"kaiyan/data"
 	"kaiyan/utils"
+	"strings"
 
 	"net/http"
-	"os"
 )
 
 //登陆
@@ -113,36 +114,20 @@ func userModifyHead(w http.ResponseWriter, r *http.Request) {
 
 	hcnsg := r.FormValue("hcnsg")
 	hcnsg_ := utils.Decode(hcnsg)
-	file, _, err := r.FormFile("yshuc")
+	yshuc := r.FormValue("yshuc")
+
+	yshuc_ := strings.Split(yshuc, ",")
+
+	buffer, _ := base64.StdEncoding.DecodeString(yshuc_[1])      //成图片文件并把文件写入到buffer
+	err := ioutil.WriteFile("user/"+hcnsg_+".jpg", buffer, 0666) //buffer输出到jpg文件中（不做处理，直接写到文件）
 	if err != nil {
 		fmt.Println(err)
 		result := data.SuccessFail_("0", "图片获取失败")
 		fmt.Fprintf(w, result)
 		return
 	}
-	defer file.Close()
 
-	utils.CreateDir("back")
-
-	fW, err := os.Create("back/" + hcnsg_ + ".jpg")
-	if err != nil {
-		fmt.Println("文件创建失败")
-		result := data.SuccessFail_("0", "文件创建失败")
-		fmt.Fprintf(w, result)
-		return
-	}
-	defer fW.Close()
-
-	_, err = io.Copy(fW, file)
-
-	if err != nil {
-		fmt.Println("文件保存失败")
-		result := data.SuccessFail_("0", "文件保存失败")
-		fmt.Fprintf(w, result)
-		return
-	}
-
-	result := data.UserModifyHead_(hcnsg_, "kaiyan/back/"+hcnsg_+".jpg")
+	result := data.UserModifyHead_(hcnsg_, "kaiyan/user/"+hcnsg_+".jpg")
 	fmt.Fprintf(w, result)
 }
 
@@ -204,21 +189,21 @@ func userModifyBrief(w http.ResponseWriter, r *http.Request) {
 //修改登录密码
 
 func userModifyPassword(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
-	w.Header().Set("content-type", "application/json")
-	w.Header().Set("Access-Control-Allow-Methods", "GET POST PUT DELETE")
+	// w.Header().Set("Access-Control-Allow-Origin", "*")
+	// w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
+	// w.Header().Set("content-type", "application/json")
+	// w.Header().Set("Access-Control-Allow-Methods", "GET POST PUT DELETE")
 
-	if r.Method == "OPTIONS" {
-		return
-	}
-	token := r.Header.Get("Token")
+	// if r.Method == "OPTIONS" {
+	// 	return
+	// }
+	// token := r.Header.Get("Token")
 
-	if !utils.AuthenticToken(token) {
-		result := data.SuccessFail_("0", "Token验证失败")
-		fmt.Fprintf(w, result)
-		return
-	}
+	// if !utils.AuthenticToken(token) {
+	// 	result := data.SuccessFail_("0", "Token验证失败")
+	// 	fmt.Fprintf(w, result)
+	// 	return
+	// }
 
 	jksnd := r.FormValue("jksnd")
 	jksnd_ := utils.Decode(jksnd)

@@ -1,10 +1,12 @@
 package main
 
 import (
+	"encoding/base64"
 	"fmt"
-	"io"
+	"io/ioutil"
 	"kaiyan/data"
 	"kaiyan/utils"
+	"strings"
 
 	"log"
 	"net/http"
@@ -282,44 +284,28 @@ func articleUploadPicture(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("Access-Control-Allow-Headers", "Content-Type")
 	w.Header().Set("content-type", "application/json")
 
-	var err error
-
 	twhck := r.FormValue("twhck")
 	twhck_ := utils.Decode(twhck)
-	file, _, err := r.FormFile("oxjwg")
+	oxjwg := r.FormValue("oxjwg")
+
+	timestamp := time.Now().Unix()
+	tm := time.Unix(timestamp, 0)
+	time := tm.Format("060102150405")
+
+	utils.CreateDir("article/" + twhck_ + time)
+
+	oxjwg_ := strings.Split(oxjwg, ",")
+
+	buffer, _ := base64.StdEncoding.DecodeString(oxjwg_[1])                       //成图片文件并把文件写入到buffer
+	err := ioutil.WriteFile("article/"+twhck_+time+"/"+time+".jpg", buffer, 0666) //buffer输出到jpg文件中（不做处理，直接写到文件）
 	if err != nil {
 		fmt.Println(err)
 		result := data.SuccessFail_("0", "图片获取失败")
 		fmt.Fprintf(w, result)
 		return
 	}
-	defer file.Close()
 
-	utils.CreateDir("article/" + twhck_)
-
-	timestamp := time.Now().Unix()
-	tm := time.Unix(timestamp, 0)
-	time := tm.Format("060102150405")
-
-	fW, err := os.Create("article/" + twhck_ + "/" + time + ".jpg")
-	if err != nil {
-		fmt.Println("文件创建失败")
-		result := data.SuccessFail_("0", "文件创建失败")
-		fmt.Fprintf(w, result)
-		return
-	}
-
-	defer fW.Close()
-
-	_, err = io.Copy(fW, file)
-	if err != nil {
-		fmt.Println("文件保存失败")
-		result := data.SuccessFail_("0", "文件保存失败")
-		fmt.Fprintf(w, result)
-		return
-	}
-
-	result := data.ArticleUploadPicture_("kaiyan/article/" + twhck_ + "/" + time + ".jpg")
+	result := data.ArticleUploadPicture_("kaiyan/article/" + twhck_ + time + "/" + time + ".jpg")
 	fmt.Fprintf(w, result)
 }
 
