@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"net/http"
 	"time"
 )
@@ -16,8 +17,6 @@ func main() {
 	//
 
 	// 主页
-
-	mux.HandleFunc("/", index)
 
 	// 错误处理（待定）
 	mux.HandleFunc("/err", err)
@@ -99,7 +98,8 @@ func main() {
 	mux.HandleFunc("/user/Focus", userFocus)                           //关注用户
 	mux.HandleFunc("/user/CancelFocus", userCancelFocus)               //取消关注用户
 
-	//mux.Handle("/", http.FileServer(http.Dir("./"))) //文件服务器
+	files := http.FileServer(http.Dir(config.Static))
+	mux.Handle("/static/", http.StripPrefix("/static/", files)) //静态文件服务器
 
 	server := &http.Server{
 		Addr:           config.Address,
@@ -111,5 +111,8 @@ func main() {
 
 	go update()
 
-	server.ListenAndServe()
+	err := server.ListenAndServe()
+	if err != nil {
+		log.Fatal("ListenAndServe: ", err)
+	}
 }
