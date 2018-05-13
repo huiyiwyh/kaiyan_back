@@ -14,6 +14,7 @@ import (
 
 var Db *sqlx.DB       //主数据库
 var Mutex *sync.Mutex //读写互斥锁，每当有数据库操作时，要加锁，数据库操作完再解锁。
+var MaxLabel = 30
 
 //初始化数据库
 func init() {

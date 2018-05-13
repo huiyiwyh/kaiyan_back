@@ -16,7 +16,7 @@ import (
 
 func UserLogin_(bhtdm, opawe string) string {
 	Mutex.Lock()
-	rows, err := Db.Query("select account,nickname,head,brief,countFocus,countFans,countLike,countArticle,countSubject,indexback,countWords,countLiked from view_user where account = ? and password = ?", bhtdm, opawe)
+	rows, err := Db.Query("select Raccount,Hnickname,Uhead,Jbrief,Hcountfocus,Kcountfans,Ycountlike,Xcountarticle,Ecountsubject,Rindexback,BcountWords,GcountLiked from ruser where Raccount = ? and Ipassword = ?", bhtdm, opawe)
 	if err != nil {
 		log.Println(err)
 		Mutex.Unlock()

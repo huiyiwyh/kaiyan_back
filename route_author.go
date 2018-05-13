@@ -12,8 +12,21 @@ import (
 
 func authorList(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Add("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
 	w.Header().Set("content-type", "application/json")
+	w.Header().Set("Access-Control-Allow-Methods", "GET POST PUT DELETE")
+
+	if r.Method == "OPTIONS" {
+		return
+	}
+
+	token := r.Header.Get("Token")
+
+	if !utils.AuthenticToken(token) {
+		result := data.SuccessFail_("0", "Token验证失败")
+		fmt.Fprintf(w, result)
+		return
+	}
 
 	utydk := r.FormValue("utydk")
 	utydk_ := utils.Decode(utydk)
@@ -40,8 +53,20 @@ func authorList(w http.ResponseWriter, r *http.Request) {
 
 func authorListRanking(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Add("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
 	w.Header().Set("content-type", "application/json")
+	w.Header().Set("Access-Control-Allow-Methods", "GET POST PUT DELETE")
+
+	if r.Method == "OPTIONS" {
+		return
+	}
+	token := r.Header.Get("Token")
+
+	if !utils.AuthenticToken(token) {
+		result := data.SuccessFail_("0", "Token验证失败")
+		fmt.Fprintf(w, result)
+		return
+	}
 
 	jeheh := r.FormValue("jeheh")
 	jeheh_ := utils.Decode(jeheh)

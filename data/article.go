@@ -14,7 +14,7 @@ import (
 //NoneNew
 func ArticleListNoneNew(idonx string) string {
 	Mutex.Lock()
-	rows, err := Db.Query("select id,sid,subjectName,title,content,account,nickname,head,date,thumbnail,countComment,countLike,countRead from view_article where date < ?", idonx)
+	rows, err := Db.Query("select id,sid,subjectName,title,content,account,nickname,head,date,thumbnail,countComment,countLike,countRead from view_article where date < ? limit 6", idonx)
 	if err != nil {
 		log.Println(err)
 		Mutex.Unlock()
@@ -74,7 +74,7 @@ func ArticleListNonePopular(idonx string) string {
 	}
 
 	Mutex.Lock()
-	rows, err := Db.Query("select id,sid,subjectName,title,content,account,nickname,head,date,thumbnail,countComment,countLike,countRead from view_article limit ?,10", limit)
+	rows, err := Db.Query("select id,sid,subjectName,title,content,account,nickname,head,date,thumbnail,countComment,countLike,countRead from view_article limit ?,6", limit)
 	if err != nil {
 		log.Println(err)
 		Mutex.Unlock()
@@ -129,7 +129,7 @@ func ArticleListNonePopular(idonx string) string {
 //SubjectNew
 func ArticleListSubjectNew(bvnsj, idonx string) string {
 	Mutex.Lock()
-	rows, err := Db.Query("select id,title,account,nickname,head,date,thumbnail,countComment,countLike,countRead from view_article where sid = ? and date < ?", bvnsj, idonx)
+	rows, err := Db.Query("select id,title,account,nickname,head,date,thumbnail,countComment,countLike,countRead from view_article where sid = ? and date < ? limit 6", bvnsj, idonx)
 	if err != nil {
 		log.Println(err)
 		Mutex.Unlock()
@@ -189,7 +189,7 @@ func ArticleListSubjectPopular(bvnsj, idonx string) string {
 
 	Mutex.Lock()
 
-	rows, err := Db.Query("select id,title,account,nickname,head,date,thumbnail,countComment,countLike,countRead from view_article where sid = ? limit ?,10", bvnsj, limit)
+	rows, err := Db.Query("select id,title,account,nickname,head,date,thumbnail,countComment,countLike,countRead from view_article where sid = ? limit ?,6", bvnsj, limit)
 	if err != nil {
 		log.Println(err)
 		Mutex.Unlock()
@@ -240,7 +240,7 @@ func ArticleListSubjectPopular(bvnsj, idonx string) string {
 //AccountNew
 func ArticleListAccountNew(bvnsj, idonx string) string {
 	Mutex.Lock()
-	rows, err := Db.Query("select id,sid,subjectName,title,date,thumbnail,countComment,countLike,countRead from view_article where account = ? and date < ?", bvnsj, idonx)
+	rows, err := Db.Query("select id,sid,subjectName,title,date,thumbnail,countComment,countLike,countRead from view_article where account = ? and date < ? limit 6", bvnsj, idonx)
 	if err != nil {
 		log.Println(err)
 		Mutex.Unlock()
@@ -291,7 +291,7 @@ func ArticleListAccountNew(bvnsj, idonx string) string {
 //AccountPopular
 func ArticleListAccountPopular(bvnsj, idonx string) string {
 	Mutex.Lock()
-	rows, err := Db.Query("select id,sid,subjectName,title,date,thumbnail,countComment,countLike,countRead from view_article where account = ? limit ?,10", bvnsj, idonx)
+	rows, err := Db.Query("select id,sid,subjectName,title,date,thumbnail,countComment,countLike,countRead from view_article where account = ? limit ?,6", bvnsj, idonx)
 	if err != nil {
 		log.Println(err)
 		Mutex.Unlock()
@@ -353,7 +353,7 @@ func ArticleListRanking_(ieudh string, day int64) string {
 
 	Mutex.Lock()
 
-	rows, err := Db.Query("select id,sid,subjectName,title,content,account,nickname,head,date,thumbnail,countComment,countLike,countRead from view_article where date < ? limit ?,10", time, limit)
+	rows, err := Db.Query("select id,sid,subjectName,title,content,account,nickname,head,date,thumbnail,countComment,countLike,countRead from view_article where date < ? limit ?,6", time, limit)
 	if err != nil {
 		log.Println(err)
 		Mutex.Unlock()
@@ -409,7 +409,7 @@ func ArticleListRanking_(ieudh string, day int64) string {
 
 func ArticleListLike_(xdgje, uegsb string) string {
 	Mutex.Lock()
-	rows, err := Db.Query("select id,author, nickname, head, aid, title, date, thumbnail,countComment,countLike,countRead from view_article_like where account = ? and date < ?", xdgje, uegsb)
+	rows, err := Db.Query("select id,author, nickname, head, aid, title, date, thumbnail,countComment,countLike,countRead from view_article_like where account = ? and date < ? limit 6", xdgje, uegsb)
 	if err != nil {
 		log.Println(err)
 		Mutex.Unlock()
@@ -461,7 +461,7 @@ func ArticleListLike_(xdgje, uegsb string) string {
 //获取历史记录(complete)
 func ArticleListHistory_(ychwn, siwhb string) string {
 	Mutex.Lock()
-	rows, err := Db.Query("select id,author, nickname, head, aid, title, date, thumbnail,countComment,countLike,countRead from view_article_history where account = ? and date < ?", ychwn, siwhb)
+	rows, err := Db.Query("select id,author, nickname, head, aid, title, date, thumbnail,countComment,countLike,countRead from view_article_history where account = ? and date < ? limit 6", ychwn, siwhb)
 	if err != nil {
 		log.Println(err)
 		Mutex.Unlock()
@@ -666,7 +666,7 @@ func ArticleListComment_(hnksa, ncvbs string) string {
 	return string(result)
 }
 
-//评论文章(can not add or update a child row)
+//评论文章
 
 func ArticleAddComment_(iwuus, kalcb, thske, ywhkd, mnsjf string) string {
 
@@ -685,7 +685,7 @@ func ArticleAddComment_(iwuus, kalcb, thske, ywhkd, mnsjf string) string {
 	return SuccessFail_("1", "")
 }
 
-//记录文章阅读信息(complete)
+//记录文章阅读信息
 
 func ArticleAddHistory_(rqgcm, ivhws string) string {
 	Mutex.Lock()
@@ -767,18 +767,26 @@ func ArticleAddLike_(ivwga, rwhcs, uwhgc, mjkns string) string {
 			log.Println(err)
 			conn.Rollback()
 			Mutex.Unlock()
-			return SuccessFail_("0", "查询失败1")
+			return SuccessFail_("0", "查询失败")
 		}
 
 		defer rows.Close()
 
 		if rows.Next() {
-			_, err = Db.Exec("Update vuserlabel set Lvalue = Lvalue + 6 where Xaccount = ? and Qlabel = ? and Otype = 0", uwhgc, symbol)
+			_, err = Db.Exec("Update vuserlabel set Lvalue = Lvalue + 6 where Xaccount = ? and Qlabel = ? and Otype = 0 and Lvalue <= ?", uwhgc, symbol, MaxLabel-6)
 			if err != nil {
 				log.Println(err)
 				conn.Rollback()
 				Mutex.Unlock()
-				return SuccessFail_("0", "更新失败2")
+				return SuccessFail_("0", "更新失败")
+			}
+
+			_, err = Db.Exec("Update vuserlabel set Lvalue = ? where Xaccount = ? and Qlabel = ? and Otype = 0 and Lvalue > ?", MaxLabel, uwhgc, symbol, MaxLabel-6)
+			if err != nil {
+				log.Println(err)
+				conn.Rollback()
+				Mutex.Unlock()
+				return SuccessFail_("0", "更新失败")
 			}
 		} else {
 			_, err = Db.Exec("Insert into vuserlabel(Xaccount,Qlabel,Lvalue,Otype) values(?,?,6,0)", uwhgc, symbol)
@@ -838,7 +846,15 @@ func ArticleDeletelike_(wqsvh, zshrs, uqvcj string) string {
 		defer rows.Close()
 
 		if rows.Next() {
-			_, err = Db.Exec("update vuserlabel set Lvalue = Lvalue - 6 where Xaccount = ? and Qlabel = ? and Otype = 0", zshrs, symbol)
+			_, err = Db.Exec("update vuserlabel set Lvalue = Lvalue - 6 where Xaccount = ? and Qlabel = ? and Otype = 0 and Lvalue >= 6", zshrs, symbol)
+			if err != nil {
+				log.Println(err)
+				conn.Rollback()
+				Mutex.Unlock()
+				return SuccessFail_("0", "更新失败")
+			}
+
+			_, err = Db.Exec("update vuserlabel set Lvalue = 0 where Xaccount = ? and Qlabel = ? and Otype = 0 and Lvalue < 6", zshrs, symbol)
 			if err != nil {
 				log.Println(err)
 				conn.Rollback()
@@ -882,7 +898,7 @@ func ArtcileUploadSymbolNum_(wafhc, iryvn, yvhen string) string {
 		defer rows.Close()
 
 		if rows.Next() {
-			_, err = Db.Exec("Update vuserlabel set Lvalue = Lvalue - ? where Xaccount = ? and Qlabel = ?", yvhen, wafhc, symbol)
+			_, err = Db.Exec("Update vuserlabel set Lvalue = Lvalue + ? where Xaccount = ? and Qlabel = ? and Otype = 0", yvhen, wafhc, symbol)
 			if err != nil {
 				log.Println(err)
 				conn.Rollback()

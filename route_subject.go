@@ -16,8 +16,20 @@ import (
 
 func subjectList(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Add("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
 	w.Header().Set("content-type", "application/json")
+	w.Header().Set("Access-Control-Allow-Methods", "GET POST PUT DELETE")
+
+	if r.Method == "OPTIONS" {
+		return
+	}
+	token := r.Header.Get("Token")
+
+	if !utils.AuthenticToken(token) {
+		result := data.SuccessFail_("0", "Token验证失败")
+		fmt.Fprintf(w, result)
+		return
+	}
 
 	vhdes := r.FormValue("vhdes")
 	vhdes_ := utils.Decode(vhdes)
@@ -44,8 +56,20 @@ func subjectList(w http.ResponseWriter, r *http.Request) {
 
 func subjectListFocus(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Add("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
 	w.Header().Set("content-type", "application/json")
+	w.Header().Set("Access-Control-Allow-Methods", "GET POST PUT DELETE")
+
+	if r.Method == "OPTIONS" {
+		return
+	}
+	token := r.Header.Get("Token")
+
+	if !utils.AuthenticToken(token) {
+		result := data.SuccessFail_("0", "Token验证失败")
+		fmt.Fprintf(w, result)
+		return
+	}
 
 	budhs := r.FormValue("budhs")
 	budhs_ := utils.Decode(budhs)
@@ -60,8 +84,20 @@ func subjectListFocus(w http.ResponseWriter, r *http.Request) {
 
 func subjectListDetails(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Add("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
 	w.Header().Set("content-type", "application/json")
+	w.Header().Set("Access-Control-Allow-Methods", "GET POST PUT DELETE")
+
+	if r.Method == "OPTIONS" {
+		return
+	}
+	token := r.Header.Get("Token")
+
+	if !utils.AuthenticToken(token) {
+		result := data.SuccessFail_("0", "Token验证失败")
+		fmt.Fprintf(w, result)
+		return
+	}
 
 	grbfs := r.FormValue("grbfs")
 	grbfs_ := utils.Decode(grbfs)
@@ -76,33 +112,62 @@ func subjectListDetails(w http.ResponseWriter, r *http.Request) {
 
 func subjectAdd(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Add("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
 	w.Header().Set("content-type", "application/json")
+	w.Header().Set("Access-Control-Allow-Methods", "GET POST PUT DELETE")
 
-	ythcs := r.FormValue("ythcs")
-	ythcs_ := utils.Decode(ythcs)
-	utyeh := r.FormValue("utyeh")
-	ertqh := r.FormValue("ertqh")
-	vjmsk := r.FormValue("vjmsk")
-	vjmsk_ := utils.Decode(vjmsk)
-	oiyhx := r.FormValue("oiyhx")
+	if r.Method == "OPTIONS" {
+		return
+	}
+	token := r.Header.Get("Token")
 
-	oiyhx_ := strings.Split(oiyhx, ",")
+	if !utils.AuthenticToken(token) {
+		result := data.SuccessFail_("0", "Token验证失败")
+		fmt.Fprintf(w, result)
+		return
+	}
+
+	r.ParseMultipartForm(32 << 20)
+
+	var ythcs []string
+	var utyeh []string
+	var ertqh []string
+	var vjmsk []string
+	var oiyhx []string
+
+	if r.MultipartForm != nil {
+		ythcs = r.MultipartForm.Value["ythcs"]
+		utyeh = r.MultipartForm.Value["utyeh"]
+		ertqh = r.MultipartForm.Value["ertqh"]
+		vjmsk = r.MultipartForm.Value["vjmsk"]
+		oiyhx = r.MultipartForm.Value["oiyhx"]
+	}
+
+	ythcs_ := utils.Decode(ythcs[0])
+	vjmsk_ := utils.Decode(vjmsk[0])
+
+	oiyhx_ := strings.Split(oiyhx[0], ",")
 
 	timestamp := time.Now().Unix()
 	tm := time.Unix(timestamp, 0)
 	time := tm.Format("0601021504")
 
-	buffer, _ := base64.StdEncoding.DecodeString(oiyhx_[1])              //成图片文件并把文件写入到buffer
-	err := ioutil.WriteFile("subject/"+ythcs_+time+".jpg", buffer, 0666) //buffer输出到jpg文件中（不做处理，直接写到文件）
+	buffer, err := base64.StdEncoding.DecodeString(oiyhx_[1]) //成图片文件并把文件写入到buffer
 	if err != nil {
 		fmt.Println(err)
 		result := data.SuccessFail_("0", "图片获取失败")
 		fmt.Fprintf(w, result)
 		return
 	}
+	err = ioutil.WriteFile("subject/"+ythcs_+time+".jpg", buffer, 0666) //buffer输出到jpg文件中（不做处理，直接写到文件）
+	if err != nil {
+		fmt.Println(err)
+		result := data.SuccessFail_("0", "图片读写失败")
+		fmt.Fprintf(w, result)
+		return
+	}
 
-	result := data.SubjectAdd_(ythcs_, utyeh, ertqh, "subject/"+ythcs_+time+".jpg", vjmsk_)
+	result := data.SubjectAdd_(ythcs_, utyeh[0], ertqh[0], "subject/"+ythcs_+time+".jpg", vjmsk_)
 	fmt.Fprintf(w, result)
 }
 
@@ -110,8 +175,20 @@ func subjectAdd(w http.ResponseWriter, r *http.Request) {
 
 func subjectDelete(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Add("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
 	w.Header().Set("content-type", "application/json")
+	w.Header().Set("Access-Control-Allow-Methods", "GET POST PUT DELETE")
+
+	if r.Method == "OPTIONS" {
+		return
+	}
+	token := r.Header.Get("Token")
+
+	if !utils.AuthenticToken(token) {
+		result := data.SuccessFail_("0", "Token验证失败")
+		fmt.Fprintf(w, result)
+		return
+	}
 
 	rejcs := r.FormValue("rejcs")
 	rejcs_ := utils.Decode(rejcs)
@@ -124,8 +201,20 @@ func subjectDelete(w http.ResponseWriter, r *http.Request) {
 
 func subjectUploadSymbol(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Add("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
 	w.Header().Set("content-type", "application/json")
+	w.Header().Set("Access-Control-Allow-Methods", "GET POST PUT DELETE")
+
+	if r.Method == "OPTIONS" {
+		return
+	}
+	token := r.Header.Get("Token")
+
+	if !utils.AuthenticToken(token) {
+		result := data.SuccessFail_("0", "Token验证失败")
+		fmt.Fprintf(w, result)
+		return
+	}
 
 	tjnsv := r.FormValue("tjnsv")
 
@@ -137,8 +226,20 @@ func subjectUploadSymbol(w http.ResponseWriter, r *http.Request) {
 
 func subjectFocus(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Add("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
 	w.Header().Set("content-type", "application/json")
+	w.Header().Set("Access-Control-Allow-Methods", "GET POST PUT DELETE")
+
+	if r.Method == "OPTIONS" {
+		return
+	}
+	token := r.Header.Get("Token")
+
+	if !utils.AuthenticToken(token) {
+		result := data.SuccessFail_("0", "Token验证失败")
+		fmt.Fprintf(w, result)
+		return
+	}
 
 	grbfs := r.FormValue("grbfs")
 	grbfs_ := utils.Decode(grbfs)
@@ -155,8 +256,20 @@ func subjectFocus(w http.ResponseWriter, r *http.Request) {
 
 func subjectCancleFocus(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Add("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
 	w.Header().Set("content-type", "application/json")
+	w.Header().Set("Access-Control-Allow-Methods", "GET POST PUT DELETE")
+
+	if r.Method == "OPTIONS" {
+		return
+	}
+	token := r.Header.Get("Token")
+
+	if !utils.AuthenticToken(token) {
+		result := data.SuccessFail_("0", "Token验证失败")
+		fmt.Fprintf(w, result)
+		return
+	}
 
 	grbfs := r.FormValue("grbfs")
 	grbfs_ := utils.Decode(grbfs)
@@ -173,8 +286,20 @@ func subjectCancleFocus(w http.ResponseWriter, r *http.Request) {
 
 func articleContribute(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Add("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
 	w.Header().Set("content-type", "application/json")
+	w.Header().Set("Access-Control-Allow-Methods", "GET POST PUT DELETE")
+
+	if r.Method == "OPTIONS" {
+		return
+	}
+	token := r.Header.Get("Token")
+
+	if !utils.AuthenticToken(token) {
+		result := data.SuccessFail_("0", "Token验证失败")
+		fmt.Fprintf(w, result)
+		return
+	}
 
 	ychsw := r.FormValue("ychsw")
 	ychsw_ := utils.Decode(ychsw)
@@ -192,8 +317,20 @@ func articleContribute(w http.ResponseWriter, r *http.Request) {
 //获取未投稿文章
 func articleNotContribute(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Add("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
 	w.Header().Set("content-type", "application/json")
+	w.Header().Set("Access-Control-Allow-Methods", "GET POST PUT DELETE")
+
+	if r.Method == "OPTIONS" {
+		return
+	}
+	token := r.Header.Get("Token")
+
+	if !utils.AuthenticToken(token) {
+		result := data.SuccessFail_("0", "Token验证失败")
+		fmt.Fprintf(w, result)
+		return
+	}
 
 	hskcu := r.FormValue("hskcu")
 	hskcu_ := utils.Decode(hskcu)
@@ -206,8 +343,20 @@ func articleNotContribute(w http.ResponseWriter, r *http.Request) {
 
 func articleNotExamine(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Add("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
 	w.Header().Set("content-type", "application/json")
+	w.Header().Set("Access-Control-Allow-Methods", "GET POST PUT DELETE")
+
+	if r.Method == "OPTIONS" {
+		return
+	}
+	token := r.Header.Get("Token")
+
+	if !utils.AuthenticToken(token) {
+		result := data.SuccessFail_("0", "Token验证失败")
+		fmt.Fprintf(w, result)
+		return
+	}
 
 	ueysj := r.FormValue("ueysj")
 	ueysj_ := utils.Decode(ueysj)
@@ -219,8 +368,20 @@ func articleNotExamine(w http.ResponseWriter, r *http.Request) {
 //管理待审核文章
 func articleExamine(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Add("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
 	w.Header().Set("content-type", "application/json")
+	w.Header().Set("Access-Control-Allow-Methods", "GET POST PUT DELETE")
+
+	if r.Method == "OPTIONS" {
+		return
+	}
+	token := r.Header.Get("Token")
+
+	if !utils.AuthenticToken(token) {
+		result := data.SuccessFail_("0", "Token验证失败")
+		fmt.Fprintf(w, result)
+		return
+	}
 
 	eshhd := r.FormValue("eshhd")
 	eshhd_ := utils.Decode(eshhd)

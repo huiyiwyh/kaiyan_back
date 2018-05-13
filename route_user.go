@@ -112,17 +112,30 @@ func userModifyHead(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	hcnsg := r.FormValue("hcnsg")
-	hcnsg_ := utils.Decode(hcnsg)
-	yshuc := r.FormValue("yshuc")
+	r.ParseMultipartForm(32 << 20)
 
-	yshuc_ := strings.Split(yshuc, ",")
+	var hcnsg []string
+	var yshuc []string
 
-	buffer, _ := base64.StdEncoding.DecodeString(yshuc_[1])      //成图片文件并把文件写入到buffer
-	err := ioutil.WriteFile("user/"+hcnsg_+".jpg", buffer, 0666) //buffer输出到jpg文件中（不做处理，直接写到文件）
+	if r.MultipartForm != nil {
+		hcnsg = r.MultipartForm.Value["hcnsg"]
+		yshuc = r.MultipartForm.Value["yshuc"]
+	}
+	hcnsg_ := utils.Decode(hcnsg[0])
+
+	yshuc_ := strings.Split(yshuc[0], ",")
+
+	buffer, err := base64.StdEncoding.DecodeString(yshuc_[1]) //成图片文件并把文件写入到buffer
 	if err != nil {
 		fmt.Println(err)
 		result := data.SuccessFail_("0", "图片获取失败")
+		fmt.Fprintf(w, result)
+		return
+	}
+	err = ioutil.WriteFile("user/"+hcnsg_+".jpg", buffer, 0666) //buffer输出到jpg文件中（不做处理，直接写到文件）
+	if err != nil {
+		fmt.Println(err)
+		result := data.SuccessFail_("0", "图片读写失败")
 		fmt.Fprintf(w, result)
 		return
 	}
@@ -189,21 +202,21 @@ func userModifyBrief(w http.ResponseWriter, r *http.Request) {
 //修改登录密码
 
 func userModifyPassword(w http.ResponseWriter, r *http.Request) {
-	// w.Header().Set("Access-Control-Allow-Origin", "*")
-	// w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
-	// w.Header().Set("content-type", "application/json")
-	// w.Header().Set("Access-Control-Allow-Methods", "GET POST PUT DELETE")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
+	w.Header().Set("content-type", "application/json")
+	w.Header().Set("Access-Control-Allow-Methods", "GET POST PUT DELETE")
 
-	// if r.Method == "OPTIONS" {
-	// 	return
-	// }
-	// token := r.Header.Get("Token")
+	if r.Method == "OPTIONS" {
+		return
+	}
+	token := r.Header.Get("Token")
 
-	// if !utils.AuthenticToken(token) {
-	// 	result := data.SuccessFail_("0", "Token验证失败")
-	// 	fmt.Fprintf(w, result)
-	// 	return
-	// }
+	if !utils.AuthenticToken(token) {
+		result := data.SuccessFail_("0", "Token验证失败")
+		fmt.Fprintf(w, result)
+		return
+	}
 
 	jksnd := r.FormValue("jksnd")
 	jksnd_ := utils.Decode(jksnd)

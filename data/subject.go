@@ -58,7 +58,15 @@ func SubjectFocus_(grbfs, ckege, uiksh string) string {
 		defer rows.Close()
 
 		if rows.Next() {
-			_, err = Db.Exec("Update vuserlabel set Lvalue = Lvalue + 6 where Xaccount = ? and Qlabel = ? and Otype = 1", ckege, symbol)
+			_, err = Db.Exec("Update vuserlabel set Lvalue = Lvalue + 6 where Xaccount = ? and Qlabel = ? and Otype = 1 and Lvalue <= ?", ckege, symbol, MaxLabel-6)
+			if err != nil {
+				log.Println(err)
+				conn.Rollback()
+				Mutex.Unlock()
+				return SuccessFail_("0", "更新失败")
+			}
+
+			_, err = Db.Exec("Update vuserlabel set Lvalue = ? where Xaccount = ? and Qlabel = ? and Otype = 1 and Lvalue > ?", MaxLabel, ckege, symbol, MaxLabel-6)
 			if err != nil {
 				log.Println(err)
 				conn.Rollback()
@@ -125,7 +133,15 @@ func SubjectCancleFocus_(grbfs, ckege, uiksh string) string {
 		defer rows.Close()
 
 		if rows.Next() {
-			_, err = Db.Exec("Update vuserlabel set Lvalue = Lvalue - 6 where Xaccount = ? and Qlabel = ? and Otype = 1", ckege, symbol)
+			_, err = Db.Exec("Update vuserlabel set Lvalue = Lvalue - 6 where Xaccount = ? and Qlabel = ? and Otype = 1 and Lvalue >= 6", ckege, symbol)
+			if err != nil {
+				log.Println(err)
+				conn.Rollback()
+				Mutex.Unlock()
+				return SuccessFail_("0", "更新失败")
+			}
+
+			_, err = Db.Exec("Update vuserlabel set Lvalue = 0 where Xaccount = ? and Qlabel = ? and Otype = 1 and Lvalue < 6", ckege, symbol)
 			if err != nil {
 				log.Println(err)
 				conn.Rollback()

@@ -4,6 +4,7 @@ import (
 	"encoding/base64"
 	"fmt"
 	"io/ioutil"
+
 	"kaiyan/data"
 	"kaiyan/utils"
 	"strings"
@@ -18,8 +19,20 @@ import (
 
 func articleListRec(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Add("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
 	w.Header().Set("content-type", "application/json")
+	w.Header().Set("Access-Control-Allow-Methods", "GET POST PUT DELETE")
+
+	if r.Method == "OPTIONS" {
+		return
+	}
+	token := r.Header.Get("Token")
+
+	if !utils.AuthenticToken(token) {
+		result := data.SuccessFail_("0", "Token验证失败")
+		fmt.Fprintf(w, result)
+		return
+	}
 
 	thsue := r.FormValue("thsue")
 	thsue_ := utils.Decode(thsue)
@@ -32,8 +45,20 @@ func articleListRec(w http.ResponseWriter, r *http.Request) {
 
 func articleList(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Add("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
 	w.Header().Set("content-type", "application/json")
+	w.Header().Set("Access-Control-Allow-Methods", "GET POST PUT DELETE")
+
+	if r.Method == "OPTIONS" {
+		return
+	}
+	token := r.Header.Get("Token")
+
+	if !utils.AuthenticToken(token) {
+		result := data.SuccessFail_("0", "Token验证失败")
+		fmt.Fprintf(w, result)
+		return
+	}
 
 	dhcjs := r.FormValue("dhcjs")
 	dhcjs_ := utils.Decode(dhcjs)
@@ -79,8 +104,20 @@ func articleList(w http.ResponseWriter, r *http.Request) {
 
 func articleListRanking(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Add("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
 	w.Header().Set("content-type", "application/json")
+	w.Header().Set("Access-Control-Allow-Methods", "GET POST PUT DELETE")
+
+	if r.Method == "OPTIONS" {
+		return
+	}
+	token := r.Header.Get("Token")
+
+	if !utils.AuthenticToken(token) {
+		result := data.SuccessFail_("0", "Token验证失败")
+		fmt.Fprintf(w, result)
+		return
+	}
 
 	ieudh := r.FormValue("ieudh")
 	ieudh_ := utils.Decode(ieudh)
@@ -108,8 +145,20 @@ func articleListRanking(w http.ResponseWriter, r *http.Request) {
 //获取喜欢文章
 func articleListLike(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Add("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
 	w.Header().Set("content-type", "application/json")
+	w.Header().Set("Access-Control-Allow-Methods", "GET POST PUT DELETE")
+
+	if r.Method == "OPTIONS" {
+		return
+	}
+	token := r.Header.Get("Token")
+
+	if !utils.AuthenticToken(token) {
+		result := data.SuccessFail_("0", "Token验证失败")
+		fmt.Fprintf(w, result)
+		return
+	}
 
 	xdgje := r.FormValue("xdgje")
 	xdgje_ := utils.Decode(xdgje)
@@ -125,8 +174,20 @@ func articleListLike(w http.ResponseWriter, r *http.Request) {
 
 func articleListHistory(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Add("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
 	w.Header().Set("content-type", "application/json")
+	w.Header().Set("Access-Control-Allow-Methods", "GET POST PUT DELETE")
+
+	if r.Method == "OPTIONS" {
+		return
+	}
+	token := r.Header.Get("Token")
+
+	if !utils.AuthenticToken(token) {
+		result := data.SuccessFail_("0", "Token验证失败")
+		fmt.Fprintf(w, result)
+		return
+	}
 
 	ychwn := r.FormValue("ychwn")
 	ychwn_ := utils.Decode(ychwn)
@@ -141,8 +202,20 @@ func articleListHistory(w http.ResponseWriter, r *http.Request) {
 
 func articleListDetails(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Add("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
 	w.Header().Set("content-type", "application/json")
+	w.Header().Set("Access-Control-Allow-Methods", "GET POST PUT DELETE")
+
+	if r.Method == "OPTIONS" {
+		return
+	}
+	token := r.Header.Get("Token")
+
+	if !utils.AuthenticToken(token) {
+		result := data.SuccessFail_("0", "Token验证失败")
+		fmt.Fprintf(w, result)
+		return
+	}
 
 	rwhcs := r.FormValue("rwhcs")
 	rwhcs_ := utils.Decode(rwhcs)
@@ -157,8 +230,20 @@ func articleListDetails(w http.ResponseWriter, r *http.Request) {
 
 func articleListComment(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Add("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
 	w.Header().Set("content-type", "application/json")
+	w.Header().Set("Access-Control-Allow-Methods", "GET POST PUT DELETE")
+
+	if r.Method == "OPTIONS" {
+		return
+	}
+	token := r.Header.Get("Token")
+
+	if !utils.AuthenticToken(token) {
+		result := data.SuccessFail_("0", "Token验证失败")
+		fmt.Fprintf(w, result)
+		return
+	}
 
 	hnksa := r.FormValue("hnksa")
 	hnksa_ := utils.Decode(hnksa)
@@ -173,8 +258,20 @@ func articleListComment(w http.ResponseWriter, r *http.Request) {
 
 func articleAddComment(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Add("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
 	w.Header().Set("content-type", "application/json")
+	w.Header().Set("Access-Control-Allow-Methods", "GET POST PUT DELETE")
+
+	if r.Method == "OPTIONS" {
+		return
+	}
+	token := r.Header.Get("Token")
+
+	if !utils.AuthenticToken(token) {
+		result := data.SuccessFail_("0", "Token验证失败")
+		fmt.Fprintf(w, result)
+		return
+	}
 
 	iwuus := r.FormValue("iwuus")
 	iwuus_ := utils.Decode(iwuus)
@@ -196,8 +293,20 @@ func articleAddComment(w http.ResponseWriter, r *http.Request) {
 
 func articleAddHistory(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Add("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
 	w.Header().Set("content-type", "application/json")
+	w.Header().Set("Access-Control-Allow-Methods", "GET POST PUT DELETE")
+
+	if r.Method == "OPTIONS" {
+		return
+	}
+	token := r.Header.Get("Token")
+
+	if !utils.AuthenticToken(token) {
+		result := data.SuccessFail_("0", "Token验证失败")
+		fmt.Fprintf(w, result)
+		return
+	}
 
 	rqgcm := r.FormValue("rqgcm")
 	rqgcm_ := utils.Decode(rqgcm)
@@ -213,8 +322,20 @@ func articleAddHistory(w http.ResponseWriter, r *http.Request) {
 
 func articleAddLike(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Add("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
 	w.Header().Set("content-type", "application/json")
+	w.Header().Set("Access-Control-Allow-Methods", "GET POST PUT DELETE")
+
+	if r.Method == "OPTIONS" {
+		return
+	}
+	token := r.Header.Get("Token")
+
+	if !utils.AuthenticToken(token) {
+		result := data.SuccessFail_("0", "Token验证失败")
+		fmt.Fprintf(w, result)
+		return
+	}
 
 	ivwga := r.FormValue("ivwga")
 	ivwga_ := utils.Decode(ivwga)
@@ -233,8 +354,20 @@ func articleAddLike(w http.ResponseWriter, r *http.Request) {
 
 func articleDeletelike(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Add("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
 	w.Header().Set("content-type", "application/json")
+	w.Header().Set("Access-Control-Allow-Methods", "GET POST PUT DELETE")
+
+	if r.Method == "OPTIONS" {
+		return
+	}
+	token := r.Header.Get("Token")
+
+	if !utils.AuthenticToken(token) {
+		result := data.SuccessFail_("0", "Token验证失败")
+		fmt.Fprintf(w, result)
+		return
+	}
 
 	wqsvh := r.FormValue("wqsvh")
 	wqsvh_ := utils.Decode(wqsvh)
@@ -250,8 +383,20 @@ func articleDeletelike(w http.ResponseWriter, r *http.Request) {
 //上传标签值
 func articleUploadSymbolNum(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Add("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
 	w.Header().Set("content-type", "application/json")
+	w.Header().Set("Access-Control-Allow-Methods", "GET POST PUT DELETE")
+
+	if r.Method == "OPTIONS" {
+		return
+	}
+	token := r.Header.Get("Token")
+
+	if !utils.AuthenticToken(token) {
+		result := data.SuccessFail_("0", "Token验证失败")
+		fmt.Fprintf(w, result)
+		return
+	}
 
 	wafhc := r.FormValue("wafhc")
 	wafhc_ := utils.Decode(wafhc)
@@ -268,8 +413,20 @@ func articleUploadSymbolNum(w http.ResponseWriter, r *http.Request) {
 
 func articleUploadSymbol(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Add("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
 	w.Header().Set("content-type", "application/json")
+	w.Header().Set("Access-Control-Allow-Methods", "GET POST PUT DELETE")
+
+	if r.Method == "OPTIONS" {
+		return
+	}
+	token := r.Header.Get("Token")
+
+	if !utils.AuthenticToken(token) {
+		result := data.SuccessFail_("0", "Token验证失败")
+		fmt.Fprintf(w, result)
+		return
+	}
 
 	tgmbj := r.FormValue("tgmbj")
 
@@ -281,12 +438,32 @@ func articleUploadSymbol(w http.ResponseWriter, r *http.Request) {
 
 func articleUploadPicture(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Add("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
 	w.Header().Set("content-type", "application/json")
+	w.Header().Set("Access-Control-Allow-Methods", "GET POST PUT DELETE")
 
-	twhck := r.FormValue("twhck")
-	twhck_ := utils.Decode(twhck)
-	oxjwg := r.FormValue("oxjwg")
+	if r.Method == "OPTIONS" {
+		return
+	}
+	token := r.Header.Get("Token")
+
+	if !utils.AuthenticToken(token) {
+		result := data.SuccessFail_("0", "Token验证失败")
+		fmt.Fprintf(w, result)
+		return
+	}
+
+	r.ParseMultipartForm(32 << 20)
+
+	var twhck []string
+	var oxjwg []string
+
+	if r.MultipartForm != nil {
+		twhck = r.MultipartForm.Value["twhck"]
+		oxjwg = r.MultipartForm.Value["oxjwg"]
+	}
+
+	twhck_ := utils.Decode(twhck[0])
 
 	timestamp := time.Now().Unix()
 	tm := time.Unix(timestamp, 0)
@@ -294,7 +471,7 @@ func articleUploadPicture(w http.ResponseWriter, r *http.Request) {
 
 	utils.CreateDir("article/" + twhck_ + time)
 
-	oxjwg_ := strings.Split(oxjwg, ",")
+	oxjwg_ := strings.Split(oxjwg[0], ",")
 
 	buffer, _ := base64.StdEncoding.DecodeString(oxjwg_[1])                       //成图片文件并把文件写入到buffer
 	err := ioutil.WriteFile("article/"+twhck_+time+"/"+time+".jpg", buffer, 0666) //buffer输出到jpg文件中（不做处理，直接写到文件）
@@ -313,8 +490,20 @@ func articleUploadPicture(w http.ResponseWriter, r *http.Request) {
 
 func articleCancel(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Add("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
 	w.Header().Set("content-type", "application/json")
+	w.Header().Set("Access-Control-Allow-Methods", "GET POST PUT DELETE")
+
+	if r.Method == "OPTIONS" {
+		return
+	}
+	token := r.Header.Get("Token")
+
+	if !utils.AuthenticToken(token) {
+		result := data.SuccessFail_("0", "Token验证失败")
+		fmt.Fprintf(w, result)
+		return
+	}
 
 	iuhwc := r.FormValue("iuhwc")
 	iuhwc_ := utils.Decode(iuhwc)
@@ -345,8 +534,20 @@ func articleCancel(w http.ResponseWriter, r *http.Request) {
 
 func articleEdit(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Add("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
 	w.Header().Set("content-type", "application/json")
+	w.Header().Set("Access-Control-Allow-Methods", "GET POST PUT DELETE")
+
+	if r.Method == "OPTIONS" {
+		return
+	}
+	token := r.Header.Get("Token")
+
+	if !utils.AuthenticToken(token) {
+		result := data.SuccessFail_("0", "Token验证失败")
+		fmt.Fprintf(w, result)
+		return
+	}
 
 	ywjnc := r.FormValue("ywjnc")
 	ywjnc_ := utils.Decode(ywjnc)
@@ -368,8 +569,20 @@ func articleEdit(w http.ResponseWriter, r *http.Request) {
 
 func articleWrite(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Add("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
 	w.Header().Set("content-type", "application/json")
+	w.Header().Set("Access-Control-Allow-Methods", "GET POST PUT DELETE")
+
+	if r.Method == "OPTIONS" {
+		return
+	}
+	token := r.Header.Get("Token")
+
+	if !utils.AuthenticToken(token) {
+		result := data.SuccessFail_("0", "Token验证失败")
+		fmt.Fprintf(w, result)
+		return
+	}
 
 	twhck := r.FormValue("twhck")
 	twhck_ := utils.Decode(twhck)

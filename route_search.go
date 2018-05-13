@@ -15,8 +15,20 @@ import (
 
 func searchPopular(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Add("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
 	w.Header().Set("content-type", "application/json")
+	w.Header().Set("Access-Control-Allow-Methods", "GET POST PUT DELETE")
+
+	if r.Method == "OPTIONS" {
+		return
+	}
+	token := r.Header.Get("Token")
+
+	if !utils.AuthenticToken(token) {
+		result := data.SuccessFail_("0", "Token验证失败")
+		fmt.Fprintf(w, result)
+		return
+	}
 
 	result := data.SearchPopular_()
 	fmt.Fprintf(w, result)
@@ -26,8 +38,20 @@ func searchPopular(w http.ResponseWriter, r *http.Request) {
 
 func searchHistory(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Add("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
 	w.Header().Set("content-type", "application/json")
+	w.Header().Set("Access-Control-Allow-Methods", "GET POST PUT DELETE")
+
+	if r.Method == "OPTIONS" {
+		return
+	}
+	token := r.Header.Get("Token")
+
+	if !utils.AuthenticToken(token) {
+		result := data.SuccessFail_("0", "Token验证失败")
+		fmt.Fprintf(w, result)
+		return
+	}
 
 	jehcd := r.FormValue("jehcd")
 	jehcd_ := utils.Decode(jehcd)
@@ -41,8 +65,20 @@ func searchHistory(w http.ResponseWriter, r *http.Request) {
 
 func searchDelete(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Add("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
 	w.Header().Set("content-type", "application/json")
+	w.Header().Set("Access-Control-Allow-Methods", "GET POST PUT DELETE")
+
+	if r.Method == "OPTIONS" {
+		return
+	}
+	token := r.Header.Get("Token")
+
+	if !utils.AuthenticToken(token) {
+		result := data.SuccessFail_("0", "Token验证失败")
+		fmt.Fprintf(w, result)
+		return
+	}
 
 	uejsh := r.FormValue("uejsh")
 	uejsh_ := utils.Decode(uejsh)
@@ -57,8 +93,20 @@ func searchDelete(w http.ResponseWriter, r *http.Request) {
 
 func search(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Add("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
 	w.Header().Set("content-type", "application/json")
+	w.Header().Set("Access-Control-Allow-Methods", "GET POST PUT DELETE")
+
+	if r.Method == "OPTIONS" {
+		return
+	}
+	token := r.Header.Get("Token")
+
+	if !utils.AuthenticToken(token) {
+		result := data.SuccessFail_("0", "Token验证失败")
+		fmt.Fprintf(w, result)
+		return
+	}
 
 	okshc := r.FormValue("okshc")
 
@@ -70,8 +118,20 @@ func search(w http.ResponseWriter, r *http.Request) {
 
 func searchUser(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Add("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
 	w.Header().Set("content-type", "application/json")
+	w.Header().Set("Access-Control-Allow-Methods", "GET POST PUT DELETE")
+
+	if r.Method == "OPTIONS" {
+		return
+	}
+	token := r.Header.Get("Token")
+
+	if !utils.AuthenticToken(token) {
+		result := data.SuccessFail_("0", "Token验证失败")
+		fmt.Fprintf(w, result)
+		return
+	}
 
 	hwjco := r.FormValue("hwjco")
 
@@ -86,8 +146,20 @@ func searchUser(w http.ResponseWriter, r *http.Request) {
 
 func searchSubject(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Add("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
 	w.Header().Set("content-type", "application/json")
+	w.Header().Set("Access-Control-Allow-Methods", "GET POST PUT DELETE")
+
+	if r.Method == "OPTIONS" {
+		return
+	}
+	token := r.Header.Get("Token")
+
+	if !utils.AuthenticToken(token) {
+		result := data.SuccessFail_("0", "Token验证失败")
+		fmt.Fprintf(w, result)
+		return
+	}
 
 	hwjco := r.FormValue("hwjco")
 
@@ -102,8 +174,20 @@ func searchSubject(w http.ResponseWriter, r *http.Request) {
 
 func searchArticle(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Add("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
 	w.Header().Set("content-type", "application/json")
+	w.Header().Set("Access-Control-Allow-Methods", "GET POST PUT DELETE")
+
+	if r.Method == "OPTIONS" {
+		return
+	}
+	token := r.Header.Get("Token")
+
+	if !utils.AuthenticToken(token) {
+		result := data.SuccessFail_("0", "Token验证失败")
+		fmt.Fprintf(w, result)
+		return
+	}
 
 	abehs := r.FormValue("abehs")
 

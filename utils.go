@@ -42,5 +42,13 @@ func init() {
 
 // 版本
 func version() string {
-	return "0.4"
+	return "0.8"
+	//基础
+	//外域访问
+	//增加Token
+	//base64解密
+	//base64图片上传
+	//静态文件服务
+	//每天更新机制
+	//推荐算法
 }

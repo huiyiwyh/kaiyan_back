@@ -1,6 +1,7 @@
 package main
 
 import (
+	"kaiyan/data"
 	"log"
 	"net/http"
 	"time"
@@ -10,7 +11,6 @@ func main() {
 	p("kaiyan", version(), "started at", config.Address)
 
 	mux := http.NewServeMux()
-
 	//
 	// 定义所有的路由
 	// 处理器定义在其他index.go文件
@@ -109,7 +109,7 @@ func main() {
 		MaxHeaderBytes: 1 << 20,
 	}
 
-	go update()
+	go data.Update()
 
 	err := server.ListenAndServe()
 	if err != nil {
