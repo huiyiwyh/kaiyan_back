@@ -409,7 +409,7 @@ func ArticleListRanking_(ieudh string, day int64) string {
 
 func ArticleListLike_(xdgje, uegsb string) string {
 	Mutex.Lock()
-	rows, err := Db.Query("select id,author, nickname, head, aid, title, date, thumbnail,countComment,countLike,countRead from view_article_like where account = ? and date < ? limit 6", xdgje, uegsb)
+	rows, err := Db.Query("select id,author, nickname, head, aid, title, date, thumbnail,countComment,countLike,countRead from view_article_like where account = ? and date < ? order by date desc limit 6", xdgje, uegsb)
 	if err != nil {
 		log.Println(err)
 		Mutex.Unlock()
@@ -716,17 +716,18 @@ func ArticleAddHistory_(rqgcm, hcwga, ivhws string) string {
 
 func ArticleAddLike_(ivwga, rwhcs, uwhgc, mjkns string) string {
 	Mutex.Lock()
+
 	conn, err := Db.Begin()
 	if err != nil {
-		log.Println("事物开启失败")
+		log.Println(err)
 		Mutex.Unlock()
-		return SuccessFail_("0", "事物开启失败")
+		return SuccessFail_("0", "事务开启失败")
 	}
-
 	timestamp := time.Now().Unix()
 	tm := time.Unix(timestamp, 0)
 	time := tm.Format("2006-01-02 15:04")
-	_, err = conn.Query("insert into fuserlike (Rautaccount,Taid,Vaccount,Idate) values (?,?,?,?)", ivwga, rwhcs, uwhgc, time)
+
+	_, err = Db.Exec("insert into fuserlike (Rautaccount,Taid,Vaccount,Idate) values (?,?,?,?)", ivwga, rwhcs, uwhgc, time)
 	if err != nil {
 		log.Println(err)
 		conn.Rollback()
@@ -734,7 +735,7 @@ func ArticleAddLike_(ivwga, rwhcs, uwhgc, mjkns string) string {
 		return SuccessFail_("0", "插入失败1")
 	}
 
-	_, err = conn.Exec("update larticle set Klike = Klike + 1 where Xaid = ?", ivwga)
+	_, err = Db.Exec("update larticle set Klike = Klike + 1 where Xaid = ?", ivwga)
 	if err != nil {
 		log.Println(err)
 		conn.Rollback()
@@ -742,7 +743,7 @@ func ArticleAddLike_(ivwga, rwhcs, uwhgc, mjkns string) string {
 		return SuccessFail_("0", "更新失败2")
 	}
 
-	_, err = conn.Exec("insert into hmesslike (Ireceiver,Varticle,Ssender,Wdate) values (?,?,?,?)", ivwga, rwhcs, uwhgc, time)
+	_, err = Db.Exec("insert into hmesslike (Ireceiver,Varticle,Ssender,Wdate) values (?,?,?,?)", ivwga, rwhcs, uwhgc, time)
 	if err != nil {
 		log.Println(err)
 		conn.Rollback()
@@ -755,7 +756,7 @@ func ArticleAddLike_(ivwga, rwhcs, uwhgc, mjkns string) string {
 	for index := 0; index < len(symbols); index++ {
 		symbol, _ := strconv.Atoi(symbols[index])
 
-		rows, err := conn.Query("select * from vuserlabel where Xaccount = ? and  Qlabel = ? and Otype = 0", uwhgc, symbol)
+		rows, err := Db.Query("select * from vuserlabel where Xaccount = ? and  Qlabel = ? and Otype = 0", uwhgc, symbol)
 		if err != nil {
 			log.Println(err)
 			conn.Rollback()
@@ -766,7 +767,7 @@ func ArticleAddLike_(ivwga, rwhcs, uwhgc, mjkns string) string {
 		defer rows.Close()
 
 		if rows.Next() {
-			_, err = conn.Exec("Update vuserlabel set Lvalue = Lvalue + 6 where Xaccount = ? and Qlabel = ? and Otype = 0 and Lvalue <= ?", uwhgc, symbol, MaxLabel-6)
+			_, err = Db.Exec("Update vuserlabel set Lvalue = Lvalue + 6 where Xaccount = ? and Qlabel = ? and Otype = 0 and Lvalue <= ?", uwhgc, symbol, MaxLabel-6)
 			if err != nil {
 				log.Println(err)
 				conn.Rollback()
@@ -774,7 +775,7 @@ func ArticleAddLike_(ivwga, rwhcs, uwhgc, mjkns string) string {
 				return SuccessFail_("0", "更新失败5")
 			}
 
-			_, err = conn.Exec("Update vuserlabel set Lvalue = ? where Xaccount = ? and Qlabel = ? and Otype = 0 and Lvalue > ?", MaxLabel, uwhgc, symbol, MaxLabel-6)
+			_, err = Db.Exec("Update vuserlabel set Lvalue = ? where Xaccount = ? and Qlabel = ? and Otype = 0 and Lvalue > ?", MaxLabel, uwhgc, symbol, MaxLabel-6)
 			if err != nil {
 				log.Println(err)
 				conn.Rollback()
@@ -782,7 +783,7 @@ func ArticleAddLike_(ivwga, rwhcs, uwhgc, mjkns string) string {
 				return SuccessFail_("0", "更新失败6")
 			}
 		} else {
-			_, err = conn.Exec("Insert into vuserlabel(Xaccount,Qlabel,Lvalue,Otype) values(?,?,6,0)", uwhgc, symbol)
+			_, err = Db.Exec("Insert into vuserlabel(Xaccount,Qlabel,Lvalue,Otype) values(?,?,6,0)", uwhgc, symbol)
 			if err != nil {
 				log.Println(err)
 				conn.Rollback()
@@ -808,14 +809,14 @@ func ArticleDeletelike_(wqsvh, zshrs, uqvcj string) string {
 		return SuccessFail_("0", "事物开启失败")
 	}
 
-	_, err = conn.Exec("delete from fuserlike where Taid = ? and Vaccount = ?", wqsvh, zshrs)
+	_, err = Db.Exec("delete from fuserlike where Taid = ? and Vaccount = ?", wqsvh, zshrs)
 	if err != nil {
 		log.Println(err)
 		conn.Rollback()
 		Mutex.Unlock()
 		return SuccessFail_("0", "删除失败")
 	}
-	_, err = conn.Exec("update larticle set Klike = Klike - 1 where Xaid = ?", wqsvh)
+	_, err = Db.Exec("update larticle set Klike = Klike - 1 where Xaid = ?", wqsvh)
 	if err != nil {
 		log.Println(err)
 		conn.Rollback()
@@ -828,7 +829,7 @@ func ArticleDeletelike_(wqsvh, zshrs, uqvcj string) string {
 	for index := 0; index < len(symbols); index++ {
 		symbol, _ := strconv.Atoi(symbols[index])
 
-		rows, err := conn.Query("select * from vuserlabel where Xaccount = ? and  Qlabel = ? and Otype = 0", zshrs, symbol)
+		rows, err := Db.Query("select * from vuserlabel where Xaccount = ? and  Qlabel = ? and Otype = 0", zshrs, symbol)
 		if err != nil {
 			log.Println(err)
 			conn.Rollback()
@@ -839,7 +840,7 @@ func ArticleDeletelike_(wqsvh, zshrs, uqvcj string) string {
 		defer rows.Close()
 
 		if rows.Next() {
-			_, err = conn.Exec("update vuserlabel set Lvalue = Lvalue - 6 where Xaccount = ? and Qlabel = ? and Otype = 0 and Lvalue >= 6", zshrs, symbol)
+			_, err = Db.Exec("update vuserlabel set Lvalue = Lvalue - 6 where Xaccount = ? and Qlabel = ? and Otype = 0 and Lvalue >= 6", zshrs, symbol)
 			if err != nil {
 				log.Println(err)
 				conn.Rollback()
@@ -847,7 +848,7 @@ func ArticleDeletelike_(wqsvh, zshrs, uqvcj string) string {
 				return SuccessFail_("0", "更新失败")
 			}
 
-			_, err = conn.Exec("update vuserlabel set Lvalue = 0 where Xaccount = ? and Qlabel = ? and Otype = 0 and Lvalue < 6", zshrs, symbol)
+			_, err = Db.Exec("update vuserlabel set Lvalue = 0 where Xaccount = ? and Qlabel = ? and Otype = 0 and Lvalue < 6", zshrs, symbol)
 			if err != nil {
 				log.Println(err)
 				conn.Rollback()
@@ -880,7 +881,7 @@ func ArtcileUploadSymbolNum_(wafhc, iryvn, yvhen string) string {
 	for index := 0; index < len(symbols); index++ {
 		symbol, _ := strconv.Atoi(symbols[index])
 
-		rows, err := conn.Query("select * from vuserlabel where Xaccount = ? and  Qlabel = ?", wafhc, symbol)
+		rows, err := Db.Query("select * from vuserlabel where Xaccount = ? and  Qlabel = ?", wafhc, symbol)
 		if err != nil {
 			log.Println(err)
 			conn.Rollback()
@@ -891,7 +892,7 @@ func ArtcileUploadSymbolNum_(wafhc, iryvn, yvhen string) string {
 		defer rows.Close()
 
 		if rows.Next() {
-			_, err = conn.Exec("Update vuserlabel set Lvalue = Lvalue + ? where Xaccount = ? and Qlabel = ? and Otype = 0", yvhen, wafhc, symbol)
+			_, err = Db.Exec("Update vuserlabel set Lvalue = Lvalue + ? where Xaccount = ? and Qlabel = ? and Otype = 0", yvhen, wafhc, symbol)
 			if err != nil {
 				log.Println(err)
 				conn.Rollback()
@@ -899,7 +900,7 @@ func ArtcileUploadSymbolNum_(wafhc, iryvn, yvhen string) string {
 				return SuccessFail_("0", "更新失败")
 			}
 		} else {
-			_, err = conn.Exec("Insert into vuserlabel(Xaccount,Qlabel,Lvalue,Otype) values(?,?,6,0)", wafhc, symbol)
+			_, err = Db.Exec("Insert into vuserlabel(Xaccount,Qlabel,Lvalue,Otype) values(?,?,6,0)", wafhc, symbol)
 			if err != nil {
 				log.Println(err)
 				conn.Rollback()

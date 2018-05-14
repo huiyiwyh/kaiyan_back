@@ -2,6 +2,7 @@ package data
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"sort"
 	"strconv"
@@ -73,12 +74,12 @@ func SubjectListRec_(Account string) string {
 			Mutex.Unlock()
 			return SuccessFail_("0", "赋值失败1")
 		}
-		//fmt.Println(label, labelnum)
+		fmt.Println(label, labelnum)
 		labelsNumUser = append(labelsNumUser, UserLabelSubject{Label: strconv.Itoa(label), LabelNum: labelnum})
 		labelsUser = append(labelsUser, strconv.Itoa(label))
 	}
-	//fmt.Println(labels_num_user)
-	//fmt.Println(labels_user)
+	fmt.Println(labelsNumUser)
+	fmt.Println(labelsUser)
 
 	rows, err = conn.Query("select Usid,Blabel from hsubject")
 	if err != nil {
@@ -119,10 +120,10 @@ func SubjectListRec_(Account string) string {
 	}
 
 	sort.Sort(RecSubjectSlice(recSubjectsMatchall))
-	//fmt.Println(recartcilesmatchall)
+	fmt.Println(recSubjectsMatchall)
 
 	sort.Sort(RecSubjectSlice(recSubjectsMatch))
-	//fmt.Println(recartcilesmatch)
+	fmt.Println(recSubjectsMatch)
 
 	for index := 0; index < len(recSubjectsMatchall); index++ {
 		RecSubjects = append(RecSubjects, recSubjectsMatchall[index])
@@ -132,7 +133,7 @@ func SubjectListRec_(Account string) string {
 		RecSubjects = append(RecSubjects, recSubjectsMatch[index])
 	}
 
-	//fmt.Println(RecSubjects)
+	fmt.Println(RecSubjects)
 	var post SubjectList
 	post.Data = make([]DataSubjectList, 0)
 
