@@ -1,13 +1,11 @@
 package main
 
 import (
-	"encoding/base64"
 	"fmt"
-	"io/ioutil"
+	"io"
 
 	"kaiyan/data"
 	"kaiyan/utils"
-	"strings"
 
 	"log"
 	"net/http"
@@ -37,7 +35,7 @@ func articleListRec(w http.ResponseWriter, r *http.Request) {
 	thsue := r.FormValue("thsue")
 	thsue_ := utils.Decode(thsue)
 
-	result := data.ArticleListRec(thsue_)
+	result := data.ArticleListRec_(thsue_)
 	fmt.Fprintf(w, result)
 }
 
@@ -275,12 +273,12 @@ func articleAddComment(w http.ResponseWriter, r *http.Request) {
 
 	iwuus := r.FormValue("iwuus")
 	iwuus_ := utils.Decode(iwuus)
+	fmt.Println(iwuus_)
 	kalcb := r.FormValue("kalcb")
 	kalcb_ := utils.Decode(kalcb)
 	thske := r.FormValue("thske")
 	thske_ := utils.Decode(thske)
 	ywhkd := r.FormValue("ywhkd")
-
 	mnsjf := r.FormValue("mnsjf")
 	mnsjf_ := utils.Decode(mnsjf)
 
@@ -310,10 +308,12 @@ func articleAddHistory(w http.ResponseWriter, r *http.Request) {
 
 	rqgcm := r.FormValue("rqgcm")
 	rqgcm_ := utils.Decode(rqgcm)
+	hcwga := r.FormValue("hcwga")
+	hcwga_ := utils.Decode(hcwga)
 	ivhws := r.FormValue("ivhws")
 	ivhws_ := utils.Decode(ivhws)
 
-	result := data.ArticleAddHistory_(rqgcm_, ivhws_)
+	result := data.ArticleAddHistory_(rqgcm_, hcwga_, ivhws_)
 	fmt.Fprintf(w, result)
 
 }
@@ -453,36 +453,43 @@ func articleUploadPicture(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	r.ParseMultipartForm(32 << 20)
-
-	var twhck []string
-	var oxjwg []string
-
-	if r.MultipartForm != nil {
-		twhck = r.MultipartForm.Value["twhck"]
-		oxjwg = r.MultipartForm.Value["oxjwg"]
+	var result string
+	twhck := r.FormValue("twhck")
+	twhck_ := utils.Decode(twhck)
+	file, _, err := r.FormFile("oxjwg")
+	if err != nil {
+		fmt.Println(err)
+		result = data.SuccessFail_("0", "图片获取失败")
+		fmt.Fprintf(w, result)
+		return
 	}
-
-	twhck_ := utils.Decode(twhck[0])
+	defer file.Close()
 
 	timestamp := time.Now().Unix()
 	tm := time.Unix(timestamp, 0)
 	time := tm.Format("060102150405")
 
-	utils.CreateDir("article/" + twhck_ + time)
+	utils.CreateDir("article/" + twhck_)
 
-	oxjwg_ := strings.Split(oxjwg[0], ",")
-
-	buffer, _ := base64.StdEncoding.DecodeString(oxjwg_[1])                       //成图片文件并把文件写入到buffer
-	err := ioutil.WriteFile("article/"+twhck_+time+"/"+time+".jpg", buffer, 0666) //buffer输出到jpg文件中（不做处理，直接写到文件）
+	fW, err := os.Create("article/" + twhck_ + "/" + time + ".jpg")
 	if err != nil {
-		fmt.Println(err)
-		result := data.SuccessFail_("0", "图片获取失败")
+		log.Println(err)
+		result = data.SuccessFail_("0", "文件创建失败")
 		fmt.Fprintf(w, result)
 		return
 	}
 
-	result := data.ArticleUploadPicture_("kaiyan/article/" + twhck_ + time + "/" + time + ".jpg")
+	defer fW.Close()
+
+	_, err = io.Copy(fW, file)
+	if err != nil {
+		fmt.Println("文件保存失败")
+		result = data.SuccessFail_("0", "文件保存失败")
+		fmt.Fprintf(w, result)
+		return
+	}
+
+	result = data.ArticleUploadPicture_("article/" + twhck_ + "/" + time + ".jpg")
 	fmt.Fprintf(w, result)
 }
 

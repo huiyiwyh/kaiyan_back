@@ -13,7 +13,7 @@ import (
 
 //获取热门搜索(complete)
 
-func SearchPopular_() string {
+func SearchListPopular_() string {
 	Mutex.Lock()
 	rows, err := Db.Query("select * from view_history_search_popular")
 	if err != nil {
@@ -30,8 +30,8 @@ func SearchPopular_() string {
 	}
 	rows.Close()
 
-	var post SearchPopular
-	post.Data = make([]DataSearchPopular, 0)
+	var post SearchListPopular
+	post.Data = make([]DataSearchListPopular, 0)
 
 	slice := make([]int, 0) //创建用于检验重复随机数的数组，存放已生成的随机数
 	for index := 0; index < 10; index++ {
@@ -63,7 +63,7 @@ func SearchPopular_() string {
 				return SuccessFail_("0", "赋值失败")
 			}
 
-			data := DataSearchPopular{
+			data := DataSearchListPopular{
 				Name: name,
 			}
 			post.Data = append(post.Data, data)
@@ -84,7 +84,7 @@ func SearchPopular_() string {
 
 //获取搜索记录(complete)
 
-func SearchHistroy_(jehcd string) string {
+func SearchListHistroy_(jehcd string) string {
 	Mutex.Lock()
 	rows, err := Db.Query("select id,content from view_history_search where account = ? limit 10", jehcd)
 	if err != nil {
@@ -97,8 +97,8 @@ func SearchHistroy_(jehcd string) string {
 
 	Mutex.Unlock()
 
-	var post SearchHistory
-	post.Data = make([]DataSearchHistory, 0)
+	var post SearchListHistory
+	post.Data = make([]DataSearchListHistory, 0)
 	for rows.Next() {
 		var id, name string
 		err = rows.Scan(&id, &name)
@@ -106,7 +106,7 @@ func SearchHistroy_(jehcd string) string {
 			log.Println(err)
 			return SuccessFail_("0", "赋值失败")
 		}
-		data := DataSearchHistory{
+		data := DataSearchListHistory{
 			Id:   id,
 			Name: name,
 		}
@@ -138,10 +138,10 @@ func SearchDelete_(uejsh, yehjc string) string {
 
 func Search_(okshc string) string {
 	okshc = "%" + okshc + "%"
-	var post Search
-	post.Data.User = make([]DataSearchUser, 0)
-	post.Data.Article = make([]DataSearchArticle, 0)
-	post.Data.Subject = make([]DataSearchSubject, 0)
+	var post SearchList
+	post.Data.User = make([]DataSearchListUser, 0)
+	post.Data.Article = make([]DataSearchListArticle, 0)
+	post.Data.Subject = make([]DataSearchListSubject, 0)
 
 	Mutex.Lock()
 	rows, err := Db.Query("select account,nickname,head from view_user where nickname like ? limit 4", okshc)
@@ -162,7 +162,7 @@ func Search_(okshc string) string {
 			return SuccessFail_("0", "赋值失败")
 		}
 
-		data := DataSearchUser{
+		data := DataSearchListUser{
 			Account:  account,
 			Nickname: nickname,
 			Head:     head,
@@ -186,7 +186,7 @@ func Search_(okshc string) string {
 			return SuccessFail_("0", "赋值失败")
 		}
 
-		data := DataSearchSubject{
+		data := DataSearchListSubject{
 			Id:        id,
 			Name:      name,
 			Thumbnail: thumbnail,
@@ -211,7 +211,7 @@ func Search_(okshc string) string {
 			return SuccessFail_("0", "赋值失败")
 		}
 
-		data := DataSearchArticle{
+		data := DataSearchListArticle{
 			Id:           id,
 			Sid:          sid,
 			SubjectName:  subjectName,
@@ -272,8 +272,8 @@ func SearchUser_(hwjco, irksh string) string {
 
 	defer rows.Close()
 
-	var post SearchUser
-	post.Data = make([]DataSearchUser_, 0)
+	var post SearchListUsersimple
+	post.Data = make([]DataSearchListUsersimple, 0)
 	for rows.Next() {
 		var account, nickname, head, brief string
 		err = rows.Scan(&account, &nickname, &head)
@@ -283,14 +283,14 @@ func SearchUser_(hwjco, irksh string) string {
 			return SuccessFail_("0", "赋值失败")
 		}
 
-		data := DataSearchUser_{
+		data := DataSearchListUsersimple{
 			Account:  account,
 			Nickname: nickname,
 			Head:     head,
 			Brief:    brief,
 		}
 
-		data.Article = make([]DataSearchUser_Article, 0)
+		data.Article = make([]DataSearchListUsersimpleArticle, 0)
 		newrows, err := Db.Query("select title, id from view_article where account = ? limit 2", account)
 		if err != nil {
 			log.Println(err)
@@ -309,7 +309,7 @@ func SearchUser_(hwjco, irksh string) string {
 				return SuccessFail_("0", "赋值失败")
 			}
 
-			article := DataSearchUser_Article{
+			article := DataSearchListUsersimpleArticle{
 				Title: title,
 				Id:    id,
 			}
@@ -365,8 +365,8 @@ func SearchSubject_(hwjco, irksh string) string {
 
 	Mutex.Unlock()
 
-	var post SearchSubject
-	post.Data = make([]DataSearchSubject_, 0)
+	var post SearchListSubjectsimple
+	post.Data = make([]DataSearchListSubjectsimple, 0)
 	for rows.Next() {
 		var id, name, thumbnail, brief string
 		var countFocus, countArticle int
@@ -376,7 +376,7 @@ func SearchSubject_(hwjco, irksh string) string {
 			return SuccessFail_("0", "赋值失败")
 		}
 
-		data := DataSearchSubject_{
+		data := DataSearchListSubjectsimple{
 			Id:           id,
 			Name:         name,
 			Thumbnail:    thumbnail,
@@ -433,8 +433,8 @@ func SearchArticle_(abehs, jwkah string) string {
 
 	Mutex.Unlock()
 
-	var post SearchArticle
-	post.Data = make([]DataSearchArticle, 0)
+	var post SearchListArticlesimple
+	post.Data = make([]DataSearchListArticle, 0)
 	for rows.Next() {
 		var id, subjectName, title, content, account, nickname, head, date, thumbnail string
 		var sid, countComment, countLike, countRead int
@@ -445,7 +445,7 @@ func SearchArticle_(abehs, jwkah string) string {
 			return SuccessFail_("0", "赋值失败")
 		}
 
-		data := DataSearchArticle{
+		data := DataSearchListArticle{
 			Id:           id,
 			Sid:          sid,
 			SubjectName:  subjectName,

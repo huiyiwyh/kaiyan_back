@@ -1,6 +1,7 @@
 package data
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"sort"
@@ -10,7 +11,7 @@ import (
 
 //对用户的各个标签值进行排序
 
-//查询文章表中所有文章，
+//查询文章表中所有文章
 //将标签值与用户完全重合的挑选出来，按照用户标签值排序
 //将标签值与用户部分重合的挑选出来，按照用户标签值排序
 
@@ -19,7 +20,7 @@ type RecArticle struct {
 	LabelNum  int
 }
 
-type UserLabel struct {
+type UserLabelArticle struct {
 	Label    string
 	LabelNum int
 }
@@ -36,11 +37,11 @@ func (a RecArticleSlice) Less(i, j int) bool { // 重写 Less() 方法， 从大
 	return a[j].LabelNum < a[i].LabelNum
 }
 
-func ArticleListRec(Account string) string {
+func ArticleListRec_(Account string) string {
 
-	labels_num_user := make([]UserLabel, 0) //存放用户标签和值(string,int)
-	labels_user := make([]string, 0)        //存放用户标签(string)
-	Recartciles := make([]RecArticle, 0)    //存放文章ID(string)-----最终
+	labels_num_user := make([]UserLabelArticle, 0) //存放用户标签和值(string,int)
+	labels_user := make([]string, 0)               //存放用户标签(string)
+	Recartciles := make([]RecArticle, 0)           //存放文章ID(string)-----最终
 	recartcilesmatchall := make([]RecArticle, 0)
 	recartcilesmatch := make([]RecArticle, 0)
 
@@ -66,13 +67,19 @@ func ArticleListRec(Account string) string {
 	for rows.Next() {
 		var label int
 		var labelnum int
-		rows.Scan(&label, &labelnum)
-		//fmt.Println(label, labelnum)
-		labels_num_user = append(labels_num_user, UserLabel{Label: strconv.Itoa(label), LabelNum: labelnum})
+		err := rows.Scan(&label, &labelnum)
+		if err != nil {
+			log.Println(err)
+			conn.Rollback()
+			Mutex.Unlock()
+			return SuccessFail_("0", "赋值失败1")
+		}
+		fmt.Println(label, labelnum)
+		labels_num_user = append(labels_num_user, UserLabelArticle{Label: strconv.Itoa(label), LabelNum: labelnum})
 		labels_user = append(labels_user, strconv.Itoa(label))
 	}
-	//fmt.Println(labels_num_user)
-	//fmt.Println(labels_user)
+	fmt.Println(labels_num_user)
+	fmt.Println(labels_user)
 
 	rows, err = Db.Query("select Xaid,Vlabel from larticle")
 	if err != nil {
@@ -83,9 +90,15 @@ func ArticleListRec(Account string) string {
 	}
 	for rows.Next() {
 		var articleid, labelstring string
-		rows.Scan(&articleid, &labelstring)
+		err := rows.Scan(&articleid, &labelstring)
+		if err != nil {
+			log.Println(err)
+			conn.Rollback()
+			Mutex.Unlock()
+			return SuccessFail_("0", "赋值失败2")
+		}
 
-		labels_article := strings.Split(labelstring, "_") //存放文章标签(string)
+		labels_article := strings.Split(labelstring, "|") //存放文章标签(string)
 
 		labelmatch := 0
 		labelnum := 0
@@ -116,14 +129,11 @@ func ArticleListRec(Account string) string {
 		}
 	}
 
-	conn.Commit()
-	Mutex.Unlock()
-
 	sort.Sort(RecArticleSlice(recartcilesmatchall))
-	//fmt.Println(recartcilesmatchall)
+	fmt.Println(recartcilesmatchall)
 
 	sort.Sort(RecArticleSlice(recartcilesmatch))
-	//fmt.Println(recartcilesmatch)
+	fmt.Println(recartcilesmatch)
 
 	for index := 0; index < len(recartcilesmatchall); index++ {
 		Recartciles = append(Recartciles, recartcilesmatchall[index])
@@ -133,6 +143,61 @@ func ArticleListRec(Account string) string {
 		Recartciles = append(Recartciles, recartcilesmatch[index])
 	}
 
+	var post ArticleListNone
+	post.Data = make([]DataArticleListNone, 0)
+
+	for index := 0; index < len(Recartciles); index++ {
+		rows, err := Db.Query("select id,sid,subjectName,title,content,account,nickname,head,date,thumbnail,countComment,countLike,countRead from view_article where id = ?", Recartciles[index].ArticleId)
+		if err != nil {
+			log.Println(err)
+			conn.Rollback()
+			Mutex.Unlock()
+			return SuccessFail_("0", "查询失败")
+		}
+
+		defer rows.Close()
+
+		if rows.Next() {
+			var id, subjectName, title, content, account, nickname, head, date, thumbnail string
+			var sid, countComment, countLike, countRead int
+			err = rows.Scan(&id, &sid, &subjectName, &title, &content, &account, &nickname, &head, &date, &thumbnail, &countComment, &countLike, &countRead)
+			if err != nil {
+				log.Println(err)
+				conn.Rollback()
+				Mutex.Unlock()
+				return SuccessFail_("0", "赋值失败")
+			}
+
+			data := DataArticleListNone{
+				Id:           id,
+				Sid:          sid,
+				SubjectName:  subjectName,
+				Title:        title,
+				Content:      content,
+				Account:      account,
+				Nickname:     nickname,
+				Head:         head,
+				Date:         date,
+				Thumbnail:    thumbnail,
+				CountComment: countComment,
+				CountLike:    countLike,
+				CountRead:    countRead,
+			}
+			post.Data = append(post.Data, data)
+		}
+	}
+
+	conn.Commit()
+	Mutex.Unlock()
+
+	post.Code = "1"
+	post.Msg = ""
+	result, err := json.MarshalIndent(post, "", " ")
+	if err != nil {
+		return FailMarshalIndent(err)
+	}
 	fmt.Println(Recartciles)
-	return ""
+
+	return string(result)
+
 }

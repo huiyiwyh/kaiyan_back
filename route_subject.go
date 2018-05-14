@@ -12,6 +12,31 @@ import (
 	"net/http"
 )
 
+//推荐专题
+func subjectListRec(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
+	w.Header().Set("content-type", "application/json")
+	w.Header().Set("Access-Control-Allow-Methods", "GET POST PUT DELETE")
+
+	if r.Method == "OPTIONS" {
+		return
+	}
+	token := r.Header.Get("Token")
+
+	if !utils.AuthenticToken(token) {
+		result := data.SuccessFail_("0", "Token验证失败")
+		fmt.Fprintf(w, result)
+		return
+	}
+
+	uisnt := r.FormValue("thsue")
+	uisnt_ := utils.Decode(uisnt)
+
+	result := data.SubjectListRec_(uisnt_)
+	fmt.Fprintf(w, result)
+}
+
 //获取专题列表
 
 func subjectList(w http.ResponseWriter, r *http.Request) {

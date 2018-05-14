@@ -67,9 +67,9 @@ func userSignup(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, result)
 }
 
-//获取个人信息
+//获取用户信息
 
-func userDetails(w http.ResponseWriter, r *http.Request) {
+func userListDetails(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
 	w.Header().Set("content-type", "application/json")
@@ -88,8 +88,10 @@ func userDetails(w http.ResponseWriter, r *http.Request) {
 
 	jchen := r.FormValue("jchen")
 	jchen_ := utils.Decode(jchen)
+	yhskc := r.FormValue("yhskc")
+	yhskc_ := utils.Decode(yhskc)
 
-	result := data.UserDetails_(jchen_)
+	result := data.UserListDetails_(jchen_, yhskc_)
 	fmt.Fprintf(w, result)
 }
 
@@ -140,7 +142,7 @@ func userModifyHead(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	result := data.UserModifyHead_(hcnsg_, "kaiyan/user/"+hcnsg_+".jpg")
+	result := data.UserModifyHead_(hcnsg_, "user/"+hcnsg_+".jpg")
 	fmt.Fprintf(w, result)
 }
 
@@ -171,7 +173,7 @@ func userModifyNickname(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, result)
 }
 
-//修改个人简介
+//修改用户简介
 
 func userModifyBrief(w http.ResponseWriter, r *http.Request) {
 
@@ -229,7 +231,7 @@ func userModifyPassword(w http.ResponseWriter, r *http.Request) {
 
 //获取动态信息
 
-func userDynamic(w http.ResponseWriter, r *http.Request) {
+func userListDynamic(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
 	w.Header().Set("content-type", "application/json")
@@ -253,7 +255,7 @@ func userDynamic(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Println(nhcjs, asxcd)
 
-	result := data.UserDynamic_(nhcjs_, asxcd_)
+	result := data.UserListDynamic_(nhcjs_, asxcd_)
 	fmt.Fprintf(w, result)
 }
 

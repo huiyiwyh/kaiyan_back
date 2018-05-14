@@ -20,7 +20,7 @@ func SubjectFocus_(grbfs, ckege, uiksh string) string {
 		return SuccessFail_("0", "事物开启失败")
 	}
 
-	_, err = Db.Exec("insert into rsubfocus (Ksid,Saccount) values (?,?)", grbfs, ckege)
+	_, err = conn.Exec("insert into rsubfocus (Ksid,Saccount) values (?,?)", grbfs, ckege)
 	if err != nil {
 		log.Println(err)
 		conn.Rollback()
@@ -28,7 +28,7 @@ func SubjectFocus_(grbfs, ckege, uiksh string) string {
 		return SuccessFail_("0", "插入失败")
 	}
 
-	_, err = Db.Exec("update hsubject set Scountfocus = Scountfocus + 1 where Usid = ?", grbfs)
+	_, err = conn.Exec("update hsubject set Scountfocus = Scountfocus + 1 where Usid = ?", grbfs)
 	if err != nil {
 		log.Println(err)
 		conn.Rollback()
@@ -36,11 +36,15 @@ func SubjectFocus_(grbfs, ckege, uiksh string) string {
 		return SuccessFail_("0", "更新失败")
 	}
 
-	// _, err = Db.Exec("insert into hmesslike (Ireceiver,Varticle,Ssender,Wdate) values (?,?,?,?)", ivwga, rwhcs, uwhgc, time)
+	// timestamp := time.Now().Unix()
+	// tm := time.Unix(timestamp, 0)
+	// time := tm.Format("2006-01-02 15:04")
+
+	// _, err = Db.Exec("insert into hmesslike (Ireceiver,Varticle,Ssender,Wdate) values (?,?,?,?)", iv, rwhcs, uwhgc, time)
 	// if err != nil {
 	// 	log.Println(err)
 	// 	conn.Rollback()
-	// 	return SuccessFail_("Insert_ err")
+	// 	return SuccessFail_("0", "Insert err")
 	// }
 
 	symbols := strings.Split(uiksh, "|")
@@ -48,7 +52,7 @@ func SubjectFocus_(grbfs, ckege, uiksh string) string {
 	for index := 0; index < len(symbols); index++ {
 		symbol, _ := strconv.Atoi(symbols[index])
 
-		rows, err := Db.Query("select * from vuserlabel where Xaccount = ? and  Qlabel = ? and Otype = 1", ckege, symbol)
+		rows, err := conn.Query("select * from vuserlabel where Xaccount = ? and  Qlabel = ? and Otype = 1", ckege, symbol)
 		if err != nil {
 			log.Println(err)
 			conn.Rollback()
@@ -58,7 +62,7 @@ func SubjectFocus_(grbfs, ckege, uiksh string) string {
 		defer rows.Close()
 
 		if rows.Next() {
-			_, err = Db.Exec("Update vuserlabel set Lvalue = Lvalue + 6 where Xaccount = ? and Qlabel = ? and Otype = 1 and Lvalue <= ?", ckege, symbol, MaxLabel-6)
+			_, err = conn.Exec("Update vuserlabel set Lvalue = Lvalue + 6 where Xaccount = ? and Qlabel = ? and Otype = 1 and Lvalue <= ?", ckege, symbol, MaxLabel-6)
 			if err != nil {
 				log.Println(err)
 				conn.Rollback()
@@ -66,7 +70,7 @@ func SubjectFocus_(grbfs, ckege, uiksh string) string {
 				return SuccessFail_("0", "更新失败")
 			}
 
-			_, err = Db.Exec("Update vuserlabel set Lvalue = ? where Xaccount = ? and Qlabel = ? and Otype = 1 and Lvalue > ?", MaxLabel, ckege, symbol, MaxLabel-6)
+			_, err = conn.Exec("Update vuserlabel set Lvalue = ? where Xaccount = ? and Qlabel = ? and Otype = 1 and Lvalue > ?", MaxLabel, ckege, symbol, MaxLabel-6)
 			if err != nil {
 				log.Println(err)
 				conn.Rollback()
@@ -74,7 +78,7 @@ func SubjectFocus_(grbfs, ckege, uiksh string) string {
 				return SuccessFail_("0", "更新失败")
 			}
 		} else {
-			_, err = Db.Exec("Insert into vuserlabel(Xaccount,Qlabel,Lvalue,Otype) values(?,?,6,1)", ckege, symbol)
+			_, err = conn.Exec("Insert into vuserlabel(Xaccount,Qlabel,Lvalue,Otype) values(?,?,6,1)", ckege, symbol)
 			if err != nil {
 				log.Println(err)
 				conn.Rollback()
@@ -102,14 +106,14 @@ func SubjectCancleFocus_(grbfs, ckege, uiksh string) string {
 		return SuccessFail_("0", "事物开启失败")
 	}
 
-	_, err = Db.Exec("delete from rsubfocus where Ksid = ? and Saccount = ?", grbfs, ckege)
+	_, err = conn.Exec("delete from rsubfocus where Ksid = ? and Saccount = ?", grbfs, ckege)
 	if err != nil {
 		log.Println(err)
 		conn.Rollback()
 		Mutex.Unlock()
 		return SuccessFail_("0", "删除失败")
 	}
-	_, err = Db.Exec("update hsubject set  = Scountfocus - 1 where Usid = ?", grbfs)
+	_, err = conn.Exec("update hsubject set  = Scountfocus - 1 where Usid = ?", grbfs)
 	if err != nil {
 		log.Println(err)
 		conn.Rollback()
@@ -122,7 +126,7 @@ func SubjectCancleFocus_(grbfs, ckege, uiksh string) string {
 	for index := 0; index < len(symbols); index++ {
 		symbol, _ := strconv.Atoi(symbols[index])
 
-		rows, err := Db.Query("select * from vuserlabel where Xaccount = ? and Qlabel = ? and Otype = 1", ckege, symbol)
+		rows, err := conn.Query("select * from vuserlabel where Xaccount = ? and Qlabel = ? and Otype = 1", ckege, symbol)
 		if err != nil {
 			log.Println(err)
 			conn.Rollback()
@@ -133,7 +137,7 @@ func SubjectCancleFocus_(grbfs, ckege, uiksh string) string {
 		defer rows.Close()
 
 		if rows.Next() {
-			_, err = Db.Exec("Update vuserlabel set Lvalue = Lvalue - 6 where Xaccount = ? and Qlabel = ? and Otype = 1 and Lvalue >= 6", ckege, symbol)
+			_, err = conn.Exec("Update vuserlabel set Lvalue = Lvalue - 6 where Xaccount = ? and Qlabel = ? and Otype = 1 and Lvalue >= 6", ckege, symbol)
 			if err != nil {
 				log.Println(err)
 				conn.Rollback()
@@ -141,7 +145,7 @@ func SubjectCancleFocus_(grbfs, ckege, uiksh string) string {
 				return SuccessFail_("0", "更新失败")
 			}
 
-			_, err = Db.Exec("Update vuserlabel set Lvalue = 0 where Xaccount = ? and Qlabel = ? and Otype = 1 and Lvalue < 6", ckege, symbol)
+			_, err = conn.Exec("Update vuserlabel set Lvalue = 0 where Xaccount = ? and Qlabel = ? and Otype = 1 and Lvalue < 6", ckege, symbol)
 			if err != nil {
 				log.Println(err)
 				conn.Rollback()
@@ -170,7 +174,7 @@ func SubjectUploadSymbol_(tjnsv string) string {
 
 	var post SubjectUploadSymbol
 
-	rows, err := Db.Query("select Tslid from ysubjectlabel where Rname = ?", tjnsv)
+	rows, err := conn.Query("select Tslid from ysubjectlabel where Rname = ?", tjnsv)
 	if err != nil {
 		log.Println(err)
 		conn.Rollback()
@@ -185,7 +189,7 @@ func SubjectUploadSymbol_(tjnsv string) string {
 		rows.Scan(&Tslid)
 		post.Msg = string(Tslid)
 	} else {
-		_, err = Db.Exec("insert into ysubjectlabel(Rname) values (?)", tjnsv)
+		_, err = conn.Exec("insert into ysubjectlabel(Rname) values (?)", tjnsv)
 		if err != nil {
 			log.Println(err)
 			conn.Rollback()
@@ -193,7 +197,7 @@ func SubjectUploadSymbol_(tjnsv string) string {
 			return SuccessFail_("0", "删除失败")
 		}
 
-		newrows, err := Db.Query("select Tslid from ysubjectlabel where Rname = ?", tjnsv)
+		newrows, err := conn.Query("select Tslid from ysubjectlabel where Rname = ?", tjnsv)
 		if err != nil {
 			log.Println(err)
 			conn.Rollback()
@@ -303,8 +307,8 @@ func SubjectListTime(wyejs string) string {
 	post.Data = make([]DataSubjectList, 0)
 
 	for rows.Next() {
-		var name, nickname, thumbnail, date string
-		var id, countArticle, countFocus int
+		var id, name, nickname, thumbnail, date string
+		var countArticle, countFocus int
 		err = rows.Scan(&id, &name, &nickname, &thumbnail, &countArticle, &countFocus, &date)
 		if err != nil {
 			log.Println(err)
@@ -357,8 +361,8 @@ func SubjectListNum(wyejs string) string {
 	post.Data = make([]DataSubjectList, 0)
 
 	for rows.Next() {
-		var name, nickname, thumbnail, date string
-		var id, countArticle, countFocus int
+		var id, name, nickname, thumbnail, date string
+		var countArticle, countFocus int
 		err = rows.Scan(&id, &name, &nickname, &thumbnail, &countArticle, &countFocus, &date)
 		if err != nil {
 			log.Println(err)
@@ -405,8 +409,8 @@ func SubjectListAccount(kvjed string) string {
 	post.Data = make([]DataSubjectList, 0)
 
 	for rows.Next() {
-		var name, nickname, thumbnail, date string
-		var id, countArticle, countFocus int
+		var id, name, nickname, thumbnail, date string
+		var countArticle, countFocus int
 		err = rows.Scan(&id, &name, &nickname, &thumbnail, &countArticle, &countFocus, &date)
 		if err != nil {
 			log.Println(err)
@@ -439,15 +443,15 @@ func SubjectListAccount(kvjed string) string {
 //获取专题详情
 
 func SubjectListDetails_(grbfs, ckege string) string {
-	subjectId, err := strconv.Atoi(grbfs)
-	if err != nil {
-		log.Println(err)
-		return SuccessFail_("0", "字符串转字符失败")
-	}
+	// subjectId, err := strconv.Atoi(grbfs)
+	// if err != nil {
+	// 	log.Println(err)
+	// 	return SuccessFail_("0", "字符串转字符失败")
+	// }
 
 	Mutex.Lock()
 
-	rows, err := Db.Query("select id,name,brief,thumbnail,owner,nickname,countArticle,countFocus,label from view_subject where id = ?", subjectId)
+	rows, err := Db.Query("select id,name,brief,thumbnail,owner,nickname,countArticle,countFocus,label from view_subject where id = ?", grbfs)
 	if err != nil {
 		log.Println(err)
 		Mutex.Unlock()
@@ -461,8 +465,8 @@ func SubjectListDetails_(grbfs, ckege string) string {
 	var post SubjectDetails
 
 	for rows.Next() {
-		var id, countArticle, countFocus int
-		var name, brief, thumbnail, owner, nickname, label string
+		var countArticle, countFocus int
+		var id, name, brief, thumbnail, owner, nickname, label string
 		err = rows.Scan(&id, &name, &brief, &thumbnail, &owner, &nickname, &countArticle, &countFocus, &label)
 		if err != nil {
 			log.Println(err)
@@ -512,7 +516,7 @@ func SubjectAdd_(ythcs, utyeh, ertqh, oiyhx, vjmsk string) string {
 		return SuccessFail_("0", "事物开启失败")
 	}
 
-	rows, err := Db.Query("select * from hsubject where Ebelong = ?", ythcs)
+	rows, err := conn.Query("select * from hsubject where Ebelong = ?", ythcs)
 	if err != nil {
 		log.Println(err)
 		Mutex.Unlock()
@@ -538,7 +542,7 @@ func SubjectAdd_(ythcs, utyeh, ertqh, oiyhx, vjmsk string) string {
 	tm := time.Unix(timestamp, 0)
 	time := tm.Format("2006-01-02 15:04")
 
-	_, err = Db.Exec("insert into hsubject(Yname,Kbrief,Uthumbnail,Ebelong,Hcountarticle,Scountfocus,Ydate,Blabel)  values (?,?,?,?,?,?,?,?)", utyeh, ertqh, oiyhx, ythcs, 0, 0, time, vjmsk)
+	_, err = conn.Exec("insert into hsubject(Yname,Kbrief,Uthumbnail,Ebelong,Hcountarticle,Scountfocus,Ydate,Blabel)  values (?,?,?,?,?,?,?,?)", utyeh, ertqh, oiyhx, ythcs, 0, 0, time, vjmsk)
 	if err != nil {
 		log.Println(err)
 		conn.Rollback()
@@ -570,7 +574,7 @@ func SubjectDelete_(rejcs string) string {
 		return SuccessFail_("0", "事物开启失败")
 	}
 
-	_, err = Db.Exec("update larticle set psid = 0 where psid = ?", id)
+	_, err = conn.Exec("update larticle set psid = 0 where psid = ?", id)
 	if err != nil {
 		log.Println(err)
 		conn.Rollback()
@@ -578,7 +582,7 @@ func SubjectDelete_(rejcs string) string {
 		return SuccessFail_("0", "更新失败")
 	}
 
-	_, err = Db.Exec("delete from hsubject where Usid = ?", id)
+	_, err = conn.Exec("delete from hsubject where Usid = ?", id)
 	if err != nil {
 		log.Println(err)
 		conn.Rollback()
@@ -608,7 +612,7 @@ func ArticleContribute_(ychsw, hsyce, anscj, rywjc string) string {
 		return SuccessFail_("0", "事物开启失败")
 	}
 
-	_, err = Db.Exec("insert into jexamine(Caid,Usid,Gaccount,Edate) values (?,?,?,?)", ychsw, hsyce, anscj, time)
+	_, err = conn.Exec("insert into jexamine(Caid,Usid,Gaccount,Edate) values (?,?,?,?)", ychsw, hsyce, anscj, time)
 	if err != nil {
 		log.Println(err)
 		conn.Rollback()
@@ -616,7 +620,7 @@ func ArticleContribute_(ychsw, hsyce, anscj, rywjc string) string {
 		return SuccessFail_("0", "更新失败")
 	}
 
-	_, err = Db.Exec("insert into umesssubject(Wsender,Qreceiver,Ydate,Carticle,Isubject) values (?,?,?,?,?)", anscj, rywjc, time, ychsw, hsyce)
+	_, err = conn.Exec("insert into umesssubject(Wsender,Qreceiver,Ydate,Carticle,Isubject) values (?,?,?,?,?)", anscj, rywjc, time, ychsw, hsyce)
 	if err != nil {
 		log.Println(err)
 		conn.Rollback()
@@ -739,7 +743,7 @@ func ArticleExamine_ac(eshhd, twrch, imvah, tafvm, uehst string) string {
 		return SuccessFail_("0", "事物开启失败")
 	}
 
-	rows, err := Db.Query("select Caid,Usid,Gaccount from jexamine where Rid = ?", examineId)
+	rows, err := conn.Query("select Caid,Usid,Gaccount from jexamine where Rid = ?", examineId)
 	if err != nil {
 		log.Println(err)
 		conn.Rollback()
@@ -760,7 +764,7 @@ func ArticleExamine_ac(eshhd, twrch, imvah, tafvm, uehst string) string {
 
 		fmt.Println(articleId, subjectId, author)
 	}
-	_, err = Db.Exec("update larticle set Psid = ? where Xaid = ?", subjectId, articleId)
+	_, err = conn.Exec("update larticle set Psid = ? where Xaid = ?", subjectId, articleId)
 	if err != nil {
 		log.Println(err)
 		conn.Rollback()
@@ -768,7 +772,7 @@ func ArticleExamine_ac(eshhd, twrch, imvah, tafvm, uehst string) string {
 		return SuccessFail_("0", "更新失败")
 	}
 
-	_, err = Db.Exec("delete from jexamine where Rid = ?", examineId)
+	_, err = conn.Exec("delete from jexamine where Rid = ?", examineId)
 	if err != nil {
 		log.Println(err)
 		conn.Rollback()
@@ -776,7 +780,7 @@ func ArticleExamine_ac(eshhd, twrch, imvah, tafvm, uehst string) string {
 		return SuccessFail_("0", "删除失败")
 	}
 
-	_, err = Db.Exec("update hsubject set Hcountarticle = Hcountarticle + 1 where Usid =  ?", subjectId)
+	_, err = conn.Exec("update hsubject set Hcountarticle = Hcountarticle + 1 where Usid =  ?", subjectId)
 	if err != nil {
 		log.Println(err)
 		conn.Rollback()
@@ -789,7 +793,7 @@ func ArticleExamine_ac(eshhd, twrch, imvah, tafvm, uehst string) string {
 	time := tm.Format("2006-01-02 15:04")
 	content := "管理员：" + tafvm + "通过了您的投稿"
 	fmt.Println(time, content)
-	_, err = Db.Exec("insert into smessage(Esender,Rdate,Pcontent,Oreceiver,GisRead) values (?,?,?,?,0)", imvah, time, content, author)
+	_, err = conn.Exec("insert into smessage(Esender,Rdate,Pcontent,Oreceiver,GisRead) values (?,?,?,?,0)", imvah, time, content, author)
 	if err != nil {
 		log.Println(err)
 		conn.Rollback()
@@ -820,7 +824,7 @@ func ArticleExamine_fa(eshhd, twrch, imvah, tafvm, uehst string) string {
 		return SuccessFail_("0", "事物开启失败")
 	}
 
-	rows, err := Db.Query("select Gaccount from jexamine where Rid = ?", examineId)
+	rows, err := conn.Query("select Gaccount from jexamine where Rid = ?", examineId)
 	if err != nil {
 		log.Println(err)
 		conn.Rollback()
@@ -838,7 +842,7 @@ func ArticleExamine_fa(eshhd, twrch, imvah, tafvm, uehst string) string {
 		return SuccessFail_("0", "赋值失败")
 	}
 
-	_, err = Db.Exec("delete from jexamine where Rid = ?", examineId)
+	_, err = conn.Exec("delete from jexamine where Rid = ?", examineId)
 	if err != nil {
 		log.Println(err)
 		conn.Rollback()
@@ -850,7 +854,7 @@ func ArticleExamine_fa(eshhd, twrch, imvah, tafvm, uehst string) string {
 	tm := time.Unix(timestamp, 0)
 	time := tm.Format("2006-01-02 15:04")
 	content := "管理员：" + tafvm + "拒绝了您的投稿"
-	_, err = Db.Exec("insert into smessage(Esender,Rdate,Pcontent,Oreceiver,GisRead) values (?,?,?,?,0)", imvah, time, content, author)
+	_, err = conn.Exec("insert into smessage(Esender,Rdate,Pcontent,Oreceiver,GisRead) values (?,?,?,?,0)", imvah, time, content, author)
 	if err != nil {
 		log.Println(err)
 		conn.Rollback()

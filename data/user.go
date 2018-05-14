@@ -100,9 +100,9 @@ func UserSignup_(ywhft, iuqng string) string {
 	return SuccessFail_("1", "通过XXX待审核文章成功！")
 }
 
-//获取个人信息(complete)
+//获取用户信息
 
-func UserDetails_(jchen string) string {
+func UserListDetails_(jchen, yhskc string) string {
 	Mutex.Lock()
 	rows, err := Db.Query("select nickname,head,brief,countFocus,countFans,countLike,countArticle,countSubject,indexback,countWords,countLiked from view_user where account = ?", jchen)
 	if err != nil {
@@ -113,7 +113,7 @@ func UserDetails_(jchen string) string {
 	defer rows.Close()
 	Mutex.Unlock()
 
-	var post UserInfo
+	var post UserDetails
 
 	for rows.Next() {
 		var nickname, head, brief, indexback string
@@ -124,7 +124,7 @@ func UserDetails_(jchen string) string {
 			return SuccessFail_("0", "赋值失败")
 		}
 
-		post.Data = DataUserInfo{
+		post.Data = DataUserDetails{
 			Nickname:     nickname,
 			Head:         head,
 			Brief:        brief,
@@ -136,6 +136,20 @@ func UserDetails_(jchen string) string {
 			Indexback:    indexback,
 			CountWords:   countWords,
 			CountLiked:   countLiked,
+		}
+
+		newrows, err := Db.Query("select * from view_author_focus where account = ? and owner = ?", jchen, yhskc)
+		if err != nil {
+			log.Println(err)
+			return SuccessFail_("0", "查询失败")
+		}
+
+		defer newrows.Close()
+
+		if newrows.Next() {
+			post.Data.IsFocused = true
+		} else {
+			post.Data.IsFocused = false
 		}
 	}
 
@@ -211,7 +225,7 @@ func UserModifyPassword_(jksnd, nklsh, wrqsd string) string {
 
 //获取动态信息(complete)
 
-func UserDynamic_(nhcjs, asxcd string) string {
+func UserListDynamic_(nhcjs, asxcd string) string {
 	Mutex.Lock()
 	rows, err := Db.Query("select `key`,value,type,date from view_action where account = ? and date < ? limit 10", nhcjs, asxcd)
 	if err != nil {
@@ -695,7 +709,7 @@ func UserCancelFocus_(ivneh, oapcw string) string {
 	if err != nil {
 		log.Println(err)
 		Mutex.Unlock()
-		return SuccessFail_("0", "查询失败")
+		return SuccessFail_("0", "取消失败")
 	}
 
 	Mutex.Unlock()

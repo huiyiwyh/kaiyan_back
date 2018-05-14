@@ -12,7 +12,7 @@ import (
 //获取作者列表
 // 1-关注作者列表的成功响应(complete)
 
-func AuthorListFollow(geacg, iicje string) string {
+func AuthorListFollow_(geacg, iicje string) string {
 
 	limit, err := strconv.Atoi(iicje)
 	if err != nil {
@@ -33,8 +33,8 @@ func AuthorListFollow(geacg, iicje string) string {
 
 	Mutex.Unlock()
 
-	var post AuthorFollow
-	post.Data = make([]DataAuthorFollow, 0)
+	var post AuthorListFollow
+	post.Data = make([]DataAuthorListFollow, 0)
 
 	for rows.Next() {
 		var account, nickname, head, aid, title string
@@ -44,7 +44,7 @@ func AuthorListFollow(geacg, iicje string) string {
 			return SuccessFail_("0", "赋值失败")
 		}
 
-		data := DataAuthorFollow{
+		data := DataAuthorListFollow{
 			Account:  account,
 			Nickname: nickname,
 			Head:     head,
@@ -66,7 +66,7 @@ func AuthorListFollow(geacg, iicje string) string {
 
 // 2-我的关注列表的成功响应(complete)
 
-func AuthorListFollowAll(geacg, iicje string) string {
+func AuthorListFollowAll_(geacg, iicje string) string {
 	limit, err := strconv.Atoi(iicje)
 	if err != nil {
 		log.Println(err)
@@ -86,8 +86,8 @@ func AuthorListFollowAll(geacg, iicje string) string {
 
 	Mutex.Unlock()
 
-	var post AuthorFollowAll
-	post.Data = make([]DataAuthorFollowAll, 0)
+	var post AuthorListFollowAll
+	post.Data = make([]DataAuthorListFollowAll, 0)
 
 	for rows.Next() {
 		var account, nickname, head, countWords, countLiked string
@@ -97,7 +97,7 @@ func AuthorListFollowAll(geacg, iicje string) string {
 			return SuccessFail_("0", "赋值失败")
 		}
 
-		data := DataAuthorFollowAll{
+		data := DataAuthorListFollowAll{
 			Account:    account,
 			Nickname:   nickname,
 			Head:       head,
@@ -120,7 +120,7 @@ func AuthorListFollowAll(geacg, iicje string) string {
 
 // 3-我的粉丝列表的成功响应(complete)
 
-func AuthorListFans(geacg, iicje string) string {
+func AuthorListFans_(geacg, iicje string) string {
 	limit, err := strconv.Atoi(iicje)
 	if err != nil {
 		log.Println(err)
@@ -129,7 +129,7 @@ func AuthorListFans(geacg, iicje string) string {
 
 	Mutex.Lock()
 
-	rows, err := Db.Query("select account,nickname,head,countwords,countliked from view_userfocus where account = ? limit ?,10", geacg, limit)
+	rows, err := Db.Query("select account,nickname,head,countwords,countliked from view_userfans where account = ? limit ?,10", geacg, limit)
 	if err != nil {
 		log.Println(err)
 		Mutex.Unlock()
@@ -140,8 +140,8 @@ func AuthorListFans(geacg, iicje string) string {
 
 	Mutex.Unlock()
 
-	var post AuthorFans
-	post.Data = make([]DataAuthorFans, 0)
+	var post AuthorListFans
+	post.Data = make([]DataAuthorListFans, 0)
 
 	for rows.Next() {
 		var account, nickname, head, countWords, countLiked string
@@ -151,7 +151,7 @@ func AuthorListFans(geacg, iicje string) string {
 			return SuccessFail_("0", "赋值失败")
 		}
 
-		data := DataAuthorFans{
+		data := DataAuthorListFans{
 			Account:    account,
 			Nickname:   nickname,
 			Head:       head,
@@ -194,8 +194,8 @@ func AuthorListRanking_(jeheh string) string {
 
 	Mutex.Unlock()
 
-	var post AuthorRanking
-	post.Data = make([]DataAuthorRanking, 0)
+	var post AuthorListRanking
+	post.Data = make([]DataAuthorListRanking, 0)
 
 	for rows.Next() {
 		var account, nickname, head, aid, title string
@@ -205,7 +205,7 @@ func AuthorListRanking_(jeheh string) string {
 			return SuccessFail_("0", "赋值失败")
 		}
 
-		data := DataAuthorRanking{
+		data := DataAuthorListRanking{
 			Account:  account,
 			Nickname: nickname,
 			Head:     head,

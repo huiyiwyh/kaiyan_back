@@ -13,13 +13,13 @@ type DataSuccessFail struct {
 //获取作者列表
 //1-关注作者列表的成功响应
 
-type AuthorFollow struct {
-	Code string             `json:"code"`
-	Msg  string             `json:"msg"`
-	Data []DataAuthorFollow `json:"data"`
+type AuthorListFollow struct {
+	Code string                 `json:"code"`
+	Msg  string                 `json:"msg"`
+	Data []DataAuthorListFollow `json:"data"`
 }
 
-type DataAuthorFollow struct {
+type DataAuthorListFollow struct {
 	Account  string `json:"account"`
 	Nickname string `json:"nickname"`
 	Head     string `json:"head"`
@@ -29,13 +29,13 @@ type DataAuthorFollow struct {
 
 // 2-我的关注列表的成功响应
 
-type AuthorFollowAll struct {
-	Code string                `json:"code"`
-	Msg  string                `json:"msg"`
-	Data []DataAuthorFollowAll `json:"data"`
+type AuthorListFollowAll struct {
+	Code string                    `json:"code"`
+	Msg  string                    `json:"msg"`
+	Data []DataAuthorListFollowAll `json:"data"`
 }
 
-type DataAuthorFollowAll struct {
+type DataAuthorListFollowAll struct {
 	Account    string `json:"account"`
 	Nickname   string `json:"nickname"`
 	Head       string `json:"head"`
@@ -45,13 +45,13 @@ type DataAuthorFollowAll struct {
 
 // 3-我的粉丝列表的成功响应
 
-type AuthorFans struct {
-	Code string           `json:"code"`
-	Msg  string           `json:"msg"`
-	Data []DataAuthorFans `json:"data"`
+type AuthorListFans struct {
+	Code string               `json:"code"`
+	Msg  string               `json:"msg"`
+	Data []DataAuthorListFans `json:"data"`
 }
 
-type DataAuthorFans struct {
+type DataAuthorListFans struct {
 	Account    string `json:"account"`
 	Nickname   string `json:"nickname"`
 	Head       string `json:"head"`
@@ -60,13 +60,13 @@ type DataAuthorFans struct {
 }
 
 //获取作者排行榜
-type AuthorRanking struct {
-	Code string              `json:"code"`
-	Msg  string              `json:"msg"`
-	Data []DataAuthorRanking `json:"data"`
+type AuthorListRanking struct {
+	Code string                  `json:"code"`
+	Msg  string                  `json:"msg"`
+	Data []DataAuthorListRanking `json:"data"`
 }
 
-type DataAuthorRanking struct {
+type DataAuthorListRanking struct {
 	Account  string `json:"account"`
 	Nickname string `json:"nickname"`
 	Head     string `json:"head"`
@@ -111,7 +111,7 @@ type SubjectList struct {
 }
 
 type DataSubjectList struct {
-	Id           int    `json:"id"`
+	Id           string `json:"id"`
 	Name         string `json:"name"`
 	Nickname     string `json:"nickname"`
 	Thumbnail    string `json:"thumbnail"`
@@ -134,7 +134,7 @@ type DataSubjectDetails struct {
 }
 
 type DataSubjectDetailsInfo struct {
-	Id           int    `json:"id"`
+	Id           string `json:"id"`
 	Name         string `json:"name"`
 	Brief        string `json:"brief"`
 	Thumbnail    string `json:"thumbnail"`
@@ -209,24 +209,24 @@ type DataBlackList struct {
 
 //获取热门搜索
 
-type SearchPopular struct {
-	Code string              `json:"code"`
-	Msg  string              `json:"msg"`
-	Data []DataSearchPopular `json:"data"`
+type SearchListPopular struct {
+	Code string                  `json:"code"`
+	Msg  string                  `json:"msg"`
+	Data []DataSearchListPopular `json:"data"`
 }
 
-type DataSearchPopular struct {
+type DataSearchListPopular struct {
 	Name string `json:"name"`
 }
 
 //获取搜索记录
-type SearchHistory struct {
-	Code string              `json:"code"`
-	Msg  string              `json:"msg"`
-	Data []DataSearchHistory `json:"data"`
+type SearchListHistory struct {
+	Code string                  `json:"code"`
+	Msg  string                  `json:"msg"`
+	Data []DataSearchListHistory `json:"data"`
 }
 
-type DataSearchHistory struct {
+type DataSearchListHistory struct {
 	Id   string `json:"id"`
 	Name string `json:"name"`
 }
@@ -235,29 +235,29 @@ type DataSearchHistory struct {
 
 //初步检索
 
-type Search struct {
-	Code string     `json:"code"`
-	Msg  string     `json:"msg"`
-	Data DataSearch `json:"data"`
+type SearchList struct {
+	Code string         `json:"code"`
+	Msg  string         `json:"msg"`
+	Data DataSearchList `json:"data"`
 }
 
-type DataSearch struct {
-	User    []DataSearchUser    `json:"user"`
-	Subject []DataSearchSubject `json:"subject"`
-	Article []DataSearchArticle `json:"article"`
+type DataSearchList struct {
+	User    []DataSearchListUser    `json:"user"`
+	Subject []DataSearchListSubject `json:"subject"`
+	Article []DataSearchListArticle `json:"article"`
 }
 
-type DataSearchUser struct {
+type DataSearchListUser struct {
 	Account  string `json:"account"`
 	Nickname string `json:"nickname"`
 	Head     string `json:"head"`
 }
-type DataSearchSubject struct {
+type DataSearchListSubject struct {
 	Id        string `json:"id"`
 	Name      string `json:"name"`
 	Thumbnail string `json:"thumbnail"`
 }
-type DataSearchArticle struct {
+type DataSearchListArticle struct {
 	Id           string `json:"id"`
 	Sid          int    `json:"sid"`
 	SubjectName  string `json:"subjectName"`
@@ -274,34 +274,34 @@ type DataSearchArticle struct {
 }
 
 //检索相关用户
-type SearchUser struct {
-	Code string            `json:"code"`
-	Msg  string            `json:"msg"`
-	Data []DataSearchUser_ `json:"data"`
+type SearchListUsersimple struct {
+	Code string                     `json:"code"`
+	Msg  string                     `json:"msg"`
+	Data []DataSearchListUsersimple `json:"data"`
 }
 
-type DataSearchUser_ struct {
-	Account  string                   `json:"account"`
-	Nickname string                   `json:"nickname"`
-	Head     string                   `json:"head"`
-	Brief    string                   `json:"brief"`
-	Article  []DataSearchUser_Article `json:"article"`
+type DataSearchListUsersimple struct {
+	Account  string                            `json:"account"`
+	Nickname string                            `json:"nickname"`
+	Head     string                            `json:"head"`
+	Brief    string                            `json:"brief"`
+	Article  []DataSearchListUsersimpleArticle `json:"article"`
 }
 
-type DataSearchUser_Article struct {
+type DataSearchListUsersimpleArticle struct {
 	Title string `json:"title"`
 	Id    string `json:"id"`
 }
 
 //检索相关专题
 
-type SearchSubject struct {
-	Code string               `json:"code"`
-	Msg  string               `json:"msg"`
-	Data []DataSearchSubject_ `json:"data"`
+type SearchListSubjectsimple struct {
+	Code string                        `json:"code"`
+	Msg  string                        `json:"msg"`
+	Data []DataSearchListSubjectsimple `json:"data"`
 }
 
-type DataSearchSubject_ struct {
+type DataSearchListSubjectsimple struct {
 	Id           string `json:"id"`
 	Name         string `json:"name"`
 	Thumbnail    string `json:"thumbnail"`
@@ -312,24 +312,25 @@ type DataSearchSubject_ struct {
 
 //检索相关文章
 
-type SearchArticle struct {
-	Code string              `json:"code"`
-	Msg  string              `json:"msg"`
-	Data []DataSearchArticle `json:"data"`
+type SearchListArticlesimple struct {
+	Code string                  `json:"code"`
+	Msg  string                  `json:"msg"`
+	Data []DataSearchListArticle `json:"data"`
 }
 
 //用户接口文档
 //
 
-//获取个人信息
+//获取用户信息
 
-type UserInfo struct {
-	Code string       `json:"code"`
-	Msg  string       `json:"msg"`
-	Data DataUserInfo `json:"data"`
+type UserDetails struct {
+	Code string          `json:"code"`
+	Msg  string          `json:"msg"`
+	Data DataUserDetails `json:"data"`
 }
 
-type DataUserInfo struct {
+type DataUserDetails struct {
+	IsFocused    bool   `json:"isFocused"`
 	Nickname     string `json:"nickname"`
 	Head         string `json:"head"`
 	Brief        string `json:"brief"`
@@ -337,9 +338,9 @@ type DataUserInfo struct {
 	CountFans    int    `json:"countFans"`
 	CountLike    int    `json:"countLike"`
 	CountArticle int    `json:"countArticle"`
-	CountSubject int    `json:"countsubject"`
+	CountSubject int    `json:"countSubject"`
 	Indexback    string `json:"indexback"`
-	CountWords   int    `json:"countwords"`
+	CountWords   int    `json:"countWords"`
 	CountLiked   int    `json:"countLiked"`
 }
 
@@ -347,7 +348,7 @@ type DataUserInfo struct {
 
 //修改用户昵称
 
-//修改个人简介
+//修改用户简介
 
 //修改登录密码
 
@@ -373,13 +374,13 @@ type DataUserDynamic struct {
 
 //None
 
-type ArticleListWithNone struct {
-	Code string                    `json:"code"`
-	Msg  string                    `json:"msg"`
-	Data []DataArticleListWithNone `json:"data"`
+type ArticleListNone struct {
+	Code string                `json:"code"`
+	Msg  string                `json:"msg"`
+	Data []DataArticleListNone `json:"data"`
 }
 
-type DataArticleListWithNone struct {
+type DataArticleListNone struct {
 	Id           string `json:"id"`
 	Sid          int    `json:"sid"`
 	SubjectName  string `json:"subjectName"`
@@ -397,13 +398,13 @@ type DataArticleListWithNone struct {
 
 //Subject
 
-type ArticleListWithSubject struct {
-	Code string                       `json:"code"`
-	Msg  string                       `json:"msg"`
-	Data []DataArticleListWithSubject `json:"data"`
+type ArticleListSubject struct {
+	Code string                   `json:"code"`
+	Msg  string                   `json:"msg"`
+	Data []DataArticleListSubject `json:"data"`
 }
 
-type DataArticleListWithSubject struct {
+type DataArticleListSubject struct {
 	Id           string `json:"id"`
 	Title        string `json:"title"`
 	Account      string `json:"account"`
@@ -418,13 +419,13 @@ type DataArticleListWithSubject struct {
 
 //Account
 
-type ArticleListWithAccount struct {
-	Code string                       `json:"code"`
-	Msg  string                       `json:"msg"`
-	Data []DataArticleListWithAccount `json:"data"`
+type ArticleListAccount struct {
+	Code string                   `json:"code"`
+	Msg  string                   `json:"msg"`
+	Data []DataArticleListAccount `json:"data"`
 }
 
-type DataArticleListWithAccount struct {
+type DataArticleListAccount struct {
 	Id           string `json:"id"`
 	Sid          int    `json:"sid"`
 	SubjectName  string `json:"subjectName"`
@@ -438,13 +439,13 @@ type DataArticleListWithAccount struct {
 
 //获取文章排行榜
 
-type ArticleRanking struct {
-	Code string               `json:"code"`
-	Msg  string               `json:"msg"`
-	Data []DataArticleRanking `json:"data"`
+type ArticleListRanking struct {
+	Code string                   `json:"code"`
+	Msg  string                   `json:"msg"`
+	Data []DataArticleListRanking `json:"data"`
 }
 
-type DataArticleRanking struct {
+type DataArticleListRanking struct {
 	Id           string `json:"id"`
 	Sid          int    `json:"sid"`
 	SubjectName  string `json:"subjectName"`
@@ -462,12 +463,12 @@ type DataArticleRanking struct {
 
 //获取喜欢文章
 
-type ArticleLike struct {
-	Code string            `json:"code"`
-	Msg  string            `json:"msg"`
-	Data []DataArticleLike `json:"data"`
+type ArticleListLike struct {
+	Code string                `json:"code"`
+	Msg  string                `json:"msg"`
+	Data []DataArticleListLike `json:"data"`
 }
-type DataArticleLike struct {
+type DataArticleListLike struct {
 	Id           int    `json:"id"`
 	Author       string `json:"author"`
 	Nickname     string `json:"nickname"`
@@ -483,14 +484,13 @@ type DataArticleLike struct {
 
 //获取历史记录
 
-type ArticleHistory struct {
-	Code string               `json:"code"`
-	Msg  string               `json:"msg"`
-	Data []DataArticleHistory `json:"data"`
+type ArticleListHistory struct {
+	Code string                   `json:"code"`
+	Msg  string                   `json:"msg"`
+	Data []DataArticleListHistory `json:"data"`
 }
 
-type DataArticleHistory struct {
-	Id           int    `json:"id"`
+type DataArticleListHistory struct {
 	Author       string `json:"author"`
 	Nickname     string `json:"nickname"`
 	Head         string `json:"head"`
@@ -505,18 +505,18 @@ type DataArticleHistory struct {
 
 //获取文章详情
 
-type ArticleDetails struct {
-	Code string             `json:"code"`
-	Msg  string             `json:"msg"`
-	Data DataArticleDetails `json:"data"`
+type ArticleListDetails struct {
+	Code string                 `json:"code"`
+	Msg  string                 `json:"msg"`
+	Data DataArticleListDetails `json:"data"`
 }
 
-type DataArticleDetails struct {
-	IsLiked bool                   `json:"isLiked"`
-	Article DataArticleDetailsInfo `json:"article"`
+type DataArticleListDetails struct {
+	IsLiked bool                       `json:"isLiked"`
+	Article DataArticleListDetailsInfo `json:"article"`
 }
 
-type DataArticleDetailsInfo struct {
+type DataArticleListDetailsInfo struct {
 	Id           string `json:"id"`
 	Account      string `json:"account"`
 	Nickname     string `json:"nickname"`
@@ -534,24 +534,24 @@ type DataArticleDetailsInfo struct {
 }
 
 //获取文章评论
-type ArticleComment struct {
-	Code string               `json:"code"`
-	Msg  string               `json:"msg"`
-	Data []DataArticleComment `json:"data"`
+type ArticleListComment struct {
+	Code string                   `json:"code"`
+	Msg  string                   `json:"msg"`
+	Data []DataArticleListComment `json:"data"`
 }
 
-type DataArticleComment struct {
-	Article    string                         `json:"article"`
-	Sender     string                         `json:"sender"`
-	Nickname   string                         `json:"nickname"`
-	Head       string                         `json:"head"`
-	Receiver   string                         `json:"receiver"`
-	Date       string                         `json:"date"`
-	Content    string                         `json:"content"`
-	SubComment []DataArticleCommentSubComment `json:"subComment"`
+type DataArticleListComment struct {
+	Article    string                             `json:"article"`
+	Sender     string                             `json:"sender"`
+	Nickname   string                             `json:"nickname"`
+	Head       string                             `json:"head"`
+	Receiver   string                             `json:"receiver"`
+	Date       string                             `json:"date"`
+	Content    string                             `json:"content"`
+	SubComment []DataArticleListCommentSubComment `json:"subComment"`
 }
 
-type DataArticleCommentSubComment struct {
+type DataArticleListCommentSubComment struct {
 	Article  string `json:"article"`
 	Sender   string `json:"sender"`
 	Nickname string `json:"nickname"`

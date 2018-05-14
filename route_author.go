@@ -38,11 +38,11 @@ func authorList(w http.ResponseWriter, r *http.Request) {
 	var result string
 	switch utydk_ {
 	case "1":
-		result = data.AuthorListFollow(geacg_, iicje_)
+		result = data.AuthorListFollow_(geacg_, iicje_)
 	case "2":
-		result = data.AuthorListFollowAll(geacg_, iicje_)
+		result = data.AuthorListFollowAll_(geacg_, iicje_)
 	case "3":
-		result = data.AuthorListFans(geacg_, iicje_)
+		result = data.AuthorListFans_(geacg_, iicje_)
 	default:
 		result = data.SuccessFail_("0", "wrong code")
 	}

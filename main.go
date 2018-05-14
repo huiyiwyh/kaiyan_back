@@ -27,6 +27,7 @@ func main() {
 
 	//专题接口
 	mux.HandleFunc("/subject/List", subjectList)                   //获取专题列表
+	mux.HandleFunc("/subject/ListRec", subjectListRec)             //推荐
 	mux.HandleFunc("/subject/ListFocus", subjectListFocus)         //获取关注专题列表
 	mux.HandleFunc("/subject/ListDetails", subjectListDetails)     //获取专题详情
 	mux.HandleFunc("/subject/Add", subjectAdd)                     //新建专题
@@ -47,7 +48,7 @@ func main() {
 	mux.HandleFunc("/article/List", articleList)                       //获取文章列表
 	mux.HandleFunc("/article/ListRec", articleListRec)                 //推荐
 	mux.HandleFunc("/article/ListRanking", articleListRanking)         //获取文章排行榜
-	mux.HandleFunc("/article/ListHistory", articleListHistory)         //获取历史记录
+	mux.HandleFunc("/article/ListHistory", articleListHistory)         //获取历史	记录
 	mux.HandleFunc("/article/ListDetails", articleListDetails)         //获取文章详情
 	mux.HandleFunc("/article/ListLike", articleListLike)               //获取喜欢文章
 	mux.HandleFunc("/article/ListComment", articleListComment)         //获取文章评论
@@ -67,24 +68,24 @@ func main() {
 	mux.HandleFunc("/article/Examine", articleExamine)       //管理待审核文章
 
 	//搜索接口
-	mux.HandleFunc("/search", search)                //初步检索
-	mux.HandleFunc("/search/User", searchUser)       //检索相关用户
-	mux.HandleFunc("/search/Subject", searchSubject) //检索相关专题
-	mux.HandleFunc("/search/Article", searchArticle) //检索相关文章
-	mux.HandleFunc("/search/Popular", searchPopular) //获取热门搜索
-	mux.HandleFunc("/search/History", searchHistory) //获取搜索记录
-	mux.HandleFunc("/search/Delete", searchDelete)   //清除搜索记录
+	mux.HandleFunc("/search", search)                    //初步检索
+	mux.HandleFunc("/search/User", searchListUser)       //检索相关用户
+	mux.HandleFunc("/search/Subject", searchListSubject) //检索相关专题
+	mux.HandleFunc("/search/Article", searchListArticle) //检索相关文章
+	mux.HandleFunc("/search/Popular", searchListPopular) //获取热门搜索
+	mux.HandleFunc("/search/History", searchListHistory) //获取搜索记录
+	mux.HandleFunc("/search/Delete", searchDelete)       //清除搜索记录
 
 	//用户接口
 	mux.HandleFunc("/user/Login", userLogin)                   //登陆
 	mux.HandleFunc("/user/Logout", userLogout)                 //登出
 	mux.HandleFunc("/user/Signup", userSignup)                 //注册
-	mux.HandleFunc("/user/Details", userDetails)               //获取个人信息
+	mux.HandleFunc("/user/ListDetails", userListDetails)       //获取用户信息
 	mux.HandleFunc("/user/ModifyHead", userModifyHead)         //修改用户头像
 	mux.HandleFunc("/user/ModifyNickname", userModifyNickname) //修改用户昵称
-	mux.HandleFunc("/user/ModifyBrief", userModifyBrief)       //修改个人简介
+	mux.HandleFunc("/user/ModifyBrief", userModifyBrief)       //修改用户简介
 	mux.HandleFunc("/user/ModifyPassword", userModifyPassword) //修改登录密码
-	mux.HandleFunc("/user/Dynamic", userDynamic)               //获取动态信息
+	mux.HandleFunc("/user/ListDynamic", userListDynamic)       //获取动态信息
 
 	mux.HandleFunc("/user/ListMessage", userListMessage)               //获取私信列表
 	mux.HandleFunc("/user/ListMessageDetails", userListMessageDetails) //查看私信内容

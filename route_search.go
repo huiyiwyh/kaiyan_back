@@ -13,7 +13,7 @@ import (
 
 //获取热门搜索
 
-func searchPopular(w http.ResponseWriter, r *http.Request) {
+func searchListPopular(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
 	w.Header().Set("content-type", "application/json")
@@ -30,13 +30,13 @@ func searchPopular(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	result := data.SearchPopular_()
+	result := data.SearchListPopular_()
 	fmt.Fprintf(w, result)
 }
 
 //获取搜索记录
 
-func searchHistory(w http.ResponseWriter, r *http.Request) {
+func searchListHistory(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
 	w.Header().Set("content-type", "application/json")
@@ -57,7 +57,7 @@ func searchHistory(w http.ResponseWriter, r *http.Request) {
 	jehcd_ := utils.Decode(jehcd)
 	fmt.Println(jehcd)
 
-	result := data.SearchHistroy_(jehcd_)
+	result := data.SearchListHistroy_(jehcd_)
 	fmt.Fprintf(w, result)
 }
 
@@ -116,7 +116,7 @@ func search(w http.ResponseWriter, r *http.Request) {
 
 //检索相关用户
 
-func searchUser(w http.ResponseWriter, r *http.Request) {
+func searchListUser(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
 	w.Header().Set("content-type", "application/json")
@@ -144,7 +144,7 @@ func searchUser(w http.ResponseWriter, r *http.Request) {
 
 //检索相关专题
 
-func searchSubject(w http.ResponseWriter, r *http.Request) {
+func searchListSubject(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
 	w.Header().Set("content-type", "application/json")
@@ -172,7 +172,7 @@ func searchSubject(w http.ResponseWriter, r *http.Request) {
 
 //检索相关文章
 
-func searchArticle(w http.ResponseWriter, r *http.Request) {
+func searchListArticle(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
 	w.Header().Set("content-type", "application/json")
