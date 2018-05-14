@@ -47,7 +47,7 @@ func SearchListPopular_() string {
 		}
 		slice = append(slice, num)
 
-		rows, err = Db.Query("select content from view_history_search_popular limit ?,10", num)
+		rows, err = Db.Query("select content from view_history_search_popular limit ?,1", num)
 		if err != nil {
 			log.Println(err)
 			Mutex.Unlock()

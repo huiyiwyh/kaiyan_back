@@ -54,7 +54,7 @@ func SubjectListRec_(Account string) string {
 	}
 
 	//先查看用户的标签，再查找专题附带标签
-	rows, err := conn.Query("select Qlabel,Lvalue from vuserlabel where Xaccount = ? and Otype = 0", Account)
+	rows, err := Db.Query("select Qlabel,Lvalue from vuserlabel where Xaccount = ? and Otype = 0", Account)
 	if err != nil {
 		log.Println(err)
 		conn.Rollback()
@@ -81,7 +81,7 @@ func SubjectListRec_(Account string) string {
 	fmt.Println(labelsNumUser)
 	fmt.Println(labelsUser)
 
-	rows, err = conn.Query("select Usid,Blabel from hsubject")
+	rows, err = Db.Query("select Usid,Blabel from hsubject")
 	if err != nil {
 		log.Println(err)
 		conn.Rollback()

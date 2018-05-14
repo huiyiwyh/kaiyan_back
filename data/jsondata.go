@@ -129,8 +129,9 @@ type SubjectDetails struct {
 }
 
 type DataSubjectDetails struct {
-	IsOwned bool                   `json:"isOwned"`
-	Info    DataSubjectDetailsInfo `json:"info"`
+	IsFocused bool                   `json:"isFocused"`
+	IsOwned   bool                   `json:"isOwned"`
+	Info      DataSubjectDetailsInfo `json:"info"`
 }
 
 type DataSubjectDetailsInfo struct {
