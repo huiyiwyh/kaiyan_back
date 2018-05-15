@@ -59,6 +59,8 @@ func CreateDir(dir string) {
 	}
 }
 
+//创建Token
+
 func CreateToken() string {
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{

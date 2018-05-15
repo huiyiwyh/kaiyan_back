@@ -89,9 +89,35 @@ func searchDelete(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, result)
 }
 
+//清除账户搜索记录
+
+func searchDeleteAccount(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
+	w.Header().Set("content-type", "application/json")
+	w.Header().Set("Access-Control-Allow-Methods", "GET POST PUT DELETE")
+
+	if r.Method == "OPTIONS" {
+		return
+	}
+	token := r.Header.Get("Token")
+
+	if !utils.AuthenticToken(token) {
+		result := data.SuccessFail_("0", "Token验证失败")
+		fmt.Fprintf(w, result)
+		return
+	}
+
+	yenkc := r.FormValue("yenkc")
+	yenkc_ := utils.Decode(yenkc)
+
+	result := data.SearchDeleteAccount_(yenkc_)
+	fmt.Fprintf(w, result)
+}
+
 //初步检索
 
-func search(w http.ResponseWriter, r *http.Request) {
+func searchList(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Token")
 	w.Header().Set("content-type", "application/json")
@@ -109,8 +135,10 @@ func search(w http.ResponseWriter, r *http.Request) {
 	}
 
 	okshc := r.FormValue("okshc")
+	kciha := r.FormValue("kciha")
+	kciha_ := utils.Decode(kciha)
 
-	result := data.Search_(okshc)
+	result := data.SearchList_(okshc, kciha_)
 	fmt.Fprintf(w, result)
 }
 
@@ -161,12 +189,12 @@ func searchListSubject(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	hwjco := r.FormValue("hwjco")
+	iyscf := r.FormValue("iyscf")
 
-	irksh := r.FormValue("irksh")
-	irksh_ := utils.Decode(irksh)
+	wqefs := r.FormValue("wqefs")
+	wqefs_ := utils.Decode(wqefs)
 
-	result := data.SearchSubject_(hwjco, irksh_)
+	result := data.SearchSubject_(iyscf, wqefs_)
 	fmt.Fprintf(w, result)
 }
 

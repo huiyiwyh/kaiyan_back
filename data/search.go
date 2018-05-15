@@ -123,11 +123,26 @@ func SearchListHistroy_(jehcd string) string {
 
 func SearchDelete_(uejsh, yehjc string) string {
 	Mutex.Lock()
-	_, err := Db.Exec("delete from yhissearch where Hsid = ? and jaccount = ?", uejsh, yehjc)
+	_, err := Db.Exec("delete from yhissearch where Hsid = ? and Jaccount = ?", uejsh, yehjc)
 	if err != nil {
 		log.Println(err)
 		Mutex.Unlock()
-		return SuccessFail_("0", "can not delete")
+		return SuccessFail_("0", "删除失败")
+	}
+	Mutex.Unlock()
+
+	return SuccessFail_("1", "")
+}
+
+//清除账户搜索记录
+
+func SearchDeleteAccount_(yenkc string) string {
+	Mutex.Lock()
+	_, err := Db.Exec("delete from yhissearch where Jaccount = ?", yenkc)
+	if err != nil {
+		log.Println(err)
+		Mutex.Unlock()
+		return SuccessFail_("0", "删除失败")
 	}
 	Mutex.Unlock()
 
@@ -136,15 +151,39 @@ func SearchDelete_(uejsh, yehjc string) string {
 
 //初步检索(complete)
 
-func Search_(okshc string) string {
-	okshc = "%" + okshc + "%"
+func SearchList_(okshc, kciha string) string {
+	orune := []rune(okshc)
+	nrune := make([]rune, 2*len(orune)+1)
+	nrune[0] = '%'
+	index := 1
+
+	for _, v := range orune {
+		nrune[index] = v
+		index++
+		nrune[index] = '%'
+		index++
+	}
+
 	var post SearchList
 	post.Data.User = make([]DataSearchListUser, 0)
 	post.Data.Article = make([]DataSearchListArticle, 0)
 	post.Data.Subject = make([]DataSearchListSubject, 0)
 
 	Mutex.Lock()
-	rows, err := Db.Query("select account,nickname,head from view_user where nickname like ? limit 4", okshc)
+
+	timestamp := time.Now().Unix()
+	tm := time.Unix(timestamp, 0)
+	time_ := tm.Format("060102150405")
+	time := tm.Format("2006-01-02 15:04")
+
+	_, err := Db.Exec("insert into yhissearch(Hsid,Econtent,Jaccount,Wdate) values (?,?,?,?)", kciha+time_, okshc, kciha, time)
+	if err != nil {
+		log.Println(err)
+		Mutex.Unlock()
+		return SuccessFail_("0", "插入失败")
+	}
+
+	rows, err := Db.Query("select account,nickname,head from view_user where nickname like ? limit 4", string(nrune))
 	if err != nil {
 		log.Println(err)
 		Mutex.Unlock()
@@ -170,7 +209,7 @@ func Search_(okshc string) string {
 		post.Data.User = append(post.Data.User, data)
 	}
 
-	rows, err = Db.Query("select id, name, thumbnail from view_subject where name like ? limit 4", okshc)
+	rows, err = Db.Query("select id, name, thumbnail from view_subject where name like ? limit 4", string(nrune))
 	if err != nil {
 		log.Println(err)
 		Mutex.Unlock()
@@ -194,7 +233,7 @@ func Search_(okshc string) string {
 		post.Data.Subject = append(post.Data.Subject, data)
 	}
 
-	rows, err = Db.Query("select id,sid,subjectName,title,content,account,nickname,head,date,thumbnail,countComment,countLike,countRead from view_article where title like ? limit 4", okshc)
+	rows, err = Db.Query("select id,sid,subjectName,title,content,account,nickname,head,date,thumbnail,countComment,countLike,countRead from view_article where title like ? limit 4", string(nrune))
 	if err != nil {
 		log.Println(err)
 		Mutex.Unlock()
@@ -263,7 +302,7 @@ func SearchUser_(hwjco, irksh string) string {
 	}
 
 	Mutex.Lock()
-	rows, err := Db.Query("select account,nickname,head from view_user where nickname like ? limit ?,8", string(nrune), limit)
+	rows, err := Db.Query("select account,nickname,head,brief from view_user where nickname like ? limit ?,8", string(nrune), limit)
 	if err != nil {
 		log.Println(err)
 		Mutex.Unlock()
@@ -276,7 +315,7 @@ func SearchUser_(hwjco, irksh string) string {
 	post.Data = make([]DataSearchListUsersimple, 0)
 	for rows.Next() {
 		var account, nickname, head, brief string
-		err = rows.Scan(&account, &nickname, &head)
+		err = rows.Scan(&account, &nickname, &head, &brief)
 		if err != nil {
 			log.Println(err)
 			Mutex.Unlock()
@@ -302,7 +341,7 @@ func SearchUser_(hwjco, irksh string) string {
 
 		for newrows.Next() {
 			var id, title string
-			err = newrows.Scan(&id, &title)
+			err = newrows.Scan(&title, &id)
 			if err != nil {
 				log.Println(err)
 				Mutex.Unlock()
@@ -333,9 +372,9 @@ func SearchUser_(hwjco, irksh string) string {
 
 //检索相关专题(complete)
 
-func SearchSubject_(hwjco, irksh string) string {
+func SearchSubject_(iyscf, wqefs string) string {
 
-	orune := []rune(hwjco)
+	orune := []rune(iyscf)
 	nrune := make([]rune, 2*len(orune)+1)
 	nrune[0] = '%'
 	index := 1
@@ -347,7 +386,7 @@ func SearchSubject_(hwjco, irksh string) string {
 		index++
 	}
 
-	limit, err := strconv.Atoi(irksh)
+	limit, err := strconv.Atoi(wqefs)
 	if err != nil {
 		log.Println(err)
 		return SuccessFail_("0", "字符串转字符失败")

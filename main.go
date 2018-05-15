@@ -68,13 +68,14 @@ func main() {
 	mux.HandleFunc("/article/Examine", articleExamine)       //管理待审核文章
 
 	//搜索接口
-	mux.HandleFunc("/search", search)                    //初步检索
-	mux.HandleFunc("/search/User", searchListUser)       //检索相关用户
-	mux.HandleFunc("/search/Subject", searchListSubject) //检索相关专题
-	mux.HandleFunc("/search/Article", searchListArticle) //检索相关文章
-	mux.HandleFunc("/search/Popular", searchListPopular) //获取热门搜索
-	mux.HandleFunc("/search/History", searchListHistory) //获取搜索记录
-	mux.HandleFunc("/search/Delete", searchDelete)       //清除搜索记录
+	mux.HandleFunc("/search/List", searchList)                   //初步检索
+	mux.HandleFunc("/search/ListUser", searchListUser)           //检索相关用户
+	mux.HandleFunc("/search/ListSubject", searchListSubject)     //检索相关专题
+	mux.HandleFunc("/search/ListArticle", searchListArticle)     //检索相关文章
+	mux.HandleFunc("/search/ListPopular", searchListPopular)     //获取热门搜索
+	mux.HandleFunc("/search/ListHistory", searchListHistory)     //获取搜索记录
+	mux.HandleFunc("/search/DeleteAccount", searchDeleteAccount) //清除账户搜索记录
+	mux.HandleFunc("/search/Delete", searchDelete)               //清除搜索记录
 
 	//用户接口
 	mux.HandleFunc("/user/Login", userLogin)                   //登陆
